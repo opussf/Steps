@@ -25,13 +25,37 @@ function test.before()
 	FITBIT.OnLoad()
 end
 function test.after()
-	--INEED_data = {}
-	--INEED_account = {}
-	--INEED_currency = {}
-	--INEED.othersNeed = nil  -- this is for global tracking
+	Fitbit_log = {}
 end
-function test.test_01()
+function test.test_playerStartsMoving()
+	unitSpeeds.player = 7 -- 100% speed
+	FITBIT.isMoving = nil
 	FITBIT.OnUpdate()
+	assertTrue( FITBIT.isMoving )
+	assertEquals( 7, FITBIT.lastSpeed )
+end
+function test.test_playerMovingSameSpeed()
+	unitSpeeds.player = 7
+	FITBIT.isMoving = true
+	FITBIT.OnUpdate()
+	assertTrue( FITBIT.isMoving )
+	assertEquals( 7, FITBIT.lastSpeed )
+end
+function test.test_playerChangesSpeed()
+	unitSpeeds.player = 14
+	FITBIT.isMoving = true
+	FITBIT.lastSpeed = 7
+	FITBIT.OnUpdate()
+	assertTrue( FITBIT.isMoving )
+	assertEquals( 14, FITBIT.lastSpeed )
+end
+function test.test_playerStops()
+	unitSpeeds.player = 0
+	FITBIT.isMoving = true
+	FITBIT.lastSpeed = 7
+	FITBIT.OnUpdate()
+	assertFalse( FITBIT.isMoving )
+	assertEquals( 0, FITBIT.lastSpeed )
 end
 
 test.run()

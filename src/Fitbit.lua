@@ -33,12 +33,12 @@ function FITBIT.OnUpdate()
 		Fitbit_log[nowTS] = speed
 		FITBIT.lastSpeed = speed
 	end
-	if speed ~= FITBIT.lastSpeed then
+	if speed == 0 and FITBIT.isMoving then
+		FITBIT.isMoving = false
 		Fitbit_log[nowTS] = speed
 		FITBIT.lastSpeed = speed
 	end
-	if speed == 0 and FITBIT.isMoving then
-		FITBIT.isMoving = false
+	if speed ~= FITBIT.lastSpeed then
 		Fitbit_log[nowTS] = speed
 		FITBIT.lastSpeed = speed
 	end

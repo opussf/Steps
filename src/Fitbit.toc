@@ -4,5 +4,6 @@
 ## Author: opussf
 ## Version: @VERSION@
 ## Description: Track how many steps you have taken
-## SavedVariables: Fitbit_data Fitbit_options
+## SavedVariables: Fitbit_data Fitbit_options Fitbit_log
 Fitbit.lua
+Fitbit.xml

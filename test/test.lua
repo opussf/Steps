@@ -30,5 +30,8 @@ function test.after()
 	--INEED_currency = {}
 	--INEED.othersNeed = nil  -- this is for global tracking
 end
+function test.test_01()
+	FITBIT.OnUpdate()
+end
 
 test.run()

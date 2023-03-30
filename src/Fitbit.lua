@@ -26,21 +26,21 @@ function FITBIT.OnLoad()
 end
 
 function FITBIT.OnUpdate()
-	speed = GetUnitSpeec("player")
+	speed = GetUnitSpeed("player")
 	local nowTS = time()
 	if speed>0 and not FITBIT.isMoving then
 		FITBIT.isMoving = true
 		Fitbit_log[nowTS] = speed
-		Fitbit.lastSpeed = speed
+		FITBIT.lastSpeed = speed
 	end
-	if speed ~= Fitbit.lastSpeed then
+	if speed ~= FITBIT.lastSpeed then
 		Fitbit_log[nowTS] = speed
-		Fitbit.lastSpeed = speed
+		FITBIT.lastSpeed = speed
 	end
 	if speed == 0 and FITBIT.isMoving then
 		FITBIT.isMoving = false
 		Fitbit_log[nowTS] = speed
-		Fitbit.lastSpeed = speed
+		FITBIT.lastSpeed = speed
 	end
 end
 

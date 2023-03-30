@@ -53,6 +53,7 @@ onCursor = {}
 globals = {}
 accountExpansionLevel = 4   -- 0 to 5
 -- registeredPrefixes - populated by the RegisterAddonMessagePrefix( prefix )
+unitSpeeds = { ["player"] = 0 }
 
 myStatistics = {
 	[60] = 42  -- 60 = deaths
@@ -1156,6 +1157,11 @@ function GetUnitName( lookupStr )
 	if( myParty[partyType] and myParty.roster[partyIndex] ) then
 		return myParty.roster[partyIndex]
 	end
+end
+function GetUnitSpeed( lookupStr )
+	lookupStr = string.lower( lookupStr )
+
+	return (unitSpeeds[lookupStr])
 end
 --[[
 function HasNewMail()

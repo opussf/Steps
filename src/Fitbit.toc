@@ -1,0 +1,8 @@
+## Title: Fitbit
+## Interface: @INTERFACE@
+## Notes: Fitbit (@VERSION@)
+## Author: opussf
+## Version: @VERSION@
+## Description: Track how many steps you have taken
+## SavedVariables: Fitbit_data Fitbit_options
+Fitbit.lua

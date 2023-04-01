@@ -44,7 +44,7 @@ end
 
 function FITBIT.OnUpdate()
 	local nowTS = time()
-	local dateStr = 	date("%Y%m%d")
+	local dateStr = date("%Y%m%d")
 	if IsMounted() or IsFlying() then
 		FITBIT.isMoving = false
 		Fitbit_log[nowTS] = "mounted / flying"

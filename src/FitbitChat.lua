@@ -15,7 +15,8 @@ function FITBIT.ReplaceMessage( msgIn )
 		--print( "tokenStart: "..tokenStart )
 		--print( "tokenEnd: "..tokenEnd )
 		--print( "index: "..index )
-		stepsStr = "Steps today: "..math.floor( FITBIT.mine[dateStr].steps or "0" )
+		local dateStr = date("%Y%m%d")
+		local stepsStr = "My steps today: "..math.floor( FITBIT.mine[dateStr].steps or "0" )
 		msgNew = string.sub( msgIn, 1, tokenStart-1 )..
 				stepsStr..
 				string.sub( msgIn, tokenEnd+1 )

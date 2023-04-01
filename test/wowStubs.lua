@@ -1206,6 +1206,10 @@ function IsInRaid()
 	-- myParty = { ["group"] = nil, ["raid"] = nil } -- set one of these to true to reflect being in group or raid.
 	return ( myParty["raid"] and 1 or nil )
 end
+function IsFlying()
+end
+function IsMounted()
+end
 function GetCursorInfo()
 end
 function GetInstanceInfo()

@@ -7,3 +7,5 @@
 ## SavedVariables: Fitbit_data Fitbit_options Fitbit_log
 Fitbit.lua
 Fitbit.xml
+
+FitbitChat.lua

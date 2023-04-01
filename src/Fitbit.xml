@@ -3,7 +3,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 xsi:schemaLocation="http://www.blizzard.com/wow/ui/
 ..\..\FrameXML\UI.xsd">
 
-	<Frame name="fitbit_Frame" frameStrata="BACKGROUND" toplevel="false" enableMouse="false" movable="false" parent="UIParent">
+	<Frame name="Fitbit_Frame" frameStrata="BACKGROUND" toplevel="false" enableMouse="false" movable="false" parent="UIParent">
 		<Scripts>
 			<OnLoad>
 				FITBIT.OnLoad();

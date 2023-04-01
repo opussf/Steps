@@ -16,6 +16,8 @@ INEEDUIListFrame_TitleText = INEEDUIListFrame.CreateFontString()
 -- require the file to test
 ParseTOC( "../src/Fitbit.toc" )
 
+Fitbit_Frame = CreateFrame()
+
 -- addon setup
 FITBIT.name = "testName"
 FITBIT.realm = "testRealm"
@@ -23,6 +25,7 @@ FITBIT.faction = "Alliance"
 
 function test.before()
 	FITBIT.OnLoad()
+	FITBIT.VARIABLES_LOADED()
 end
 function test.after()
 	Fitbit_log = {}
@@ -57,5 +60,15 @@ function test.test_playerStops()
 	assertFalse( FITBIT.isMoving )
 	assertEquals( 0, FITBIT.lastSpeed )
 end
+function test.test_speed7()
+	unitSpeeds.player = 7
+	FITBIT.isMoving = true
+	FITBIT.lastSpeed = 7
+	FITBIT.lastUpdate = time() - 1
+	FITBIT.OnUpdate()
+
+
+end
+
 
 test.run()

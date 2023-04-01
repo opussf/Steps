@@ -18,30 +18,68 @@ COLOR_END = "|r"
 Fitbit_data = {}
 Fitbit_options = {}
 Fitbit_log = {}
+Fitbit_steps_per_second = 2/7  -- 2 steps at speed 7
 
 -- Setup
 function FITBIT.OnLoad()
 	SLASH_FITBIT1 = "/FITBIT"
 	FITBIT.lastSpeed = 0
+	Fitbit_Frame:RegisterEvent( "ADDON_LOADED" )
+	Fitbit_Frame:RegisterEvent( "VARIABLES_LOADED" )
+end
+function FITBIT.ADDON_LOADED()
+	Fitbit_Frame:UnregisterEvent( "ADDON_LOADED" )
+	FITBIT.name = UnitName("player")
+	FITBIT.realm = GetRealmName()
+	FITBIT.InitChat()
+end
+function FITBIT.VARIABLES_LOADED()
+	-- Unregister the event for this method.
+	Fitbit_Frame:UnregisterEvent( "VARIABLES_LOADED" )
+
+	Fitbit_data[FITBIT.realm] = Fitbit_data[FITBIT.realm] or {}
+	Fitbit_data[FITBIT.realm][FITBIT.name] = Fitbit_data[FITBIT.realm][FITBIT.name] or { ["steps"] = 0 }
+	FITBIT.mine = Fitbit_data[FITBIT.realm][FITBIT.name]
 end
 
 function FITBIT.OnUpdate()
-	speed = GetUnitSpeed("player")
 	local nowTS = time()
-	if speed>0 and not FITBIT.isMoving then
-		FITBIT.isMoving = true
-		Fitbit_log[nowTS] = speed
-		FITBIT.lastSpeed = speed
-	end
-	if speed == 0 and FITBIT.isMoving then
+	local dateStr = 	date("%Y%m%d")
+	if IsMounted() or IsFlying() then
 		FITBIT.isMoving = false
-		Fitbit_log[nowTS] = speed
-		FITBIT.lastSpeed = speed
+		Fitbit_log[nowTS] = "mounted / flying"
+		FITBIT.lastSpeed = 0
+	else
+		speed = GetUnitSpeed("player")
+		if speed>0 and not FITBIT.isMoving then
+			FITBIT.isMoving = true
+			Fitbit_log[nowTS] = speed
+			FITBIT.lastSpeed = speed
+		end
+		if speed == 0 and FITBIT.isMoving then
+			FITBIT.isMoving = false
+			Fitbit_log[nowTS] = speed
+			FITBIT.lastSpeed = speed
+		end
+		if speed ~= FITBIT.lastSpeed then
+			Fitbit_log[nowTS] = speed
+			FITBIT.lastSpeed = speed
+		end
+		if nowTS ~= FITBIT.lastUpdate then
+			local newSteps = (Fitbit_steps_per_second * speed)
+			FITBIT.mine.steps = FITBIT.mine.steps + newSteps
+			FITBIT.mine[dateStr] = FITBIT.mine[dateStr] or { ["steps"] = 0 }
+			FITBIT.mine[dateStr].steps = FITBIT.mine[dateStr].steps + newSteps
+
+		end
 	end
-	if speed ~= FITBIT.lastSpeed then
-		Fitbit_log[nowTS] = speed
-		FITBIT.lastSpeed = speed
+	if nowTS % 10 == 0 and not FITBIT.printed then
+		print( "Steps: "..math.floor( FITBIT.mine[dateStr].steps ) )
+		FITBIT.printed = true
+	elseif nowTS % 10 ~= 0 then
+		FITBIT.printed = nil
 	end
+	FITBIT.lastUpdate = nowTS
 end
 
 

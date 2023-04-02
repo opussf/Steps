@@ -28,7 +28,7 @@ jobs:
       # fetch-depth:0 is needed to get tags too
       # normal builds do not need history.
       # https://github.com/actions/checkout/tags
-      - uses: actions/checkout@v3.5
+      - uses: actions/checkout@v3.5.0
       #  with:
       #    fetch-depth: 0
 

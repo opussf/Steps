@@ -37,7 +37,7 @@ jobs:
         uses: actions/setup-java@v3.11.0
         with:
           distribution: 'temurin'
-          java-version: 1.8
+          java-version: 17
 
       # https://github.com/leafo/gh-actions-lua/tags
       - name: Set up Lua

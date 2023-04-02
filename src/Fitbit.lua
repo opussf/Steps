@@ -41,6 +41,8 @@ function FITBIT.VARIABLES_LOADED()
 	Fitbit_data[FITBIT.realm] = Fitbit_data[FITBIT.realm] or {}
 	Fitbit_data[FITBIT.realm][FITBIT.name] = Fitbit_data[FITBIT.realm][FITBIT.name] or { ["steps"] = 0 }
 	FITBIT.mine = Fitbit_data[FITBIT.realm][FITBIT.name]
+	local dateStr = date("%Y%m%d")
+	FITBIT.mine[dateStr] = {["steps"] = 0}
 end
 
 -- OnUpdate

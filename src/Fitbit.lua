@@ -70,15 +70,18 @@ function FITBIT.OnUpdate()
 			FITBIT.mine.steps = FITBIT.mine.steps + newSteps
 			FITBIT.mine[dateStr] = FITBIT.mine[dateStr] or { ["steps"] = 0 }
 			FITBIT.mine[dateStr].steps = FITBIT.mine[dateStr].steps + newSteps
-
 		end
 	end
-	if nowTS % 10 == 0 and not FITBIT.printed then
-		print( "Steps: "..math.floor( FITBIT.mine[dateStr].steps ) )
-		FITBIT.printed = true
-	elseif nowTS % 10 ~= 0 then
-		FITBIT.printed = nil
+	if nowTS ~= FITBIT.lastUpdate then
+		Fitbit_StepBar:Show()
+		Fitbit_StepBarText:SetText( "Steps: "..math.floor( FITBIT.mine[dateStr].steps ) )
 	end
+	-- if nowTS % 10 == 0 and not FITBIT.printed then
+	-- 	print( "Steps: "..math.floor( FITBIT.mine[dateStr].steps ) )
+	-- 	FITBIT.printed = true
+	-- elseif nowTS % 10 ~= 0 then
+	-- 	FITBIT.printed = nil
+	-- end
 	FITBIT.lastUpdate = nowTS
 end
 

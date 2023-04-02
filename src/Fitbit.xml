@@ -4,6 +4,40 @@ xsi:schemaLocation="http://www.blizzard.com/wow/ui/
 ..\..\FrameXML\UI.xsd">
 
 	<Frame name="Fitbit_Frame" frameStrata="BACKGROUND" toplevel="false" enableMouse="false" movable="false" parent="UIParent">
+		<Size>
+			<AbsDimension x="200" y="12"/>
+		</Size>
+		<Anchors>
+			<Anchor point="BOTTOMLEFT"/>
+		</Anchors>
+		<Frames>
+			<StatusBar name="Fitbit_StepBar" inherits="TextStatusBar">
+				<Size>
+					<AbsDimension x="190" y="12"/>
+				</Size>
+				<Anchors>
+					<Anchor point="TOP" relativeTo="$parent" relativePoint="TOP"/>
+				</Anchors>
+				<Layers>
+					<Layer level="LOW">
+						<FontString name="Fitbit_StepBarText" inherits="GameFontNormal">
+							<Anchors>
+								<Anchor point="CENTER"/>
+							</Anchors>
+							<Color r="1" g="1" b="1"/>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnLoad> <!-- artwork -->
+						Fitbit_StepBar:SetFrameLevel( 0 );
+						Fitbit_StepBar:SetAlpha(1.0);
+					</OnLoad>
+				</Scripts>
+				<BarTexture file="Interface\TargetingFrame\UI-StatusBar"/>
+				<BarColor r="0.5" g="0.5" b="0"/>
+			</StatusBar>
+		</Frames>
 		<Scripts>
 			<OnLoad>
 				FITBIT.OnLoad();

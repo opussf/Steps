@@ -17,6 +17,8 @@ INEEDUIListFrame_TitleText = INEEDUIListFrame.CreateFontString()
 ParseTOC( "../src/Fitbit.toc" )
 
 Fitbit_Frame = CreateFrame()
+Fitbit_StepBar = CreateStatusBar()
+Fitbit_StepBarText = CreateFrame()
 
 -- addon setup
 FITBIT.name = "testName"

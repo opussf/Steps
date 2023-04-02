@@ -33,7 +33,7 @@ jobs:
           fetch-depth: 0
 
       # https://github.com/actions/setup-java/tags
-      - name: Set up JDK 1.8
+      - name: Set up JDK
         uses: actions/setup-java@v3.11.0
         with:
           distribution: 'temurin'

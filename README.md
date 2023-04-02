@@ -1,6 +1,8 @@
 # Fitbit
 
-You know.....
+This addon came from an idea from a comment from a raid run.
+
+## Notes
 
 Things I can determine:
 

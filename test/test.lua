@@ -24,6 +24,7 @@ Fitbit_StepBarText = CreateFrame()
 FITBIT.name = "testName"
 FITBIT.realm = "testRealm"
 FITBIT.faction = "Alliance"
+dateStr = date("%Y%m%d")
 
 function test.before()
 	FITBIT.OnLoad()
@@ -31,6 +32,7 @@ function test.before()
 end
 function test.after()
 	Fitbit_log = {}
+	Fitbit_data = {}
 end
 function test.test_playerStartsMoving()
 	unitSpeeds.player = 7 -- 100% speed
@@ -68,8 +70,37 @@ function test.test_speed7()
 	FITBIT.lastSpeed = 7
 	FITBIT.lastUpdate = time() - 1
 	FITBIT.OnUpdate()
-
-
+	assertEquals( 2, Fitbit_data["testRealm"]["testName"][dateStr].steps )
+end
+function test.test_speed12_5()
+	unitSpeeds.player = 12.5
+	FITBIT.isMoving = true
+	FITBIT.lastSpeed = 12.5
+	FITBIT.lastUpdate = time() - 1
+	FITBIT.OnUpdate()
+	assertEquals( 357, math.floor( Fitbit_data["testRealm"]["testName"][dateStr].steps * 100) )
+end
+function test.test_speed14()
+	unitSpeeds.player = 14
+	FITBIT.isMoving = true
+	FITBIT.lastSpeed = 14
+	FITBIT.lastUpdate = time() - 1
+	FITBIT.OnUpdate()
+	assertEquals( 4, Fitbit_data["testRealm"]["testName"][dateStr].steps )
+end
+function test.test_replace()
+	unitSpeeds.player = 7
+	FITBIT.isMoving = true
+	FITBIT.lastSpeed = 7
+	FITBIT.lastUpdate = time() - 1
+	FITBIT.OnUpdate()
+	assertEquals( "My steps today: 2", FITBIT.ReplaceMessage( "{fb}" ) )
+end
+function test.test_command()
+	FITBIT.command()
+end
+function test.test_commandHelp()
+	FITBIT.command( "help" )
 end
 
 

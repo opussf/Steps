@@ -114,7 +114,7 @@ function FITBIT.command( msg )
 		cmd = FITBIT.CommandList[cmd].alias
 	end
 	local cmdFunc = FITBIT.CommandList[cmd]
-	if cmdFunc then
+	if cmdFunc and cmdFunc.func then
 		cmdFunc.func(param)
 	else
 		FITBIT.PrintHelp()

@@ -17,7 +17,7 @@ COLOR_END = "|r"
 
 Fitbit_data = {}
 Fitbit_options = {}
-Fitbit_log = {}
+--Fitbit_log = {}
 Fitbit_steps_per_second = 2/7  -- 2 steps at speed 7
 
 -- Setup
@@ -47,22 +47,22 @@ function FITBIT.OnUpdate()
 	local dateStr = date("%Y%m%d")
 	if IsMounted() or IsFlying() then
 		FITBIT.isMoving = false
-		Fitbit_log[nowTS] = "mounted / flying"
+		--Fitbit_log[nowTS] = "mounted / flying"
 		FITBIT.lastSpeed = 0
 	else
 		speed = GetUnitSpeed("player")
 		if speed>0 and not FITBIT.isMoving then
 			FITBIT.isMoving = true
-			Fitbit_log[nowTS] = speed
+			--Fitbit_log[nowTS] = speed
 			FITBIT.lastSpeed = speed
 		end
 		if speed == 0 and FITBIT.isMoving then
 			FITBIT.isMoving = false
-			Fitbit_log[nowTS] = speed
+			--Fitbit_log[nowTS] = speed
 			FITBIT.lastSpeed = speed
 		end
 		if speed ~= FITBIT.lastSpeed then
-			Fitbit_log[nowTS] = speed
+			--Fitbit_log[nowTS] = speed
 			FITBIT.lastSpeed = speed
 		end
 		if nowTS ~= FITBIT.lastUpdate then

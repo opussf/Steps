@@ -41,8 +41,6 @@ function FITBIT.VARIABLES_LOADED()
 	Fitbit_data[FITBIT.realm] = Fitbit_data[FITBIT.realm] or {}
 	Fitbit_data[FITBIT.realm][FITBIT.name] = Fitbit_data[FITBIT.realm][FITBIT.name] or { ["steps"] = 0 }
 	FITBIT.mine = Fitbit_data[FITBIT.realm][FITBIT.name]
-	local dateStr = date("%Y%m%d")
-	FITBIT.mine[dateStr] = {["steps"] = 0}
 end
 
 -- OnUpdate
@@ -78,7 +76,7 @@ function FITBIT.OnUpdate()
 	end
 	if nowTS ~= FITBIT.lastUpdate then
 		Fitbit_StepBar:Show()
-		Fitbit_StepBarText:SetText( "Steps: "..math.floor( FITBIT.mine[dateStr].steps ) )
+		Fitbit_StepBarText:SetText( "Steps: "..math.floor( FITBIT.mine[dateStr].steps or 0) )
 	end
 	-- if nowTS % 10 == 0 and not FITBIT.printed then
 	-- 	print( "Steps: "..math.floor( FITBIT.mine[dateStr].steps ) )

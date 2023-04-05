@@ -88,6 +88,37 @@ function FITBIT.OnUpdate()
 end
 
 -- Support
+function FITBIT.Prune()
+	local nowTS = time()
+	for r, _ in pairs( Fitbit_data ) do
+		local ncount = 0
+		for n, _ in pairs( Fitbit_data[r] ) do
+			local kcount = 0
+			for k, _ in pairs( Fitbit_data[r][n] ) do
+				if k ~= "steps" then
+					local y = strsub( k, 1, 4 )
+					local m = strsub( k, 5, 6 )
+					local d = strsub( k, 7, 8 )
+					local kts = time{year=y, month=m, day=d}
+					if kts < nowTS - (91 * 86400) then
+						Fitbit_data[r][n][k] = nil
+						print(r..":"..n..":"..k)
+					else
+						kcount = kcount + 1
+					end
+				end
+			end
+			if kcount == 0 then
+				Fitbit_data[r][n] = nil
+			else
+				ncount = ncount + 1
+			end
+		end
+		if ncount == 0 then
+			Fitbit_data[r] = nil
+		end
+	end
+end
 function FITBIT.Print( msg, showName)
 	-- print to the chat frame
 	-- set showName to false to suppress the addon name printing

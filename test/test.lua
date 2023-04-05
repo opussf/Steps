@@ -28,6 +28,7 @@ dateStr = date("%Y%m%d")
 
 function test.before()
 	FITBIT.OnLoad()
+	FITBIT.ADDON_LOADED()
 	FITBIT.VARIABLES_LOADED()
 end
 function test.after()
@@ -70,7 +71,7 @@ function test.test_speed7()
 	FITBIT.lastSpeed = 7
 	FITBIT.lastUpdate = time() - 1
 	FITBIT.OnUpdate()
-	assertEquals( 2, Fitbit_data["testRealm"]["testName"][dateStr].steps )
+	assertEquals( 2, Fitbit_data["testRealm"]["testPlayer"][dateStr].steps )
 end
 function test.test_speed12_5()
 	unitSpeeds.player = 12.5
@@ -78,7 +79,7 @@ function test.test_speed12_5()
 	FITBIT.lastSpeed = 12.5
 	FITBIT.lastUpdate = time() - 1
 	FITBIT.OnUpdate()
-	assertEquals( 357, math.floor( Fitbit_data["testRealm"]["testName"][dateStr].steps * 100) )
+	assertEquals( 357, math.floor( Fitbit_data["testRealm"]["testPlayer"][dateStr].steps * 100) )
 end
 function test.test_speed14()
 	unitSpeeds.player = 14
@@ -86,7 +87,7 @@ function test.test_speed14()
 	FITBIT.lastSpeed = 14
 	FITBIT.lastUpdate = time() - 1
 	FITBIT.OnUpdate()
-	assertEquals( 4, Fitbit_data["testRealm"]["testName"][dateStr].steps )
+	assertEquals( 4, Fitbit_data["testRealm"]["testPlayer"][dateStr].steps )
 end
 function test.test_replace()
 	unitSpeeds.player = 7
@@ -102,6 +103,28 @@ end
 function test.test_commandHelp()
 	FITBIT.command( "help" )
 end
-
+function test.test_prune_removeDays()
+	-- just remove old data
+	oldDateStr = date( "%Y%m%d", time() - (92*86400) )
+	Fitbit_data["testRealm"]["testPlayer"][oldDateStr] = {["steps"] = 500}
+	Fitbit_data["testRealm"]["testPlayer"][date("%Y%m%d")] = {["steps"] = 100}
+	Fitbit_data["testRealm"]["testPlayer"].steps = 600
+	FITBIT.Prune()
+	assertIsNil( Fitbit_data["testRealm"]["testPlayer"][oldDateStr] )
+	assertEquals( 100, Fitbit_data["testRealm"]["testPlayer"][date("%Y%m%d")].steps )
+end
+function test.test_prune_removePlayer()
+	oldDateStr = date( "%Y%m%d", time() - (95*86400) )
+	Fitbit_data["testRealm"]["testPlayer"][oldDateStr] = {["steps"] = 500}
+	Fitbit_data["testRealm"]["testPlayer"].steps = 500
+	Fitbit_data["testRealm"]["otherPlayer"] = {[date("%Y%m%d")] = {["steps"] = 100}, ["steps"] = 100}
+	FITBIT.Prune()
+	assertIsNil( Fitbit_data["testRealm"]["testPlayer"] )
+end
+function test.test_prune_removeRealm()
+	Fitbit_data["otherRealm"] = {}
+	FITBIT.Prune()
+	assertIsNil( Fitbit_data["otherRealm"] )
+end
 
 test.run()

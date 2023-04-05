@@ -1,4 +1,4 @@
--- RFChat.lua
+-- FitbitChat.lua
 
 function FITBIT.InitChat()
 	FITBIT.OriginalSendChatMessage = SendChatMessage
@@ -29,7 +29,3 @@ end
 function FITBIT.BNSendWhisper( id, msgIn )
 	FITBIT.OriginalBNSendWhisper( id, FITBIT.ReplaceMessage( msgIn ) )
 end
-
--- RF.CommandList[""] = {
--- 		["help"] = {"{RF<nnn><L>}","Send to any chat. <nnn> fortune to post. <L> append lotto numbers"},
--- 	}

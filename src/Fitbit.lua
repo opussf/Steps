@@ -18,7 +18,8 @@ COLOR_END = "|r"
 Fitbit_data = {}
 Fitbit_options = {}
 --Fitbit_log = {}
-Fitbit_steps_per_second = 2/7  -- 2 steps at speed 7
+FITBIT.steps_per_second = 2/7  -- 2 steps at speed 7
+FITBIT.pruneDays = 91
 
 -- Setup
 function FITBIT.OnLoad()
@@ -68,7 +69,7 @@ function FITBIT.OnUpdate()
 			FITBIT.lastSpeed = speed
 		end
 		if nowTS ~= FITBIT.lastUpdate then
-			local newSteps = (Fitbit_steps_per_second * speed)
+			local newSteps = (FITBIT.steps_per_second * speed)
 			FITBIT.mine.steps = FITBIT.mine.steps + newSteps
 			FITBIT.mine[dateStr] = FITBIT.mine[dateStr] or { ["steps"] = 0 }
 			FITBIT.mine[dateStr].steps = FITBIT.mine[dateStr].steps + newSteps
@@ -100,7 +101,7 @@ function FITBIT.Prune()
 					local m = strsub( k, 5, 6 )
 					local d = strsub( k, 7, 8 )
 					local kts = time{year=y, month=m, day=d}
-					if kts < nowTS - (91 * 86400) then
+					if kts < nowTS - ( FITBIT.pruneDays * 86400 ) then
 						Fitbit_data[r][n][k] = nil
 						print(r..":"..n..":"..k)
 					else

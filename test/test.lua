@@ -115,11 +115,11 @@ function test.test_prune_removeDays()
 end
 function test.test_prune_removePlayer()
 	oldDateStr = date( "%Y%m%d", time() - (95*86400) )
-	Fitbit_data["testRealm"]["testPlayer"][oldDateStr] = {["steps"] = 500}
-	Fitbit_data["testRealm"]["testPlayer"].steps = 500
-	Fitbit_data["testRealm"]["otherPlayer"] = {[date("%Y%m%d")] = {["steps"] = 100}, ["steps"] = 100}
+	Fitbit_data["testRealm"]["otherPlayer"] = {[oldDateStr] = {["steps"] = 500}, ["steps"] = 500}
+	Fitbit_data["testRealm"]["otherPlayer"].steps = 500
+	Fitbit_data["testRealm"]["testPlayer"] = {[date("%Y%m%d")] = {["steps"] = 100}, ["steps"] = 100}
 	FITBIT.Prune()
-	assertIsNil( Fitbit_data["testRealm"]["testPlayer"] )
+	assertIsNil( Fitbit_data["testRealm"]["otherPlayer"] )
 end
 function test.test_prune_removeRealm()
 	Fitbit_data["otherRealm"] = {}

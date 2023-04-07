@@ -42,6 +42,8 @@ function FITBIT.VARIABLES_LOADED()
 	Fitbit_data[FITBIT.realm] = Fitbit_data[FITBIT.realm] or {}
 	Fitbit_data[FITBIT.realm][FITBIT.name] = Fitbit_data[FITBIT.realm][FITBIT.name] or { ["steps"] = 0 }
 	FITBIT.mine = Fitbit_data[FITBIT.realm][FITBIT.name]
+	FITBIT.mine[date("%Y%m%d")] = FITBIT.mine[date("%Y%m%d")] or { ["steps"] = 0 }
+	FITBIT.Prune()
 end
 
 -- OnUpdate
@@ -103,7 +105,6 @@ function FITBIT.Prune()
 					local kts = time{year=y, month=m, day=d}
 					if kts < nowTS - ( FITBIT.pruneDays * 86400 ) then
 						Fitbit_data[r][n][k] = nil
-						print(r..":"..n..":"..k)
 					else
 						kcount = kcount + 1
 					end

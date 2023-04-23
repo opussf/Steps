@@ -1,3 +1,4 @@
+-- FITBIT @VERSION@
 FITBIT_SLUG, FITBIT = ...
 FITBIT_MSG_ADDONNAME = GetAddOnMetadata( FITBIT_SLUG, "Title" )
 FITBIT_MSG_VERSION   = GetAddOnMetadata( FITBIT_SLUG, "Version" )

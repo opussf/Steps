@@ -1,4 +1,4 @@
--- FitbitChat.lua
+-- FitbitChat.lua @VERSION@
 
 function FITBIT.InitChat()
 	FITBIT.OriginalSendChatMessage = SendChatMessage

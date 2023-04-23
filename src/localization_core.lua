@@ -8,7 +8,3 @@ local function defaultFunc(L, key)
  return key
 end
 setmetatable(L.L, {__index=defaultFunc})
-
-
--- https://github.com/tekkub/wow-globalstrings/tree/master
--- https://wowwiki-archive.fandom.com/wiki/Localizing_an_addon

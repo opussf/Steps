@@ -1,8 +1,4 @@
 ## Title: Fitbit
-## Title-frFR: Hello France
-## Title-deDE: Hello Germany
-## Title-esES: Hello Spanish
-## Title-esMX: Hello Mexico
 ## Interface: @INTERFACE@
 ## Notes: Fitbit (@VERSION@)
 ## Author: opussf

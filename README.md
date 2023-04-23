@@ -28,3 +28,8 @@ I would love to expand this addon into something even more fun.
 
 
 https://wowwiki-archive.fandom.com/wiki/Localizing_an_addon
+
+https://github.com/tekkub/wow-globalstrings/tree/master
+https://wowwiki-archive.fandom.com/wiki/Localizing_an_addon
+
+enUS enGB esES esMX ptBR deDE frFR ruRU zhCN koKR zhTW

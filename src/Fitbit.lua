@@ -79,7 +79,7 @@ function FITBIT.OnUpdate()
 	end
 	if nowTS ~= FITBIT.lastUpdate then
 		Fitbit_StepBar:Show()
-		Fitbit_StepBarText:SetText( "Steps: "..math.floor( FITBIT.mine[dateStr].steps or 0) )
+		Fitbit_StepBarText:SetText( FITBIT["Steps"]..": "..math.floor( FITBIT.mine[dateStr].steps or 0) )
 	end
 	-- if nowTS % 10 == 0 and not FITBIT.printed then
 	-- 	print( "Steps: "..math.floor( FITBIT.mine[dateStr].steps ) )
@@ -155,6 +155,7 @@ function FITBIT.command( msg )
 end
 function FITBIT.PrintHelp()
 	FITBIT.Print( string.format( "%s (%s) by %s", FITBIT_MSG_ADDONNAME, FITBIT_MSG_VERSION, FITBIT_MSG_AUTHOR ) )
+	FITBIT.Print( string.format(FITBIT["%s (%s) by %s"], FITBIT_MSG_ADDONNAME, FITBIT_MSG_VERSION, FITBIT_MSG_AUTHOR ) )
 	for cmd, info in pairs(FITBIT.CommandList) do
 		if info.help then
 			local cmdStr = cmd

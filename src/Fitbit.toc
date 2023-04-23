@@ -1,10 +1,20 @@
 ## Title: Fitbit
+## Title-frFR: Hello France
+## Title-deDE: Hello Germany
+## Title-esES: Hello Spanish
 ## Interface: @INTERFACE@
 ## Notes: Fitbit (@VERSION@)
 ## Author: opussf
 ## Version: @VERSION@
 ## Description: Track how many steps you have taken
+## Description-frFR: Displays a message greeting France
+## Description-deDE: Displays a message greeting Germany
+## Description-esES: Displays a message greeting Spanish
 ## SavedVariables: Fitbit_data Fitbit_options
+localization_core.lua
+localization_de.lua
+localization_fr.lua
+localization_es.lua
 Fitbit.lua
 Fitbit.xml
 

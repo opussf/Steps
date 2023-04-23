@@ -154,7 +154,7 @@ function FITBIT.command( msg )
 	end
 end
 function FITBIT.PrintHelp()
-	FITBIT.Print( string.format( "%s (%s) by %s", FITBIT_MSG_ADDONNAME, FITBIT_MSG_VERSION, FITBIT_MSG_AUTHOR ) )
+	--FITBIT.Print( string.format( "%s (%s) by %s", FITBIT_MSG_ADDONNAME, FITBIT_MSG_VERSION, FITBIT_MSG_AUTHOR ) )
 	FITBIT.Print( string.format(FITBIT["%s (%s) by %s"], FITBIT_MSG_ADDONNAME, FITBIT_MSG_VERSION, FITBIT_MSG_AUTHOR ) )
 	for cmd, info in pairs(FITBIT.CommandList) do
 		if info.help then
@@ -171,11 +171,11 @@ function FITBIT.PrintHelp()
 end
 FITBIT.CommandList = {
 	[""] = {
-		["help"] = {"{FB}","Send steps to any chat"},
+		["help"] = {"{FB}",FITBIT["Send steps to any chat"]},
 	},
 	["help"] = {
 		["func"] = FITBIT.PrintHelp,
-		["help"] = {"","Print this help."}
+		["help"] = {"",FITBIT["Print this help."]}
 	},
 }
 

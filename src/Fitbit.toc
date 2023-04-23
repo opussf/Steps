@@ -2,6 +2,7 @@
 ## Title-frFR: Hello France
 ## Title-deDE: Hello Germany
 ## Title-esES: Hello Spanish
+## Title-esMX: Hello Mexico
 ## Interface: @INTERFACE@
 ## Notes: Fitbit (@VERSION@)
 ## Author: opussf
@@ -10,6 +11,7 @@
 ## Description-frFR: Displays a message greeting France
 ## Description-deDE: Displays a message greeting Germany
 ## Description-esES: Displays a message greeting Spanish
+## Description-esMX: Displays a message greeting Mexico
 ## SavedVariables: Fitbit_data Fitbit_options
 localization_core.lua
 localization_de.lua

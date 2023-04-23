@@ -30,7 +30,7 @@ function test.before()
 	FITBIT.OnLoad()
 	FITBIT.ADDON_LOADED()
 	FITBIT.VARIABLES_LOADED()
-	myLocale = "esES"
+	--myLocale = "esES"
 end
 function test.after()
 	Fitbit_log = {}

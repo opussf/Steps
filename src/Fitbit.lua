@@ -173,7 +173,7 @@ FITBIT.CommandList = {
 	[""] = {
 		["help"] = {"{FB}",FITBIT["Send steps to any chat"]},
 	},
-	["help"] = {
+	[FITBIT["help"]] = {
 		["func"] = FITBIT.PrintHelp,
 		["help"] = {"",FITBIT["Print this help."]}
 	},

@@ -4,5 +4,5 @@ if GetLocale() == "esES" or GetLocale() == "esMX" then
     L["Steps"] = "Pasos"
     L["My steps today"] = "Mis pasos de la dia"
     L["Print this help."] = "Imprime esta ayuda."
-    L["Help"] = "Ayuda"
+    L["help"] = "ayuda"
 end

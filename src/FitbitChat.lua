@@ -1,4 +1,4 @@
--- FitbitChat.lua
+-- FitbitChat.lua @VERSION@
 
 function FITBIT.InitChat()
 	FITBIT.OriginalSendChatMessage = SendChatMessage
@@ -16,7 +16,7 @@ function FITBIT.ReplaceMessage( msgIn )
 		--print( "tokenEnd: "..tokenEnd )
 		--print( "index: "..index )
 		local dateStr = date("%Y%m%d")
-		local stepsStr = string.format("%s: %i", FITBIT["My steps today"], math.floor( FITBIT.mine[dateStr].steps or "0" ) )
+		local stepsStr = string.format("%s: %i", FITBIT.L["My steps today"], math.floor( FITBIT.mine[dateStr].steps or "0" ) )
 		msgNew = string.sub( msgIn, 1, tokenStart-1 )..
 				stepsStr..
 				string.sub( msgIn, tokenEnd+1 )

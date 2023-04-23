@@ -1,8 +1,4 @@
 ## Title: Fitbit
-## Title-frFR: Hello France
-## Title-deDE: Hello Germany
-## Title-esES: Hello Spanish
-## Title-esMX: Hello Mexico
 ## Interface: @INTERFACE@
 ## Notes: Fitbit (@VERSION@)
 ## Author: opussf
@@ -17,6 +13,7 @@ localization_core.lua
 localization_de.lua
 localization_fr.lua
 localization_es.lua
+localization_pt.lua
 Fitbit.lua
 Fitbit.xml
 

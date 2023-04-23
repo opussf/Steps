@@ -1,4 +1,5 @@
 local addonName, L = ... -- Let's use the private table passed to every .lua file to store our locale
+L.L = {}
 local function defaultFunc(L, key)
  -- If this function was called, we have no localization for this key.
  -- We could complain loudly to allow localizers to see the error of their ways,
@@ -6,8 +7,4 @@ local function defaultFunc(L, key)
  -- avoid writing the default localization out explicitly.
  return key
 end
-setmetatable(L, {__index=defaultFunc})
-
-
--- https://github.com/tekkub/wow-globalstrings/tree/master
--- https://wowwiki-archive.fandom.com/wiki/Localizing_an_addon
+setmetatable(L.L, {__index=defaultFunc})

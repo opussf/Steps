@@ -13,6 +13,7 @@ localization_core.lua
 localization_de.lua
 localization_fr.lua
 localization_es.lua
+localization_pt.lua
 Fitbit.lua
 Fitbit.xml
 

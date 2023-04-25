@@ -104,6 +104,14 @@ end
 function test.test_commandHelp()
 	FITBIT.command( "help" )
 end
+function test.test_UI_Text()
+	unitSpeeds.player = 7
+	FITBIT.isMoving = true
+	FITBIT.lastSpeed = 7
+	FITBIT.lastUpdate = time() - 1
+	FITBIT.OnUpdate()
+	assertEquals( 'Steps: 2', Fitbit_StepBarText:GetText() )
+end
 function test.test_prune_removeDays()
 	-- just remove old data
 	oldDateStr = date( "%Y%m%d", time() - (92*86400) )

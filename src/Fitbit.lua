@@ -51,7 +51,7 @@ end
 function FITBIT.OnUpdate()
 	local nowTS = time()
 	local dateStr = date("%Y%m%d")
-	if not FITBIT.mine[dateStr] then FITBIT.mine[dateStr] = { ["steps"] = 0 }
+	if not FITBIT.mine[dateStr] then FITBIT.mine[dateStr] = { ["steps"] = 0 } end
 	if IsMounted() or IsFlying() then
 		FITBIT.isMoving = false
 		--Fitbit_log[nowTS] = "mounted / flying"

@@ -135,5 +135,15 @@ function test.test_prune_removeRealm()
 	FITBIT.Prune()
 	assertIsNil( Fitbit_data["otherRealm"] )
 end
+function test.test_missing_key()
+	unitSpeeds.player = 7
+	FITBIT.isMoving = true
+	FITBIT.lastSpeed = 7
+	FITBIT.lastUpdate = time() - 1
+	FITBIT.OnUpdate()
+	Fitbit_data["testRealm"]["testPlayer"][date("%Y%m%d")] = nil
+	FITBIT.OnUpdate()
+	assertEquals( 0, Fitbit_data["testRealm"]["testPlayer"][date("%Y%m%d")].steps )
+end
 
 test.run()

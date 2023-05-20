@@ -51,6 +51,7 @@ end
 function FITBIT.OnUpdate()
 	local nowTS = time()
 	local dateStr = date("%Y%m%d")
+	if not FITBIT.mine[dateStr] then FITBIT.mine[dateStr] = { ["steps"] = 0 }
 	if IsMounted() or IsFlying() then
 		FITBIT.isMoving = false
 		--Fitbit_log[nowTS] = "mounted / flying"
@@ -80,7 +81,7 @@ function FITBIT.OnUpdate()
 	end
 	if nowTS ~= FITBIT.lastUpdate then
 		Fitbit_StepBar:Show()
-		Fitbit_StepBarText:SetText( FITBIT.L["Steps"]..": "..math.floor( FITBIT.mine[dateStr].steps or 0) )
+		Fitbit_StepBarText:SetText( FITBIT.L["Steps"]..": "..math.floor( FITBIT.mine[dateStr].steps ) )
 	end
 	-- if nowTS % 10 == 0 and not FITBIT.printed then
 	-- 	print( "Steps: "..math.floor( FITBIT.mine[dateStr].steps ) )

@@ -82,13 +82,21 @@ function test.test_speed14()
 	STEPS.OnUpdate()
 	assertEquals( 4, Steps_data["testRealm"]["testPlayer"][dateStr].steps )
 end
-function test.test_replace()
+function test.test_replace_single()
 	unitSpeeds.player = 7
 	STEPS.isMoving = true
 	STEPS.lastSpeed = 7
 	STEPS.lastUpdate = time() - 1
 	STEPS.OnUpdate()
-	assertEquals( "My steps today: 2", STEPS.ReplaceMessage( "{fb}" ) )
+	assertEquals( "My steps today: 2", STEPS.ReplaceMessage( "{step}" ) )
+end
+function test.test_replace_plural()
+	unitSpeeds.player = 7
+	STEPS.isMoving = true
+	STEPS.lastSpeed = 7
+	STEPS.lastUpdate = time() - 1
+	STEPS.OnUpdate()
+	assertEquals( "My steps today: 2", STEPS.ReplaceMessage( "{steps}" ) )
 end
 function test.test_command()
 	STEPS.command()

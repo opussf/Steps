@@ -1,4 +1,4 @@
-<project name="Fitbit" default="package">
+<project name="Steps" default="package">
 	<!-- version 7.1 -->
 
 	<tstamp/>

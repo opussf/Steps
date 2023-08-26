@@ -1,10 +1,10 @@
-# Fitbit
+# Steps
 
 This addon came from an idea from a comment from a raid run.
 
 ## What it does
 
-Keeps track of "steps" that a character takes.
+Keeps track of "steps" that a character takes as they walk or run.
 
 ## Notes
 
@@ -18,14 +18,9 @@ Define a number of steps per second at each speed.
 
 Allow this to be mapped based on the race of the character.
 
-## Disclaimer
 
-Hi Fitbit, and Google.
-I hope that you take this addon for what it is, a fun extension into a game world.
-A way to have your product name on people's minds, as an advertisement of sorts.
 
-I would love to expand this addon into something even more fun.
-
+## Links
 
 https://wowwiki-archive.fandom.com/wiki/Localizing_an_addon
 

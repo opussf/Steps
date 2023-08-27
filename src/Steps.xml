@@ -1,10 +1,10 @@
-<!-- FITBIT @VERSION@ -->
+<!-- STEPS @VERSION@ -->
 <Ui xmlns="http://www.blizzard.com/wow/ui/"
 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 xsi:schemaLocation="http://www.blizzard.com/wow/ui/
 ..\..\FrameXML\UI.xsd">
 
-	<Frame name="Fitbit_Frame" frameStrata="BACKGROUND" toplevel="false" enableMouse="false" movable="false" parent="UIParent">
+	<Frame name="Steps_Frame" frameStrata="BACKGROUND" toplevel="false" enableMouse="false" movable="false" parent="UIParent">
 		<Size>
 			<AbsDimension x="200" y="12"/>
 		</Size>
@@ -12,7 +12,7 @@ xsi:schemaLocation="http://www.blizzard.com/wow/ui/
 			<Anchor point="BOTTOMLEFT"/>
 		</Anchors>
 		<Frames>
-			<StatusBar name="Fitbit_StepBar" inherits="TextStatusBar">
+			<StatusBar name="Steps_StepBar" inherits="TextStatusBar">
 				<Size>
 					<AbsDimension x="190" y="12"/>
 				</Size>
@@ -21,7 +21,7 @@ xsi:schemaLocation="http://www.blizzard.com/wow/ui/
 				</Anchors>
 				<Layers>
 					<Layer level="LOW">
-						<FontString name="Fitbit_StepBarText" inherits="GameFontNormal">
+						<FontString name="Steps_StepBarText" inherits="GameFontNormal">
 							<Anchors>
 								<Anchor point="CENTER"/>
 							</Anchors>
@@ -31,8 +31,8 @@ xsi:schemaLocation="http://www.blizzard.com/wow/ui/
 				</Layers>
 				<Scripts>
 					<OnLoad> <!-- artwork -->
-						Fitbit_StepBar:SetFrameLevel( 0 );
-						Fitbit_StepBar:SetAlpha(1.0);
+						Steps_StepBar:SetFrameLevel( 0 );
+						Steps_StepBar:SetAlpha(1.0);
 					</OnLoad>
 				</Scripts>
 				<BarTexture file="Interface\TargetingFrame\UI-StatusBar"/>
@@ -41,13 +41,13 @@ xsi:schemaLocation="http://www.blizzard.com/wow/ui/
 		</Frames>
 		<Scripts>
 			<OnLoad>
-				FITBIT.OnLoad();
+				STEPS.OnLoad();
 			</OnLoad>
 			<OnUpdate>
-				FITBIT.OnUpdate(arg1);
+				STEPS.OnUpdate(arg1);
 			</OnUpdate>
 			<OnEvent>
-				FITBIT[event](self, ...)
+				STEPS[event](self, ...)
 			</OnEvent>
 		</Scripts>
 	</Frame>

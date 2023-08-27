@@ -1,7 +1,7 @@
 -----------------------------------------
 -- Author  :  Opussf
--- Date    :  April 26 2023
--- Revision:  9.0.4-2-g21be25b-develop
+-- Date    :  May 20 2023
+-- Revision:  9.0.4-4-g4dbc6c4
 -----------------------------------------
 -- These are functions from wow that have been needed by addons so far
 -- Not a complete list of the functions.

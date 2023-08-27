@@ -173,7 +173,7 @@ function STEPS.PrintHelp()
 end
 STEPS.CommandList = {
 	[""] = {
-		["help"] = {"{FB}",STEPS.L["Send steps to any chat"]},
+		["help"] = {"{steps}",STEPS.L["Send steps to any chat"]},
 	},
 	[STEPS.L["help"]] = {
 		["func"] = STEPS.PrintHelp,

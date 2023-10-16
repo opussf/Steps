@@ -41,10 +41,10 @@ xsi:schemaLocation="http://www.blizzard.com/wow/ui/
 		</Frames>
 		<Scripts>
 			<OnLoad>
-				STEPS.OnLoad();
+				STEPS.OnLoad()
 			</OnLoad>
 			<OnUpdate>
-				STEPS.OnUpdate(arg1);
+				STEPS.OnUpdate()
 			</OnUpdate>
 			<OnEvent>
 				STEPS[event](self, ...)

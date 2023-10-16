@@ -18,7 +18,6 @@ COLOR_END = "|r"
 
 Steps_data = {}
 Steps_options = {}
---Steps_log = {}
 STEPS.steps_per_second = 2/7  -- 2 steps at speed 7
 STEPS.pruneDays = 91
 
@@ -54,22 +53,18 @@ function STEPS.OnUpdate()
 	if not STEPS.mine[dateStr] then STEPS.mine[dateStr] = { ["steps"] = 0 } end
 	if IsMounted() or IsFlying() then
 		STEPS.isMoving = false
-		--Steps_log[nowTS] = "mounted / flying"
 		STEPS.lastSpeed = 0
 	else
 		speed = GetUnitSpeed("player")
 		if speed>0 and not STEPS.isMoving then
 			STEPS.isMoving = true
-			--Steps_log[nowTS] = speed
 			STEPS.lastSpeed = speed
 		end
 		if speed == 0 and STEPS.isMoving then
 			STEPS.isMoving = false
-			--Steps_log[nowTS] = speed
 			STEPS.lastSpeed = speed
 		end
 		if speed ~= STEPS.lastSpeed then
-			--Steps_log[nowTS] = speed
 			STEPS.lastSpeed = speed
 		end
 		if nowTS ~= STEPS.lastUpdate then
@@ -94,7 +89,7 @@ end
 
 -- Support
 function STEPS.Prune()
-	local nowTS = time()
+	local pruneTS = time() - ( STEPS.pruneDays * 86400 )
 	for r, _ in pairs( Steps_data ) do
 		local ncount = 0
 		for n, _ in pairs( Steps_data[r] ) do
@@ -104,8 +99,8 @@ function STEPS.Prune()
 					local y = strsub( k, 1, 4 )
 					local m = strsub( k, 5, 6 )
 					local d = strsub( k, 7, 8 )
-					local kts = time{year=y, month=m, day=d}
-					if kts < nowTS - ( STEPS.pruneDays * 86400 ) then
+					local kts = time{ year=y, month=m, day=d }
+					if kts < pruneTS then
 						Steps_data[r][n][k] = nil
 					else
 						kcount = kcount + 1

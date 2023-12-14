@@ -1,0 +1,572 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<steps>
+<char realm="Aerie Peak" name="Brendeli" steps="4108">
+	<day date="2023-12-01" steps="0"/>
+	<day date="2023-11-20" steps="4064"/>
+	<day date="2023-11-17" steps="22"/>
+	<day date="2023-09-17" steps="0"/>
+	<day date="2023-11-27" steps="0"/>
+	<day date="2023-11-21" steps="0"/>
+	<day date="2023-11-22" steps="22"/>
+</char>
+<char realm="Aerie Peak" name="Pallycea" steps="17326">
+	<day date="2023-09-28" steps="76"/>
+	<day date="2023-11-20" steps="0"/>
+	<day date="2023-09-19" steps="2456"/>
+	<day date="2023-11-27" steps="0"/>
+	<day date="2023-09-26" steps="18"/>
+	<day date="2023-11-17" steps="10"/>
+	<day date="2023-11-19" steps="1951"/>
+	<day date="2023-09-23" steps="763"/>
+	<day date="2023-09-16" steps="1533"/>
+</char>
+<char realm="Aerie Peak" name="Gaiê" steps="19">
+	<day date="2023-11-20" steps="19"/>
+	<day date="2023-09-15" steps="0"/>
+	<day date="2023-11-27" steps="0"/>
+	<day date="2023-11-17" steps="0"/>
+</char>
+<char realm="Aerie Peak" name="Zenobiá" steps="10035">
+	<day date="2023-09-15" steps="988"/>
+	<day date="2023-11-27" steps="0"/>
+	<day date="2023-09-25" steps="872"/>
+	<day date="2023-09-14" steps="2053"/>
+	<day date="2023-09-26" steps="941"/>
+	<day date="2023-11-17" steps="7"/>
+	<day date="2023-09-20" steps="810"/>
+	<day date="2023-09-24" steps="174"/>
+</char>
+<char realm="Hyjal" name="Bluebig" steps="17132">
+	<day date="2023-11-20" steps="0"/>
+	<day date="2023-11-17" steps="28"/>
+	<day date="2023-09-17" steps="27"/>
+	<day date="2023-11-06" steps="11"/>
+	<day date="2023-11-28" steps="0"/>
+	<day date="2023-10-27" steps="151"/>
+</char>
+<char realm="Hyjal" name="Washu" steps="21594">
+	<day date="2023-11-20" steps="0"/>
+	<day date="2023-11-17" steps="11"/>
+	<day date="2023-09-17" steps="0"/>
+	<day date="2023-11-28" steps="0"/>
+	<day date="2023-10-27" steps="200"/>
+</char>
+<char realm="Hyjal" name="Yingli" steps="32065">
+	<day date="2023-11-20" steps="0"/>
+	<day date="2023-11-17" steps="16"/>
+	<day date="2023-09-17" steps="26"/>
+	<day date="2023-11-28" steps="0"/>
+	<day date="2023-10-27" steps="137"/>
+</char>
+<char realm="Hyjal" name="Shaleraz" steps="24510">
+	<day date="2023-10-28" steps="190"/>
+	<day date="2023-11-20" steps="0"/>
+	<day date="2023-11-17" steps="34"/>
+	<day date="2023-09-17" steps="0"/>
+	<day date="2023-11-28" steps="0"/>
+</char>
+<char realm="Hyjal" name="Bankept" steps="421">
+	<day date="2023-11-20" steps="24"/>
+	<day date="2023-09-18" steps="3"/>
+	<day date="2023-12-09" steps="2"/>
+	<day date="2023-11-21" steps="49"/>
+	<day date="2023-11-05" steps="0"/>
+	<day date="2023-11-30" steps="49"/>
+	<day date="2023-11-17" steps="32"/>
+	<day date="2023-09-17" steps="49"/>
+	<day date="2023-11-22" steps="3"/>
+	<day date="2023-09-20" steps="121"/>
+	<day date="2023-11-28" steps="0"/>
+	<day date="2023-12-06" steps="95"/>
+</char>
+<char realm="Hyjal" name="Airwin" steps="28290">
+	<day date="2023-10-28" steps="424"/>
+	<day date="2023-11-20" steps="0"/>
+	<day date="2023-11-17" steps="10"/>
+	<day date="2023-09-17" steps="0"/>
+	<day date="2023-10-27" steps="0"/>
+	<day date="2023-11-28" steps="0"/>
+</char>
+<char realm="Hyjal" name="Luighsearch" steps="58627">
+	<day date="2023-11-20" steps="3"/>
+	<day date="2023-11-17" steps="18"/>
+	<day date="2023-09-17" steps="17"/>
+	<day date="2023-11-28" steps="0"/>
+	<day date="2023-10-27" steps="135"/>
+</char>
+<char realm="Hyjal" name="Sistersally" steps="40145">
+	<day date="2023-11-20" steps="0"/>
+	<day date="2023-11-17" steps="24"/>
+	<day date="2023-09-17" steps="3"/>
+	<day date="2023-11-28" steps="0"/>
+	<day date="2023-10-27" steps="516"/>
+	<day date="2023-12-06" steps="17"/>
+</char>
+<char realm="Hyjal" name="Zildimea" steps="34505">
+	<day date="2023-11-20" steps="0"/>
+	<day date="2023-11-17" steps="8"/>
+	<day date="2023-09-17" steps="24"/>
+	<day date="2023-10-27" steps="198"/>
+	<day date="2023-11-28" steps="0"/>
+</char>
+<char realm="Hyjal" name="Kasely" steps="18907">
+	<day date="2023-11-20" steps="0"/>
+	<day date="2023-11-17" steps="7"/>
+	<day date="2023-09-17" steps="6"/>
+	<day date="2023-10-27" steps="304"/>
+	<day date="2023-11-28" steps="0"/>
+</char>
+<char realm="Hyjal" name="Igotha" steps="20199">
+	<day date="2023-11-20" steps="0"/>
+	<day date="2023-11-17" steps="4"/>
+	<day date="2023-09-17" steps="0"/>
+	<day date="2023-10-27" steps="135"/>
+	<day date="2023-11-28" steps="2"/>
+</char>
+<char realm="Velen" name="Hairaa" steps="613">
+	<day date="2023-09-23" steps="137"/>
+	<day date="2023-11-20" steps="27"/>
+	<day date="2023-09-30" steps="257"/>
+	<day date="2023-11-21" steps="25"/>
+	<day date="2023-10-01" steps="89"/>
+	<day date="2023-10-31" steps="0"/>
+	<day date="2023-11-17" steps="0"/>
+	<day date="2023-09-17" steps="0"/>
+	<day date="2023-11-19" steps="29"/>
+	<day date="2023-09-24" steps="8"/>
+	<day date="2023-11-01" steps="44"/>
+</char>
+<char realm="Eonar" name="Laverná" steps="0">
+	<day date="2023-11-27" steps="0"/>
+	<day date="2023-11-17" steps="0"/>
+	<day date="2023-11-20" steps="0"/>
+</char>
+<char realm="Eonar" name="Omagurd" steps="64">
+	<day date="2023-11-20" steps="0"/>
+	<day date="2023-11-17" steps="0"/>
+	<day date="2023-11-27" steps="0"/>
+	<day date="2023-12-06" steps="64"/>
+</char>
+<char realm="Eonar" name="Venaya" steps="1347">
+	<day date="2023-11-20" steps="0"/>
+	<day date="2023-10-21" steps="28"/>
+	<day date="2023-10-19" steps="64"/>
+	<day date="2023-10-31" steps="5"/>
+	<day date="2023-10-17" steps="415"/>
+	<day date="2023-12-05" steps="7"/>
+	<day date="2023-12-04" steps="159"/>
+	<day date="2023-10-27" steps="32"/>
+	<day date="2023-11-17" steps="8"/>
+	<day date="2023-11-28" steps="0"/>
+</char>
+<char realm="Eonar" name="Doll" steps="16">
+	<day date="2023-11-20" steps="0"/>
+	<day date="2023-11-17" steps="16"/>
+	<day date="2023-11-27" steps="0"/>
+	<day date="2023-11-28" steps="0"/>
+</char>
+<char realm="Eonar" name="Nerio" steps="22">
+	<day date="2023-11-20" steps="0"/>
+	<day date="2023-11-17" steps="22"/>
+	<day date="2023-11-28" steps="0"/>
+</char>
+<char realm="Eonar" name="Felajackson" steps="129">
+	<day date="2023-10-17" steps="97"/>
+	<day date="2023-09-15" steps="21"/>
+	<day date="2023-10-16" steps="11"/>
+</char>
+<char realm="Eonar" name="Tethys" steps="22">
+	<day date="2023-11-20" steps="0"/>
+	<day date="2023-11-17" steps="22"/>
+	<day date="2023-11-28" steps="0"/>
+</char>
+<char realm="Eonar" name="Iaso" steps="15">
+	<day date="2023-12-01" steps="0"/>
+	<day date="2023-11-20" steps="0"/>
+	<day date="2023-11-17" steps="15"/>
+	<day date="2023-11-27" steps="0"/>
+</char>
+<char realm="Eonar" name="Nava" steps="0">
+	<day date="2023-11-27" steps="0"/>
+	<day date="2023-11-17" steps="0"/>
+	<day date="2023-11-20" steps="0"/>
+</char>
+<char realm="Dunemaul" name="Moranagna" steps="50">
+	<day date="2023-11-17" steps="22"/>
+	<day date="2023-09-17" steps="28"/>
+	<day date="2023-11-21" steps="0"/>
+	<day date="2023-11-28" steps="0"/>
+</char>
+<char realm="Dunemaul" name="Deadra" steps="6744">
+	<day date="2023-09-23" steps="8"/>
+	<day date="2023-09-24" steps="6"/>
+	<day date="2023-09-19" steps="912"/>
+	<day date="2023-09-21" steps="564"/>
+	<day date="2023-09-26" steps="1271"/>
+	<day date="2023-11-17" steps="12"/>
+	<day date="2023-09-22" steps="53"/>
+	<day date="2023-09-20" steps="908"/>
+	<day date="2023-09-16" steps="0"/>
+	<day date="2023-11-28" steps="0"/>
+</char>
+<char realm="Dunemaul" name="Ate" steps="8102">
+	<day date="2023-09-28" steps="909"/>
+	<day date="2023-11-17" steps="0"/>
+	<day date="2023-09-19" steps="738"/>
+	<day date="2023-11-28" steps="0"/>
+	<day date="2023-09-20" steps="577"/>
+	<day date="2023-09-21" steps="1363"/>
+	<day date="2023-09-14" steps="1471"/>
+</char>
+<char realm="Dunemaul" name="Fatherjoe" steps="1408">
+	<day date="2023-11-20" steps="2"/>
+	<day date="2023-11-17" steps="20"/>
+	<day date="2023-11-19" steps="1383"/>
+	<day date="2023-11-29" steps="0"/>
+	<day date="2023-11-27" steps="3"/>
+	<day date="2023-11-28" steps="0"/>
+</char>
+<char realm="Dunemaul" name="Lowyatar" steps="8220">
+	<day date="2023-11-20" steps="1521"/>
+	<day date="2023-09-15" steps="1727"/>
+	<day date="2023-11-21" steps="725"/>
+	<day date="2023-09-26" steps="798"/>
+	<day date="2023-11-17" steps="0"/>
+	<day date="2023-09-17" steps="1644"/>
+	<day date="2023-09-24" steps="0"/>
+	<day date="2023-09-20" steps="1786"/>
+	<day date="2023-11-29" steps="14"/>
+	<day date="2023-11-28" steps="7"/>
+</char>
+<char realm="Dunemaul" name="Orcra" steps="5295">
+	<day date="2023-11-20" steps="2437"/>
+	<day date="2023-11-15" steps="2164"/>
+	<day date="2023-12-01" steps="0"/>
+	<day date="2023-11-17" steps="21"/>
+	<day date="2023-09-17" steps="40"/>
+	<day date="2023-11-19" steps="613"/>
+	<day date="2023-09-20" steps="23"/>
+	<day date="2023-11-28" steps="0"/>
+</char>
+<char realm="Dunemaul" name="Dotmatrix" steps="5619">
+	<day date="2023-09-23" steps="877"/>
+	<day date="2023-09-19" steps="967"/>
+	<day date="2023-09-26" steps="1743"/>
+	<day date="2023-11-17" steps="5"/>
+	<day date="2023-11-19" steps="0"/>
+	<day date="2023-09-20" steps="927"/>
+	<day date="2023-09-16" steps="1102"/>
+	<day date="2023-11-28" steps="0"/>
+</char>
+<char realm="Dunemaul" name="Béiber" steps="6278">
+	<day date="2023-09-23" steps="57"/>
+	<day date="2023-09-24" steps="1006"/>
+	<day date="2023-09-19" steps="672"/>
+	<day date="2023-11-21" steps="0"/>
+	<day date="2023-09-14" steps="2253"/>
+	<day date="2023-09-26" steps="978"/>
+	<day date="2023-11-17" steps="4"/>
+	<day date="2023-11-27" steps="0"/>
+	<day date="2023-09-20" steps="124"/>
+	<day date="2023-09-16" steps="1189"/>
+	<day date="2023-11-28" steps="0"/>
+</char>
+<char realm="Moon Guard" name="Saintpawbs" steps="5742">
+	<day date="2023-09-28" steps="657"/>
+	<day date="2023-09-30" steps="8"/>
+	<day date="2023-09-19" steps="446"/>
+	<day date="2023-11-29" steps="0"/>
+	<day date="2023-09-23" steps="1066"/>
+	<day date="2023-10-01" steps="0"/>
+	<day date="2023-10-31" steps="4"/>
+	<day date="2023-11-30" steps="152"/>
+	<day date="2023-10-28" steps="139"/>
+	<day date="2023-09-14" steps="52"/>
+	<day date="2023-11-24" steps="22"/>
+	<day date="2023-09-20" steps="770"/>
+	<day date="2023-11-08" steps="42"/>
+	<day date="2023-11-28" steps="0"/>
+</char>
+<char realm="Moon Guard" name="Ahosu" steps="95761">
+	<day date="2023-10-30" steps="184"/>
+	<day date="2023-10-01" steps="16515"/>
+	<day date="2023-12-10" steps="0"/>
+	<day date="2023-09-20" steps="5607"/>
+	<day date="2023-09-28" steps="6270"/>
+	<day date="2023-09-30" steps="9974"/>
+	<day date="2023-10-21" steps="12"/>
+	<day date="2023-11-27" steps="48"/>
+	<day date="2023-10-06" steps="165"/>
+	<day date="2023-09-21" steps="510"/>
+	<day date="2023-10-04" steps="378"/>
+	<day date="2023-10-11" steps="115"/>
+	<day date="2023-10-02" steps="8909"/>
+	<day date="2023-10-13" steps="6"/>
+	<day date="2023-09-19" steps="311"/>
+	<day date="2023-10-05" steps="149"/>
+	<day date="2023-12-12" steps="14"/>
+	<day date="2023-10-07" steps="467"/>
+	<day date="2023-12-11" steps="0"/>
+	<day date="2023-10-27" steps="582"/>
+	<day date="2023-10-29" steps="1840"/>
+	<day date="2023-12-06" steps="6"/>
+	<day date="2023-09-23" steps="24"/>
+	<day date="2023-11-02" steps="7066"/>
+	<day date="2023-09-27" steps="9520"/>
+	<day date="2023-10-14" steps="104"/>
+	<day date="2023-09-29" steps="12656"/>
+	<day date="2023-09-26" steps="3474"/>
+	<day date="2023-10-16" steps="22"/>
+	<day date="2023-12-07" steps="0"/>
+	<day date="2023-11-25" steps="2103"/>
+	<day date="2023-10-03" steps="7333"/>
+	<day date="2023-12-05" steps="0"/>
+	<day date="2023-10-22" steps="59"/>
+	<day date="2023-12-03" steps="35"/>
+	<day date="2023-10-08" steps="1240"/>
+	<day date="2023-11-08" steps="64"/>
+	<day date="2023-11-22" steps="14"/>
+</char>
+<char realm="Moon Guard" name="Pargin" steps="0">
+	<day date="2023-12-10" steps="0"/>
+</char>
+<char realm="Moon Guard" name="Levana" steps="7584">
+	<day date="2023-09-28" steps="737"/>
+	<day date="2023-09-24" steps="22"/>
+	<day date="2023-09-19" steps="970"/>
+	<day date="2023-10-01" steps="47"/>
+	<day date="2023-09-26" steps="0"/>
+	<day date="2023-09-25" steps="837"/>
+	<day date="2023-09-17" steps="823"/>
+	<day date="2023-11-24" steps="12"/>
+	<day date="2023-09-20" steps="1094"/>
+	<day date="2023-11-08" steps="0"/>
+	<day date="2023-11-26" steps="2"/>
+</char>
+<char realm="Moon Guard" name="Aetati" steps="7909">
+	<day date="2023-10-13" steps="3"/>
+	<day date="2023-11-04" steps="29"/>
+	<day date="2023-09-19" steps="1350"/>
+	<day date="2023-09-26" steps="1154"/>
+	<day date="2023-09-17" steps="435"/>
+	<day date="2023-10-12" steps="329"/>
+	<day date="2023-10-14" steps="28"/>
+	<day date="2023-12-02" steps="13"/>
+	<day date="2023-11-27" steps="27"/>
+	<day date="2023-10-15" steps="2"/>
+	<day date="2023-09-21" steps="1821"/>
+	<day date="2023-10-31" steps="2"/>
+	<day date="2023-09-16" steps="477"/>
+	<day date="2023-11-24" steps="0"/>
+	<day date="2023-11-30" steps="173"/>
+	<day date="2023-12-03" steps="5"/>
+	<day date="2023-10-16" steps="0"/>
+	<day date="2023-11-08" steps="3"/>
+	<day date="2023-12-01" steps="47"/>
+</char>
+<char realm="Moon Guard" name="Hairaá" steps="144935">
+	<day date="2023-11-21" steps="2893"/>
+	<day date="2023-12-08" steps="10269"/>
+	<day date="2023-12-01" steps="170"/>
+	<day date="2023-12-10" steps="5075"/>
+	<day date="2023-11-23" steps="3570"/>
+	<day date="2023-12-12" steps="3235"/>
+	<day date="2023-12-06" steps="3047"/>
+	<day date="2023-11-25" steps="7654"/>
+	<day date="2023-12-04" steps="2007"/>
+	<day date="2023-11-28" steps="15282"/>
+	<day date="2023-12-02" steps="4"/>
+	<day date="2023-11-27" steps="3156"/>
+	<day date="2023-11-22" steps="14469"/>
+	<day date="2023-11-24" steps="14023"/>
+	<day date="2023-11-30" steps="1017"/>
+	<day date="2023-11-26" steps="14817"/>
+	<day date="2023-12-05" steps="9437"/>
+	<day date="2023-12-07" steps="10316"/>
+	<day date="2023-12-03" steps="11"/>
+	<day date="2023-12-09" steps="2827"/>
+	<day date="2023-11-29" steps="9137"/>
+	<day date="2023-12-11" steps="12530"/>
+</char>
+<char realm="Moon Guard" name="Thelphia" steps="33799">
+	<day date="2023-11-04" steps="2383"/>
+	<day date="2023-11-24" steps="0"/>
+	<day date="2023-11-27" steps="0"/>
+	<day date="2023-12-08" steps="98"/>
+	<day date="2023-11-07" steps="2999"/>
+	<day date="2023-11-05" steps="10698"/>
+	<day date="2023-12-12" steps="262"/>
+	<day date="2023-12-05" steps="9"/>
+	<day date="2023-11-21" steps="39"/>
+	<day date="2023-11-06" steps="10083"/>
+	<day date="2023-12-09" steps="4354"/>
+	<day date="2023-11-08" steps="2877"/>
+	<day date="2023-11-22" steps="2"/>
+</char>
+<char realm="Moon Guard" name="Hanifa" steps="6540">
+	<day date="2023-09-28" steps="295"/>
+	<day date="2023-09-15" steps="1187"/>
+	<day date="2023-09-19" steps="1092"/>
+	<day date="2023-10-08" steps="0"/>
+	<day date="2023-09-22" steps="1860"/>
+	<day date="2023-09-20" steps="255"/>
+	<day date="2023-10-12" steps="90"/>
+	<day date="2023-10-11" steps="0"/>
+</char>
+<char realm="Moon Guard" name="Cofox" steps="2302">
+	<day date="2023-12-01" steps="0"/>
+	<day date="2023-11-04" steps="2004"/>
+	<day date="2023-10-08" steps="206"/>
+	<day date="2023-11-08" steps="7"/>
+	<day date="2023-11-27" steps="52"/>
+	<day date="2023-12-13" steps="23"/>
+	<day date="2023-11-24" steps="3"/>
+</char>
+<char realm="Moon Guard" name="Chalchiuhtli" steps="104710">
+	<day date="2023-11-21" steps="618"/>
+	<day date="2023-10-01" steps="11"/>
+	<day date="2023-12-10" steps="1480"/>
+	<day date="2023-09-20" steps="443"/>
+	<day date="2023-10-28" steps="793"/>
+	<day date="2023-11-03" steps="45"/>
+	<day date="2023-10-29" steps="5370"/>
+	<day date="2023-11-27" steps="0"/>
+	<day date="2023-09-21" steps="122"/>
+	<day date="2023-10-11" steps="5328"/>
+	<day date="2023-12-11" steps="2648"/>
+	<day date="2023-10-13" steps="4292"/>
+	<day date="2023-09-19" steps="449"/>
+	<day date="2023-12-12" steps="8698"/>
+	<day date="2023-09-17" steps="8273"/>
+	<day date="2023-09-22" steps="56"/>
+	<day date="2023-12-09" steps="2646"/>
+	<day date="2023-10-12" steps="10979"/>
+	<day date="2023-11-29" steps="6"/>
+	<day date="2023-10-09" steps="9329"/>
+	<day date="2023-11-02" steps="169"/>
+	<day date="2023-11-01" steps="3078"/>
+	<day date="2023-12-02" steps="93"/>
+	<day date="2023-10-15" steps="4314"/>
+	<day date="2023-09-18" steps="12030"/>
+	<day date="2023-10-16" steps="1992"/>
+	<day date="2023-10-31" steps="340"/>
+	<day date="2023-10-17" steps="12"/>
+	<day date="2023-09-26" steps="858"/>
+	<day date="2023-10-08" steps="9126"/>
+	<day date="2023-10-10" steps="8578"/>
+	<day date="2023-10-14" steps="2415"/>
+	<day date="2023-10-19" steps="2"/>
+	<day date="2023-11-08" steps="0"/>
+	<day date="2023-10-27" steps="131"/>
+</char>
+<char realm="Moon Guard" name="Fozenvalor" steps="2250">
+	<day date="2023-11-04" steps="417"/>
+	<day date="2023-09-24" steps="1715"/>
+	<day date="2023-10-15" steps="30"/>
+	<day date="2023-11-29" steps="0"/>
+	<day date="2023-12-01" steps="0"/>
+	<day date="2023-10-17" steps="0"/>
+	<day date="2023-11-27" steps="5"/>
+	<day date="2023-11-08" steps="0"/>
+	<day date="2023-11-24" steps="5"/>
+</char>
+<char realm="Moon Guard" name="Felajackson" steps="70108">
+	<day date="2023-10-20" steps="11487"/>
+	<day date="2023-10-24" steps="1444"/>
+	<day date="2023-10-19" steps="2550"/>
+	<day date="2023-12-12" steps="25"/>
+	<day date="2023-10-18" steps="2856"/>
+	<day date="2023-10-23" steps="2250"/>
+	<day date="2023-10-25" steps="5686"/>
+	<day date="2023-11-24" steps="7"/>
+	<day date="2023-10-21" steps="11450"/>
+	<day date="2023-11-27" steps="0"/>
+	<day date="2023-10-29" steps="4542"/>
+	<day date="2023-10-16" steps="3953"/>
+	<day date="2023-11-06" steps="8"/>
+	<day date="2023-10-17" steps="4296"/>
+	<day date="2023-10-22" steps="12539"/>
+	<day date="2023-10-26" steps="6659"/>
+	<day date="2023-12-03" steps="7"/>
+	<day date="2023-11-29" steps="18"/>
+	<day date="2023-11-08" steps="0"/>
+	<day date="2023-10-27" steps="340"/>
+</char>
+<char realm="Moon Guard" name="Kashemia" steps="63880">
+	<day date="2023-12-07" steps="12"/>
+	<day date="2023-12-04" steps="12030"/>
+	<day date="2023-12-02" steps="11657"/>
+	<day date="2023-12-08" steps="20"/>
+	<day date="2023-12-12" steps="5163"/>
+	<day date="2023-12-01" steps="4027"/>
+	<day date="2023-11-30" steps="4114"/>
+	<day date="2023-12-05" steps="1212"/>
+	<day date="2023-12-10" steps="2"/>
+	<day date="2023-12-03" steps="15863"/>
+	<day date="2023-12-09" steps="20"/>
+	<day date="2023-12-13" steps="9744"/>
+	<day date="2023-12-06" steps="21"/>
+</char>
+<char realm="Moon Guard" name="Até" steps="2464">
+	<day date="2023-09-24" steps="1161"/>
+	<day date="2023-09-19" steps="9"/>
+	<day date="2023-10-12" steps="93"/>
+	<day date="2023-09-20" steps="8"/>
+	<day date="2023-09-25" steps="1148"/>
+	<day date="2023-09-14" steps="0"/>
+</char>
+<char realm="Moon Guard" name="Pallyhedron" steps="27841">
+	<day date="2023-11-04" steps="313"/>
+	<day date="2023-09-19" steps="10"/>
+	<day date="2023-11-01" steps="231"/>
+	<day date="2023-12-12" steps="57"/>
+	<day date="2023-10-08" steps="4501"/>
+	<day date="2023-09-17" steps="1357"/>
+	<day date="2023-10-12" steps="11"/>
+	<day date="2023-11-25" steps="8"/>
+	<day date="2023-09-15" steps="88"/>
+	<day date="2023-10-14" steps="14"/>
+	<day date="2023-11-27" steps="0"/>
+	<day date="2023-09-14" steps="58"/>
+	<day date="2023-11-03" steps="6484"/>
+	<day date="2023-11-24" steps="3"/>
+	<day date="2023-09-28" steps="0"/>
+	<day date="2023-09-26" steps="6"/>
+	<day date="2023-11-08" steps="46"/>
+	<day date="2023-10-27" steps="206"/>
+</char>
+<char realm="Area 52" name="Chalchiuhtli" steps="6386">
+	<day date="2023-09-15" steps="6313"/>
+	<day date="2023-09-17" steps="74"/>
+</char>
+<char realm="Area 52" name="Ahosu" steps="14941">
+	<day date="2023-09-14" steps="30"/>
+	<day date="2023-09-19" steps="112"/>
+	<day date="2023-09-17" steps="743"/>
+</char>
+<char realm="Area 52" name="Akttara" steps="120594">
+	<day date="2023-09-22" steps="88"/>
+	<day date="2023-09-14" steps="0"/>
+	<day date="2023-09-19" steps="28"/>
+</char>
+<char realm="Shu'halo" name="Pettier" steps="15259">
+	<day date="2023-09-28" steps="0"/>
+	<day date="2023-11-20" steps="454"/>
+	<day date="2023-09-19" steps="0"/>
+	<day date="2023-11-27" steps="0"/>
+	<day date="2023-11-17" steps="22"/>
+	<day date="2023-09-17" steps="4"/>
+	<day date="2023-11-19" steps="63"/>
+	<day date="2023-09-23" steps="4"/>
+</char>
+<char realm="Shu'halo" name="Jehannedarc" steps="19089">
+	<day date="2023-09-28" steps="0"/>
+	<day date="2023-11-20" steps="0"/>
+	<day date="2023-11-17" steps="10"/>
+	<day date="2023-09-19" steps="0"/>
+	<day date="2023-11-27" steps="0"/>
+	<day date="2023-11-19" steps="2703"/>
+	<day date="2023-09-17" steps="0"/>
+</char>
+</steps>
+

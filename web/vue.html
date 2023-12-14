@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset="UTF-8">
+<link href="RF.css" rel="stylesheet" type="text/css"></link>
+<link href="rss" rel="alternate" type="application/rss+xml" title="Char RSS Feed"></link>
+<title>I2</title>
+</head>
+<body>
+<div class="top">
+<div class="main" id="app">
+<div class="RandomFortuneWrapper" v-for="f in fortunes">
+	<div class="RandomFortuneDate">{{ f.lastPost }}</div>
+	<div class="RandomFortune">{{ f.fortune }}</div>
+</div>
+<!--
+<thead>
+<tr>
+	<th v-for="column in columns">
+		<a href="#" 
+			v-on:click="sortBy(column)" 
+			v-bind:class="{ active: sortKey == column }">{{ column }}</a>
+	</th>
+</tr>
+</thead>
+-->
+
+</div>
+</div>
+
+<script src="http://www.zz9-za.com/js/vue.js"></script>
+<script src="http://www.zz9-za.com/js/vue-resource.js"></script>
+<script src="http://www.zz9-za.com/js/vue-filter.js"></script>
+<!--
+
+https://github.com/vuejs/vue/issues/2756
+-->
+<script>
+var app = new Vue({
+	http: {
+		root: '.',
+		headers: {
+		}
+	},
+	el: '#app',
+	data: {
+		sortKey: '',
+		reverse: false,
+		limit: 30,
+		columns: [ 'lastPost', 'fortune' ],
+
+		fortunes: [],
+	},
+
+	mounted: function() {
+		this.$nextTick(function() {
+			this.getFortunes();
+		})
+	},
+
+	methods: {
+		sortBy: function(sortKey) {
+			this.reverse = (this.sortKey == sortKey) ? ! this.reverse : false;
+			this.sortKey = sortKey;
+		},
+		getFortunes() {
+			self=this;
+			this.$http.get('RF.json').then( function( response ) {
+				//console.log(response.body);
+				self.fortunes = JSON.parse(response.body).fortunes;
+			}, function( response ) {
+				// error callback
+			});
+			
+		}
+	},
+	computed: {
+		
+	}
+})
+</script>
+</body>
+</html>

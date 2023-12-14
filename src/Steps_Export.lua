@@ -50,11 +50,11 @@ function ExportJSON()
 	for realm, chars in pairs( Steps_data ) do
 		for name, c in pairs( chars ) do
 			charOut = {}
-			table.insert( charOut, string.format( "\t{\"realm\":\"%s\", \"name\":\"%s\", \"steps\":\"%s\", \"days\":[", realm, name, math.ceil( c.steps ) ) )
+			table.insert( charOut, string.format( "\t{\"realm\":\"%s\", \"name\":\"%s\", \"steps\":%s, \"days\":[", realm, name, math.ceil( c.steps ) ) )
 			days = {}
 			for date, dateStruct in pairs( c ) do
 				if date ~= "steps" then
-					table.insert( days, string.format( "\t\t{\"date\":\"%s-%s-%s\", \"steps\":\"%s\"}", string.sub(date,1,4), string.sub(date,5,6), string.sub(date,7,8), dateStruct.steps ) )
+					table.insert( days, string.format( "\t\t{\"date\":\"%s-%s-%s\", \"steps\":%s}", string.sub(date,1,4), string.sub(date,5,6), string.sub(date,7,8), dateStruct.steps ) )
 				end
 			end
 			table.insert( charOut, table.concat( days, ",\n" ) .. "]}" )

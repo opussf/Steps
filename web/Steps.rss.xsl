@@ -24,13 +24,26 @@
 
 	<xsl:template match="char">
 		<item>
-		<title><xsl:value-of select="@name"/>-<xsl:value-of select="@realm"/> has <xsl:value-of select="@steps"/></title>
+		<title><xsl:value-of select="position()"/>. <xsl:value-of select="@name"/>-<xsl:value-of select="@realm"/> has <xsl:value-of select="@steps"/> steps.</title>
 		<link>http://www.zz9-za.com/~opus/steps</link>
-		<guid isPermaLink='false'><xsl:value-of select='@lastPost'/></guid>
-		<description>
-			<xsl:value-of select="@name"/>-<xsl:value-of select="@realm"/> has <xsl:value-of select="@steps"/>
-		</description>
+		<guid isPermaLink='false'><xsl:value-of select='@name'/>-<xsl:value-of select="@realm"/>-<xsl:value-of select='@steps'/></guid>
+		<description><xsl:value-of select="@name"/>-<xsl:value-of select="@realm"/> has <xsl:value-of select="@steps"/> steps.</description>
+		<xsl:apply-templates select='./day'>
+			<xsl:sort data-type='text' order='descending' select='@date'/>
+		</xsl:apply-templates>
 		</item>
+	</xsl:template>
+
+	<xsl:template match="day">
+		<xsl:if test='position() &lt;= 1'>
+			<xsl:variable name='xslDate' select='ex:date(@date)'/>
+			<xsl:variable name='pubDate'>
+				<xsl:value-of select="concat(ex:day-abbreviation($xslDate), ', ',
+					format-number(ex:day-in-month($xslDate), '00'), ' ',
+					ex:month-abbreviation($xslDate), ' ', ex:year($xslDate), ' GMT')"/>
+			</xsl:variable>
+			<pubDate><xsl:value-of select='$pubDate'/></pubDate>
+		</xsl:if>
 	</xsl:template>
 
 </xsl:stylesheet>

@@ -145,5 +145,28 @@ function test.test_missing_key()
 	STEPS.OnUpdate()
 	assertEquals( 0, Steps_data["testRealm"]["testPlayer"][date("%Y%m%d")].steps )
 end
+function test.prep_minavemax_data()
+	dataDay = date( "%Y%m%d", time() - (2*86400) )
+	Steps_data["testRealm"]["testPlayer"][dataDay] = {["steps"] = 100}
+	dataDay = date( "%Y%m%d", time() - (3*86400) )
+	Steps_data["testRealm"]["testPlayer"][dataDay] = {["steps"] = 120}
+	dataDay = date( "%Y%m%d", time() - (4*86400) )
+	Steps_data["testRealm"]["testPlayer"][dataDay] = {["steps"] = 200}
+end
+function test.test_minavemax_min()
+	test.prep_minavemax_data()
+	min, ave, max = STEPS.CalcMinAveMax()
+	assertEquals( 0, min )
+end
+function test.test_minavemax_ave()
+	test.prep_minavemax_data()
+	min, ave, max = STEPS.CalcMinAveMax()
+	assertEquals( 105, ave )
+end
+function test.test_minavemax_max()
+	test.prep_minavemax_data()
+	min, ave, max = STEPS.CalcMinAveMax()
+	assertEquals( 200, max )
+end
 
 test.run()

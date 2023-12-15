@@ -26,50 +26,50 @@
 </div>  <!-- row controls -->
 
 <div class="row">
-<div class="col col-xs-2 col-md-2 StepsName">
+<div class="col col-xs-2 col-md-2 StepsHeader">
 	<a href ng-click="sortReverse = sortType=='name' ? !sortReverse : true; sortType='name'">Name
 	<span ng-show="sortType=='name' && !sortReverse" class="fa fa-caret-up"></span>
 	<span ng-show="sortType=='name' && sortReverse" class="fa fa-caret-down"></span>
 	</a>
 </div>
-<div class="col col-xs-1 col-md-1 StepsSteps">
+<div class="col col-xs-1 col-md-1 StepsHeader">
 	<a href ng-click="sortReverse = sortType='steps' ? !sortReverse : true; sortType='steps'">Steps
 	<span ng-show="sortType=='steps' && !sortReverse" class="fa fa-caret-up"></span>
 	<span ng-show="sortType=='steps' && sortReverse" class="fa fa-caret-down"></span>
 	</a>
 </div>
-<div class="col col-xs-1 col-md-1 StepsSteps">
+<div class="col col-xs-1 col-md-1 StepsHeader">
 	{{currentDate | date:'yyyy-MM-dd'}}
 </div>
-<div class="col col-xs-1 col-md-1 StepsSteps">
+<div class="col col-xs-1 col-md-1 StepsHeader">
 	{{yesterday | date:'yyyy-MM-dd'}}
 </div>
-<div class="col col-xs-1 col-md-1 StepsSteps">
+<div class="col col-xs-1 col-md-1 StepsHeader">
 	{{daybefore | date:'yyyy-MM-dd'}}
 </div>
-<div class="col col-xs-1 col-md-1 StepsSteps">
-	{{currentDate | date:'yyyy-MM'}}
+<div class="col col-xs-1 col-md-1 StepsHeader">
+	{{currentDate | date:'yyyy-MM'}} (days)
 </div>
-<div class="col col-xs-1 col-md-1 StepsSteps">
-	{{lastMonth | date:'yyyy-MM'}}
+<div class="col col-xs-1 col-md-1 StepsHeader">
+	{{lastMonth | date:'yyyy-MM'}} (days)
 </div>
-<div class="col col-xs-1 col-md-1 StepsSteps">
-	{{beforeMonth | date:'yyyy-MM'}}
+<div class="col col-xs-1 col-md-1 StepsHeader">
+	{{beforeMonth | date:'yyyy-MM'}} (days)
 </div>
-<div class="col col-xs-1 col-md-1 StepsSteps">
-	{{b2Month | date:'yyyy-MM'}}
+<div class="col col-xs-1 col-md-1 StepsHeader">
+	{{b2Month | date:'yyyy-MM'}} (days)
 </div>
 </div> <!-- row -->
-<div class="row RandomFortuneWrapper" ng-repeat="char in steps | orderBy:sortType:sortReverse | filter:stepsFilter">
-<div class="col col-xs-2 col-md-2 StepsName"><span>{{ char.name }}-{{ char.realm }}</span></div>
+<div class="row RandomFortuneWrapper" ng-repeat="char in steps | orderBy:sortType:sortReverse | filter:stepsFilter track by $index" ng-value="{{$index}}">
+<div class="col col-xs-2 col-md-2 StepsName"><span>{{$index+1}} - {{char.name}}-{{char.realm}}</span></div>
 <div class="col col-xs-1 col-md-1 StepsSteps"><span>{{ char.steps }}</span></div>
-<div class="col col-xs-1 col-md-1 StepsSteps"><span>{{ stepsInDay(currentDate, char.days) }}</span></div>
-<div class="col col-xs-1 col-md-1 StepsSteps"><span>{{ stepsInDay(yesterday, char.days) }}</span></div>
-<div class="col col-xs-1 col-md-1 StepsSteps"><span>{{ stepsInDay(daybefore, char.days) }}</span></div>
-<div class="col col-xs-1 col-md-1 StepsSteps"><span>{{ stepsInMonth(currentDate, char.days) }}</span></div>
-<div class="col col-xs-1 col-md-1 StepsSteps"><span>{{ stepsInMonth(lastMonth, char.days) }}</span></div>
-<div class="col col-xs-1 col-md-1 StepsSteps"><span>{{ stepsInMonth(beforeMonth, char.days) }}</span></div>
-<div class="col col-xs-1 col-md-1 StepsSteps"><span>{{ stepsInMonth(b2Month, char.days) }}</span></div>
+<div class="col col-xs-1 col-md-1 StepsStepsDays"><span>{{ stepsInDay(currentDate, char.days) }}</span></div>
+<div class="col col-xs-1 col-md-1 StepsStepsDays"><span>{{ stepsInDay(yesterday, char.days) }}</span></div>
+<div class="col col-xs-1 col-md-1 StepsStepsDays"><span>{{ stepsInDay(daybefore, char.days) }}</span></div>
+<div class="col col-xs-1 col-md-1 StepsStepsMonths"><span>{{ stepsInMonth(currentDate, char.days) }}</span></div>
+<div class="col col-xs-1 col-md-1 StepsStepsMonths"><span>{{ stepsInMonth(lastMonth, char.days) }}</span></div>
+<div class="col col-xs-1 col-md-1 StepsStepsMonths"><span>{{ stepsInMonth(beforeMonth, char.days) }}</span></div>
+<div class="col col-xs-1 col-md-1 StepsStepsMonths"><span>{{ stepsInMonth(b2Month, char.days) }}</span></div>
 </div> <!-- row -->
 
 </div>

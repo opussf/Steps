@@ -10,7 +10,7 @@ function STEPS.ReplaceMessage( msgIn )
 	-- search for and replace {FB}
 	--print( "msgIn: "..msgIn )
 	msgNew = nil
-	local tokenStart, tokenEnd, fortuneIdx, useLotto = strfind( msgIn, "{[sS][tT][eE][pP][sS]*}" )
+	local tokenStart, tokenEnd  = strfind( msgIn, "{[sS][tT][eE][pP][sS]*}" )
 	if tokenStart then
 		--print( "tokenStart: "..tokenStart )
 		--print( "tokenEnd: "..tokenEnd )

@@ -86,6 +86,22 @@ function STEPS.OnUpdate()
 	-- end
 	STEPS.lastUpdate = nowTS
 end
+function STEPS.CalcMinAveMax()
+	-- returns: min, ave, max
+	local min, ave, max
+	local sum, count = 0, 0
+	for date, struct in pairs( STEPS.mine ) do
+		if date ~= "steps" then
+			dSteps = struct.steps
+			min = min and math.min(min, dSteps) or dSteps
+			max = max and math.max(max, dSteps) or dSteps
+			count = count + 1
+			sum = sum + dSteps
+		end
+	end
+	ave = count > 0 and sum / count or 0
+	return min, ave, max
+end
 
 -- Support
 function STEPS.Prune()
@@ -168,7 +184,7 @@ function STEPS.PrintHelp()
 end
 STEPS.CommandList = {
 	[""] = {
-		["help"] = {"{steps}",STEPS.L["Send steps to any chat"]},
+		["help"] = {STEPS.L["{steps}"], STEPS.L["Send steps to any chat"]},
 	},
 	[STEPS.L["help"]] = {
 		["func"] = STEPS.PrintHelp,

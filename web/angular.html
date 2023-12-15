@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<!--- https://www.w3schools.com/angular/angular_sql.asp  -->
+<!--- https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API -->
+<!--- https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API -->
+<html lang='en'>
+<head>
+<link href="rss" rel="alternate" type="application/rss+xml" title="RF RSS Feed"></link>
+<link rel="stylesheet" href="/css/bootstrap.css" type="text/css"/>
+<link rel="stylesheet" href="Steps.css" type="text/css"/>
+<link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css" type="text/css"/>
+<title ng-bind="limitSize + 'Steps'">Steps</title>
+<script src="/js/bootstrap.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<script src="/js/angular.min.js"></script>
+<script src="Steps.js"></script>
+</head>
+<body>
+<div class="container-fluid">
+<div class="main" ng-app="myApp" ng-controller="StepsDisplay">
+<div class="row">
+<div class="col col-xs-2 col-md-2">
+<ul>
+<li><input type="text" ng-model="stepsFilter"/></li>
+</ul>
+</div>
+</div>  <!-- row controls -->
+
+<div class="row">
+<div class="col col-xs-2 col-md-2 StepsName">
+	<a href ng-click="sortReverse = sortType=='name' ? !sortReverse : true; sortType='name'">Name
+	<span ng-show="sortType=='name' && !sortReverse" class="fa fa-caret-up"></span>
+	<span ng-show="sortType=='name' && sortReverse" class="fa fa-caret-down"></span>
+	</a>
+</div>
+<div class="col col-xs-1 col-md-1 StepsSteps">
+	<a href ng-click="sortReverse = sortType='steps' ? !sortReverse : true; sortType='steps'">Steps
+	<span ng-show="sortType=='steps' && !sortReverse" class="fa fa-caret-up"></span>
+	<span ng-show="sortType=='steps' && sortReverse" class="fa fa-caret-down"></span>
+	</a>
+</div>
+<div class="col col-xs-1 col-md-1 StepsSteps">
+	{{currentDate | date:'yyyy-MM-dd'}}
+</div>
+<div class="col col-xs-1 col-md-1 StepsSteps">
+	{{yesterday | date:'yyyy-MM-dd'}}
+</div>
+<div class="col col-xs-1 col-md-1 StepsSteps">
+	{{daybefore | date:'yyyy-MM-dd'}}
+</div>
+<div class="col col-xs-1 col-md-1 StepsSteps">
+	{{currentDate | date:'yyyy-MM'}}
+</div>
+<div class="col col-xs-1 col-md-1 StepsSteps">
+	{{lastMonth | date:'yyyy-MM'}}
+</div>
+<div class="col col-xs-1 col-md-1 StepsSteps">
+	{{beforeMonth | date:'yyyy-MM'}}
+</div>
+<div class="col col-xs-1 col-md-1 StepsSteps">
+	{{b2Month | date:'yyyy-MM'}}
+</div>
+</div> <!-- row -->
+<div class="row RandomFortuneWrapper" ng-repeat="char in steps | orderBy:sortType:sortReverse | filter:stepsFilter">
+<div class="col col-xs-2 col-md-2 StepsName"><span>{{ char.name }}-{{ char.realm }}</span></div>
+<div class="col col-xs-1 col-md-1 StepsSteps"><span>{{ char.steps }}</span></div>
+<div class="col col-xs-1 col-md-1 StepsSteps"><span>{{ stepsInDay(currentDate, char.days) }}</span></div>
+<div class="col col-xs-1 col-md-1 StepsSteps"><span>{{ stepsInDay(yesterday, char.days) }}</span></div>
+<div class="col col-xs-1 col-md-1 StepsSteps"><span>{{ stepsInDay(daybefore, char.days) }}</span></div>
+<div class="col col-xs-1 col-md-1 StepsSteps"><span>{{ stepsInMonth(currentDate, char.days) }}</span></div>
+<div class="col col-xs-1 col-md-1 StepsSteps"><span>{{ stepsInMonth(lastMonth, char.days) }}</span></div>
+<div class="col col-xs-1 col-md-1 StepsSteps"><span>{{ stepsInMonth(beforeMonth, char.days) }}</span></div>
+<div class="col col-xs-1 col-md-1 StepsSteps"><span>{{ stepsInMonth(b2Month, char.days) }}</span></div>
+</div> <!-- row -->
+
+</div>
+</div>
+
+</body>
+</html>

@@ -11,8 +11,15 @@ xsi:schemaLocation="http://www.blizzard.com/wow/ui/
 		<Anchors>
 			<Anchor point="BOTTOMLEFT"/>
 		</Anchors>
+		<Layers>
+			<Layer level="BACKGROUND">
+				<Texture setAllPoints="true">
+					<Color r="0.5" g="0.0" b="0.0" a="1" />
+				</Texture>
+			</Layer>
+		</Layers>
 		<Frames>
-			<StatusBar name="Steps_StepBar" inherits="TextStatusBar">
+			<StatusBar name="Steps_StepBar_1" inherits="TextStatusBar">
 				<Size>
 					<AbsDimension x="190" y="12"/>
 				</Size>
@@ -31,12 +38,27 @@ xsi:schemaLocation="http://www.blizzard.com/wow/ui/
 				</Layers>
 				<Scripts>
 					<OnLoad> <!-- artwork -->
-						Steps_StepBar:SetFrameLevel( 0 );
-						Steps_StepBar:SetAlpha(1.0);
+						Steps_StepBar_1:SetFrameLevel( 0 );
+						Steps_StepBar_1:SetAlpha( 1.0 );
 					</OnLoad>
 				</Scripts>
 				<BarTexture file="Interface\TargetingFrame\UI-StatusBar"/>
 				<BarColor r="0.5" g="0.5" b="0"/>
+			</StatusBar>
+			<StatusBar name="Steps_StepBar_2" inherits="TextStatusBar">
+				<Size>
+					<AbsDimension x="190" y="12"/>
+				</Size>
+				<Anchors>
+					<Anchor point="TOP" relativeTo="$parent" relativePoint="TOP"/>
+				</Anchors>
+				<Scripts>
+					<OnLoad>
+						Steps_StepBar_2:SetFrameLevel( 1 );
+					</OnLoad>
+				</Scripts>
+				<BarTexture file="Interface\TargetingFrame\UI-StatusBar"/>
+				<BarColor r="0" g="0" b="1" a="0.5" />
 			</StatusBar>
 		</Frames>
 		<Scripts>

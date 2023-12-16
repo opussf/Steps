@@ -75,7 +75,13 @@ function STEPS.OnUpdate()
 		end
 	end
 	if nowTS ~= STEPS.lastUpdate then
-		Steps_StepBar:Show()
+		local min, ave, max = STEPS.CalcMinAveMax()
+		Steps_StepBar_1:SetMinMaxValues( 0, max )
+		Steps_StepBar_1:SetValue( STEPS.mine[dateStr].steps )
+		Steps_StepBar_2:SetMinMaxValues( 0, max )
+		Steps_StepBar_2:SetValue( ave )
+		Steps_StepBar_1:Show()
+		Steps_StepBar_2:Show()
 		Steps_StepBarText:SetText( STEPS.L["Steps"]..": "..math.floor( STEPS.mine[dateStr].steps ) )
 	end
 	-- if nowTS % 10 == 0 and not STEPS.printed then
@@ -90,8 +96,9 @@ function STEPS.CalcMinAveMax()
 	-- returns: min, ave, max
 	local min, ave, max
 	local sum, count = 0, 0
+	local dateStr = date("%Y%m%d")
 	for date, struct in pairs( STEPS.mine ) do
-		if date ~= "steps" then
+		if date ~= "steps" and date ~= dateStr then
 			dSteps = struct.steps
 			min = min and math.min(min, dSteps) or dSteps
 			max = max and math.max(max, dSteps) or dSteps
@@ -102,7 +109,6 @@ function STEPS.CalcMinAveMax()
 	ave = count > 0 and sum / count or 0
 	return min, ave, max
 end
-
 -- Support
 function STEPS.Prune()
 	local pruneTS = time() - ( STEPS.pruneDays * 86400 )
@@ -167,7 +173,6 @@ function STEPS.command( msg )
 	end
 end
 function STEPS.PrintHelp()
-	--STEPS.Print( string.format( "%s (%s) by %s", STEPS_MSG_ADDONNAME, STEPS_MSG_VERSION, STEPS_MSG_AUTHOR ) )
 	STEPS.Print( string.format(STEPS.L["%s (%s) by %s"], STEPS_MSG_ADDONNAME, STEPS_MSG_VERSION, STEPS_MSG_AUTHOR ) )
 	for cmd, info in pairs(STEPS.CommandList) do
 		if info.help then

@@ -10,7 +10,8 @@ ParseTOC( "../src/Steps.toc" )
 
 -- Figure out how to parse the XML here, until then....
 Steps_Frame = CreateFrame()
-Steps_StepBar = CreateStatusBar()
+Steps_StepBar_1 = CreateStatusBar()
+Steps_StepBar_2 = CreateStatusBar()
 Steps_StepBarText = CreateFrame()
 
 -- addon setup
@@ -156,12 +157,12 @@ end
 function test.test_minavemax_min()
 	test.prep_minavemax_data()
 	min, ave, max = STEPS.CalcMinAveMax()
-	assertEquals( 0, min )
+	assertEquals( 100, min )
 end
 function test.test_minavemax_ave()
 	test.prep_minavemax_data()
 	min, ave, max = STEPS.CalcMinAveMax()
-	assertEquals( 105, ave )
+	assertEquals( 140, ave )
 end
 function test.test_minavemax_max()
 	test.prep_minavemax_data()

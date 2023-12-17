@@ -90,14 +90,8 @@ function STEPS.OnUpdate()
 		end
 		Steps_StepBar_1:Show()
 		Steps_StepBar_2:Show()
-		Steps_StepBarText:SetText( STEPS.L["Steps"]..": "..math.floor( STEPS.mine[dateStr].steps ).." ("..min..":"..ave..":"..max..")" )
+		Steps_StepBarText:SetText( STEPS.L["Steps"]..": "..math.floor( STEPS.mine[dateStr].steps ).." ("..ave..":"..max..")" )
 	end
-	-- if nowTS % 10 == 0 and not STEPS.printed then
-	-- 	print( "Steps: "..math.floor( STEPS.mine[dateStr].steps ) )
-	-- 	STEPS.printed = true
-	-- elseif nowTS % 10 ~= 0 then
-	-- 	STEPS.printed = nil
-	-- end
 	STEPS.lastUpdate = nowTS
 end
 function STEPS.CalcMinAveMax()

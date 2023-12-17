@@ -21,7 +21,7 @@ xsi:schemaLocation="http://www.blizzard.com/wow/ui/
 		<Frames>
 			<StatusBar name="Steps_StepBar_1" inherits="TextStatusBar">
 				<Size>
-					<AbsDimension x="190" y="12"/>
+					<AbsDimension x="200" y="12"/>
 				</Size>
 				<Anchors>
 					<Anchor point="TOP" relativeTo="$parent" relativePoint="TOP"/>
@@ -38,7 +38,7 @@ xsi:schemaLocation="http://www.blizzard.com/wow/ui/
 				</Layers>
 				<Scripts>
 					<OnLoad> <!-- artwork -->
-						Steps_StepBar_1:SetFrameLevel( 0 );
+						Steps_StepBar_1:SetFrameLevel( 2 );
 						Steps_StepBar_1:SetAlpha( 1.0 );
 					</OnLoad>
 				</Scripts>
@@ -47,7 +47,7 @@ xsi:schemaLocation="http://www.blizzard.com/wow/ui/
 			</StatusBar>
 			<StatusBar name="Steps_StepBar_2" inherits="TextStatusBar">
 				<Size>
-					<AbsDimension x="190" y="12"/>
+					<AbsDimension x="200" y="12"/>
 				</Size>
 				<Anchors>
 					<Anchor point="TOP" relativeTo="$parent" relativePoint="TOP"/>
@@ -55,6 +55,7 @@ xsi:schemaLocation="http://www.blizzard.com/wow/ui/
 				<Scripts>
 					<OnLoad>
 						Steps_StepBar_2:SetFrameLevel( 1 );
+						Steps_StepBar_2:SetAlpha( 1.0 );
 					</OnLoad>
 				</Scripts>
 				<BarTexture file="Interface\TargetingFrame\UI-StatusBar"/>

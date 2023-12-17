@@ -76,13 +76,21 @@ function STEPS.OnUpdate()
 	end
 	if nowTS ~= STEPS.lastUpdate then
 		local min, ave, max = STEPS.CalcMinAveMax()
+		min = min and math.floor(min) or 0; ave = ave and math.floor(ave) or 0; max = max and math.floor(max) or 0;
 		Steps_StepBar_1:SetMinMaxValues( 0, max )
 		Steps_StepBar_1:SetValue( STEPS.mine[dateStr].steps )
 		Steps_StepBar_2:SetMinMaxValues( 0, max )
 		Steps_StepBar_2:SetValue( ave )
+		if STEPS.mine[dateStr].steps > ave then
+			Steps_StepBar_1:SetFrameLevel( 1 )
+			Steps_StepBar_2:SetFrameLevel( 2 )
+		else
+			Steps_StepBar_1:SetFrameLevel( 2 )
+			Steps_StepBar_2:SetFrameLevel( 1 )
+		end
 		Steps_StepBar_1:Show()
 		Steps_StepBar_2:Show()
-		Steps_StepBarText:SetText( STEPS.L["Steps"]..": "..math.floor( STEPS.mine[dateStr].steps ) )
+		Steps_StepBarText:SetText( STEPS.L["Steps"]..": "..math.floor( STEPS.mine[dateStr].steps ).." ("..min..":"..ave..":"..max..")" )
 	end
 	-- if nowTS % 10 == 0 and not STEPS.printed then
 	-- 	print( "Steps: "..math.floor( STEPS.mine[dateStr].steps ) )

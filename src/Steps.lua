@@ -78,15 +78,17 @@ function STEPS.OnUpdate()
 		local min, ave, max = STEPS.CalcMinAveMax()
 		min = min and math.floor(min) or 0; ave = ave and math.floor(ave) or 0; max = max and math.floor(max) or 0;
 		Steps_StepBar_1:SetMinMaxValues( 0, max )
-		Steps_StepBar_1:SetValue( STEPS.mine[dateStr].steps )
 		Steps_StepBar_2:SetMinMaxValues( 0, max )
-		Steps_StepBar_2:SetValue( ave )
 		if STEPS.mine[dateStr].steps > ave then
-			Steps_StepBar_1:SetFrameLevel( 1 )
-			Steps_StepBar_2:SetFrameLevel( 2 )
+			Steps_StepBar_1:SetValue( ave )
+			Steps_StepBar_1:SetStatusBarColor( 0, 0, 1, 1 )
+			Steps_StepBar_2:SetValue( STEPS.mine[dateStr].steps )
+			Steps_StepBar_2:SetStatusBarColor( 0.5, 0.5, 0, 1 )
 		else
-			Steps_StepBar_1:SetFrameLevel( 2 )
-			Steps_StepBar_2:SetFrameLevel( 1 )
+			Steps_StepBar_2:SetValue( ave )
+			Steps_StepBar_2:SetStatusBarColor( 0, 0, 1, 1 )
+			Steps_StepBar_1:SetValue( STEPS.mine[dateStr].steps )
+			Steps_StepBar_1:SetStatusBarColor( 0.5, 0.5, 0, 1 )
 		end
 		Steps_StepBar_1:Show()
 		Steps_StepBar_2:Show()

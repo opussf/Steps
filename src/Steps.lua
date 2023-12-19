@@ -20,6 +20,9 @@ Steps_data = {}
 Steps_options = {}
 STEPS.steps_per_second = 2/7  -- 2 steps at speed 7
 STEPS.pruneDays = 91
+STEPS.min = 0
+STEPS.ave = 0
+STEPS.max = 0
 
 -- Setup
 function STEPS.OnLoad()
@@ -43,6 +46,7 @@ function STEPS.VARIABLES_LOADED()
 	Steps_data[STEPS.realm][STEPS.name] = Steps_data[STEPS.realm][STEPS.name] or { ["steps"] = 0 }
 	STEPS.mine = Steps_data[STEPS.realm][STEPS.name]
 	STEPS.mine[date("%Y%m%d")] = STEPS.mine[date("%Y%m%d")] or { ["steps"] = 0 }
+	STEPS.min, STEPS.ave, STEPS.max = STEPS.CalcMinAveMax()
 	STEPS.Prune()
 end
 
@@ -70,33 +74,36 @@ function STEPS.OnUpdate()
 		if nowTS ~= STEPS.lastUpdate then
 			local newSteps = (STEPS.steps_per_second * speed)
 			STEPS.mine.steps = STEPS.mine.steps + newSteps
+			if not STEPS.mine[dateStr] then
+				STEPS.min, STEPS.ave, STEPS.max = STEPS.CalcMinAveMax()
+			end
 			STEPS.mine[dateStr] = STEPS.mine[dateStr] or { ["steps"] = 0 }
 			STEPS.mine[dateStr].steps = STEPS.mine[dateStr].steps + newSteps
 		end
 	end
 	if nowTS ~= STEPS.lastUpdate then
-		local min, ave, max = STEPS.CalcMinAveMax()
-		min = min and math.floor(min) or 0; ave = ave and math.floor(ave) or 0; max = max and math.floor(max) or 0;
-		Steps_StepBar_1:SetMinMaxValues( 0, ( max == 0 and STEPS.mine[dateStr].steps or max ) )
-		Steps_StepBar_2:SetMinMaxValues( 0, ( max == 0 and STEPS.mine[dateStr].steps or max ) )
-		if STEPS.mine[dateStr].steps > ave then
-			Steps_StepBar_1:SetValue( ave )
+		Steps_StepBar_1:SetMinMaxValues( 0, ( STEPS.max == 0 and STEPS.mine[dateStr].steps or STEPS.max ) )
+		Steps_StepBar_2:SetMinMaxValues( 0, (STEPS.max == 0 and STEPS.mine[dateStr].steps or STEPS.max ) )
+		if STEPS.mine[dateStr].steps > STEPS.ave then
+			Steps_StepBar_1:SetValue( STEPS.ave )
 			Steps_StepBar_1:SetStatusBarColor( 0, 0, 1, 1 )
 			Steps_StepBar_2:SetValue( STEPS.mine[dateStr].steps )
 			Steps_StepBar_2:SetStatusBarColor( 0.5, 0.5, 0, 1 )
 		else
-			Steps_StepBar_2:SetValue( ave )
+			Steps_StepBar_2:SetValue( STEPS.ave )
 			Steps_StepBar_2:SetStatusBarColor( 0, 0, 1, 1 )
 			Steps_StepBar_1:SetValue( STEPS.mine[dateStr].steps )
 			Steps_StepBar_1:SetStatusBarColor( 0.5, 0.5, 0, 1 )
 		end
 		Steps_StepBar_1:Show()
 		Steps_StepBar_2:Show()
-		Steps_StepBarText:SetText( STEPS.L["Steps"]..": "..math.floor( STEPS.mine[dateStr].steps ).." ("..ave..":"..max..")" )
+
+		Steps_StepBarText:SetText( STEPS.L["Steps"]..": "..math.floor( STEPS.mine[dateStr].steps ).." ("..STEPS.ave..":"..STEPS.max..")" )
 	end
 	STEPS.lastUpdate = nowTS
 end
 function STEPS.CalcMinAveMax()
+	print( "CalcMinAveMax" )
 	-- returns: min, ave, max
 	local min, ave, max
 	local sum, count = 0, 0
@@ -111,7 +118,9 @@ function STEPS.CalcMinAveMax()
 		end
 	end
 	ave = count > 0 and sum / count or 0
-	return min, ave, max
+	return (min and math.floor(min) or 0),
+		   (ave and math.floor(ave) or 0),
+		   (max and math.floor(max) or 0)
 end
 -- Support
 function STEPS.Prune()

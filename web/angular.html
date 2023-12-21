@@ -39,13 +39,25 @@
 	</a>
 </div>
 <div class="col col-xs-1 col-md-1 StepsHeader">
+	<a href ng-click="sortReverse = sortType='today' ? !sortReverse : true; sortType='today'">
 	{{currentDate | date:'yyyy-MM-dd'}}
+	<span ng-show="sortType=='today' && !sortReverse" class="fa fa-caret-up"></span>
+	<span ng-show="sortType=='today' && sortReverse" class="fa fa-caret-down"></span>
+	</a>
 </div>
 <div class="col col-xs-1 col-md-1 StepsHeader">
+	<a href ng-click="sortReverse = sortType='yesterday' ? !sortReverse : true; sortType='yesterday'">
 	{{yesterday | date:'yyyy-MM-dd'}}
+	<span ng-show="sortType=='yesterday' && !sortReverse" class="fa fa-caret-up"></span>
+	<span ng-show="sortType=='yesterday' && sortReverse" class="fa fa-caret-down"></span>
+	</a>
 </div>
 <div class="col col-xs-1 col-md-1 StepsHeader">
+	<a href ng-click="sortReverse = sortType='daybefore' ? !sortReverse : true; sortType='daybefore'">
 	{{daybefore | date:'yyyy-MM-dd'}}
+	<span ng-show="sortType=='daybefore' && !sortReverse" class="fa fa-caret-up"></span>
+	<span ng-show="sortType=='daybefore' && sortReverse" class="fa fa-caret-down"></span>
+	</a>
 </div>
 <div class="col col-xs-1 col-md-1 StepsHeader">
 	{{currentDate | date:'yyyy-MM'}} (days)

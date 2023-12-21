@@ -111,7 +111,7 @@ function test.test_UI_Text()
 	STEPS.lastSpeed = 7
 	STEPS.lastUpdate = time() - 1
 	STEPS.OnUpdate()
-	assertEquals( 'Steps: 2 (0:0)', Steps_StepBarText:GetText() )
+	assertEquals( 'Steps: 2 (0:2)', Steps_StepBarText:GetText() )
 end
 function test.test_prune_removeDays()
 	-- just remove old data

@@ -82,7 +82,7 @@ function STEPS.OnUpdate()
 		end
 	end
 	if nowTS ~= STEPS.lastUpdate then
-		STEPS.max = math.max( STEPS.max, STEPS.mine[dateStr].steps )
+		STEPS.max = math.floor( math.max( STEPS.max, STEPS.mine[dateStr].steps ) )
 		Steps_StepBar_1:SetMinMaxValues( 0, STEPS.max )
 		Steps_StepBar_2:SetMinMaxValues( 0, STEPS.max )
 		if STEPS.mine[dateStr].steps > STEPS.ave then

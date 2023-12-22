@@ -104,7 +104,6 @@ function STEPS.OnUpdate()
 	STEPS.lastUpdate = nowTS
 end
 function STEPS.CalcMinAveMax()
-	print( "CalcMinAveMax" )
 	-- returns: min, ave, max
 	local min, ave, max
 	local sum, count = 0, 0

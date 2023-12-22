@@ -10,7 +10,8 @@ ParseTOC( "../src/Steps.toc" )
 
 -- Figure out how to parse the XML here, until then....
 Steps_Frame = CreateFrame()
-Steps_StepBar = CreateStatusBar()
+Steps_StepBar_1 = CreateStatusBar()
+Steps_StepBar_2 = CreateStatusBar()
 Steps_StepBarText = CreateFrame()
 
 -- addon setup
@@ -110,7 +111,7 @@ function test.test_UI_Text()
 	STEPS.lastSpeed = 7
 	STEPS.lastUpdate = time() - 1
 	STEPS.OnUpdate()
-	assertEquals( 'Steps: 2', Steps_StepBarText:GetText() )
+	assertEquals( 'Steps: 2 (0:2)', Steps_StepBarText:GetText() )
 end
 function test.test_prune_removeDays()
 	-- just remove old data
@@ -144,6 +145,29 @@ function test.test_missing_key()
 	Steps_data["testRealm"]["testPlayer"][date("%Y%m%d")] = nil
 	STEPS.OnUpdate()
 	assertEquals( 0, Steps_data["testRealm"]["testPlayer"][date("%Y%m%d")].steps )
+end
+function test.prep_minavemax_data()
+	dataDay = date( "%Y%m%d", time() - (2*86400) )
+	Steps_data["testRealm"]["testPlayer"][dataDay] = {["steps"] = 100}
+	dataDay = date( "%Y%m%d", time() - (3*86400) )
+	Steps_data["testRealm"]["testPlayer"][dataDay] = {["steps"] = 120}
+	dataDay = date( "%Y%m%d", time() - (4*86400) )
+	Steps_data["testRealm"]["testPlayer"][dataDay] = {["steps"] = 200}
+end
+function test.test_minavemax_min()
+	test.prep_minavemax_data()
+	min, ave, max = STEPS.CalcMinAveMax()
+	assertEquals( 100, min )
+end
+function test.test_minavemax_ave()
+	test.prep_minavemax_data()
+	min, ave, max = STEPS.CalcMinAveMax()
+	assertEquals( 140, ave )
+end
+function test.test_minavemax_max()
+	test.prep_minavemax_data()
+	min, ave, max = STEPS.CalcMinAveMax()
+	assertEquals( 200, max )
 end
 
 test.run()

@@ -1,0 +1,58 @@
+body {
+	background-image: url(bg/parchment.jpg);
+}
+
+ul {
+    border: 0; margin: 0 0 0 0; padding: 0;
+    display: inline-block;
+    list-style-type: none;
+}
+
+li {
+    border: 0; margin: 0; padding: 0px 10px 0px 0px;
+    font-style: 11px;
+    list-style: none;
+    display: inline;
+}
+/* https://www.canva.com/colors/color-palettes/under-the-ferns/
+Green #116530
+BlueGreen #21B6A8
+Neon Green #A3EBB1
+Kelly Green #18A558
+*/
+
+div.StepsHeader {
+	background-color: #ECF87F;
+	border-bottom: solid #000;
+        border-bottom-width: 1px;
+}
+div.StepsName {
+	background-color: #a3ebb1;
+	border-bottom: solid #000;
+        border-bottom-width: 1px;
+}
+
+div.StepsSteps {
+	background-color: #fff;
+	border-bottom: solid #000;
+        border-bottom-width: 1px;
+	border-left-style: solid;
+	border-left-width: 1px;
+}
+
+div.StepsStepsDays {
+	background-color: #21b6a8;
+	border-bottom: solid #000;
+        border-bottom-width: 1px;
+	border-left-style: solid;
+	border-left-width: 1px;
+}
+
+div.StepsStepsMonths {
+	background-color: #93e9be;
+	border-bottom: solid #000;
+        border-bottom-width: 1px;
+	border-left-style: solid;
+	border-left-width: 1px;
+}
+

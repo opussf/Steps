@@ -404,6 +404,7 @@ Frame = {
 		["SetChecked"] = function() end,
 		["SetText"] = function(self, textIn) self.textValue = textIn; end,
 		["GetText"] = function(self) return( self.textValue ); end,
+		["SetFrameLevel"] = function(self) end,
 }
 FrameGameTooltip = {
 		["HookScript"] = function( self, callback ) end,
@@ -1660,6 +1661,12 @@ Enum.TooltipDataType.Item = 0
 
 TooltipDataProcessor = {}
 function TooltipDataProcessor.AddTooltipPostCall()
+end
+
+-----------------------------------------
+-- XML functions
+function ParseXML( xmlFile )
+
 end
 
 -----------------------------------------

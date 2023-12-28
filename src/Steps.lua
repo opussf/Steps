@@ -65,7 +65,7 @@ end
 function STEPS.CHAT_MSG_ADDON(...)
 	self, prefix, message, distType, sender = ...
 	if prefix == STEPS.commPrefix then
-		-- STEPS.Print( "p:"..prefix.." m:"..message.." d:"..distType.." s:"..sender )
+		STEPS.Print( "p:"..prefix.." m:"..message.." d:"..distType.." s:"..sender )
 		STEPS.DecodeMessage( message )
 	end
 end
@@ -75,6 +75,11 @@ function STEPS.BuildAddonMessage( )
 	table.insert( STEPS.addonMsgTable, "r:"..STEPS.realm )
 	table.insert( STEPS.addonMsgTable, "n:"..STEPS.name )
 	table.insert( STEPS.addonMsgTable, "s:"..STEPS.mine.steps )
+	for _,dayStr in pairs({ date("%Y%m%d"), date("%Y%m%d", time()-86400) }) do
+		if STEPS.mine[dayStr] then
+			table.insert( STEPS.addonMsgTable, "t:"..dayStr.."<"..STEPS.mine[dayStr].steps )
+		end
+	end
 	return table.concat( STEPS.addonMsgTable, "," )
 end
 STEPS.keyFunctions = {
@@ -99,10 +104,19 @@ STEPS.keyFunctions = {
 			Steps_data[STEPS.importRealm][STEPS.importName].version = STEPS.importVersion
 		end
 	end,
+	t = function(val)
+		local loc, _, date, steps = string.find(val, "(.+)<(.+)")
+		print(val..":"..date..">>"..steps)
+		if loc and STEPS.importRealm and STEPS.importName then
+			Steps_data[STEPS.importRealm] = Steps_data[STEPS.importRealm] or {}
+			Steps_data[STEPS.importRealm][STEPS.importName] = Steps_data[STEPS.importRealm][STEPS.importName] or {}
+			Steps_data[STEPS.importRealm][STEPS.importName][date] = { ["steps"] = steps }
+		end
+	end,
 }
 function STEPS.DecodeMessage( msgIn )
 	for k,v in string.gmatch( msgIn, "(.):([^,]+)" ) do
-		--print(k.."-"..v)
+		print(k.."-"..v)
 		if STEPS.keyFunctions[k] then
 			STEPS.keyFunctions[k](v)
 		end
@@ -190,7 +204,7 @@ function STEPS.Prune()
 		for n, _ in pairs( Steps_data[r] ) do
 			local kcount = 0
 			for k, _ in pairs( Steps_data[r][n] ) do
-				if k ~= "steps" then
+				if string.len(k) == 8 then
 					local y = strsub( k, 1, 4 )
 					local m = strsub( k, 5, 6 )
 					local d = strsub( k, 7, 8 )

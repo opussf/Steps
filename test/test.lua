@@ -176,7 +176,7 @@ function test.test_send()
 end
 
 function test.test_decode_steps_single()
-	STEPS.CHAT_MSG_ADDON( {}, "STEPS", "v:0.0,r:wonkRealm,n:wonkPlayer,s:993.324", "GUILD", "joeBob" )
+	STEPS.CHAT_MSG_ADDON( {}, "STEPS", "v:0.0,r:wonkRealm,n:wonkPlayer,s:993.324,t:"..dateStr.."<42.634,t:"..date("%Y%m%d", time()-86400).."<15.2", "GUILD", "joeBob" )
 	assertEquals( 993.324, Steps_data["wonkRealm"]["wonkPlayer"].steps )
 	assertEquals( "0.0", Steps_data["wonkRealm"]["wonkPlayer"].version )
 	assertTrue( Steps_data["wonkRealm"]["wonkPlayer"] )
@@ -189,7 +189,6 @@ function test.test_decode_steps_multiple_singleRealm()
 	assertEquals( "0.0", Steps_data["wonkRealm"]["wonkPlayer"].version )
 	assertEquals( 123.456, Steps_data["wonkRealm"]["vader"].steps )
 	assertEquals( "0.0", Steps_data["wonkRealm"]["vader"].version )
-
 	assertIsNil( STEPS.importRealm )
 	assertIsNil( STEPS.importName )
 end

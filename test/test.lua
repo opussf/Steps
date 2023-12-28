@@ -197,10 +197,10 @@ function test.test_decode_steps_multiple_singleRealm()
 	assertTrue( STEPS.versionAlerted )
 end
 function test.test_version_to_str_tag_2()
-	assertEquals( 10100, STEPS.VersionStrToVal( "1.1" ) )
+	assertEquals( 10200, STEPS.VersionStrToVal( "1.2" ) )
 end
 function test.test_version_to_str_tag_3()
-	assertEquals( 10101, STEPS.VersionStrToVal( "1.1.1" ) )
+	assertEquals( 20304, STEPS.VersionStrToVal( "2.3.4" ) )
 end
 function test.test_version_to_str_offtag_branch()
 	assertEquals( 10100, STEPS.VersionStrToVal( "1.1-version" ) )

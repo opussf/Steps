@@ -176,21 +176,40 @@ function test.test_send()
 end
 
 function test.test_decode_steps_single()
+	STEPS.versionAlerted = nil
 	STEPS.CHAT_MSG_ADDON( {}, "STEPS", "v:0.0,r:wonkRealm,n:wonkPlayer,s:993.324,t:"..dateStr.."<42.634,t:"..date("%Y%m%d", time()-86400).."<15.2", "GUILD", "joeBob" )
 	assertEquals( 993.324, Steps_data["wonkRealm"]["wonkPlayer"].steps )
 	assertEquals( "0.0", Steps_data["wonkRealm"]["wonkPlayer"].version )
 	assertTrue( Steps_data["wonkRealm"]["wonkPlayer"] )
 	assertIsNil( STEPS.importRealm )
 	assertIsNil( STEPS.importName )
+	assertIsNil( STEPS.versionAlerted )
 end
 function test.test_decode_steps_multiple_singleRealm()
-	STEPS.CHAT_MSG_ADDON( {}, "STEPS", "v:0.0,r:wonkRealm,n:wonkPlayer,s:993.324,n:vader,s:123.456", "GUILD", "joeBob" )
+	STEPS.versionAlerted = nil
+	STEPS.CHAT_MSG_ADDON( {}, "STEPS", "v:0.1,r:wonkRealm,n:wonkPlayer,s:993.324,n:vader,s:123.456", "GUILD", "joeBob" )
 	assertEquals( 993.324, Steps_data["wonkRealm"]["wonkPlayer"].steps )
-	assertEquals( "0.0", Steps_data["wonkRealm"]["wonkPlayer"].version )
+	assertEquals( "0.1", Steps_data["wonkRealm"]["wonkPlayer"].version )
 	assertEquals( 123.456, Steps_data["wonkRealm"]["vader"].steps )
-	assertEquals( "0.0", Steps_data["wonkRealm"]["vader"].version )
+	assertEquals( "0.1", Steps_data["wonkRealm"]["vader"].version )
 	assertIsNil( STEPS.importRealm )
 	assertIsNil( STEPS.importName )
+	assertTrue( STEPS.versionAlerted )
+end
+function test.test_version_to_str_tag_2()
+	assertEquals( 10100, STEPS.VersionStrToVal( "1.1" ) )
+end
+function test.test_version_to_str_tag_3()
+	assertEquals( 10101, STEPS.VersionStrToVal( "1.1.1" ) )
+end
+function test.test_version_to_str_offtag_branch()
+	assertEquals( 10100, STEPS.VersionStrToVal( "1.1-version" ) )
+end
+function test.test_version_to_str_offtag_branch_commits()
+	assertEquals( 10100, STEPS.VersionStrToVal( "1.1-6-g0526e5e-develop" ) )
+end
+function test.test_version_replacestr()
+	assertEquals( 0, STEPS.VersionStrToVal( "@VERSION@" ) )
 end
 
 test.run()

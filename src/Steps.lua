@@ -73,7 +73,7 @@ function STEPS.CHAT_MSG_ADDON(...)
 		STEPS.DecodeMessage( message )
 	end
 end
-function STEPS.BuildAddonMessage( )
+function STEPS.BuildAddonMessage()
 	STEPS.addonMsgTable = {}
 	table.insert( STEPS.addonMsgTable, "v:"..STEPS_MSG_VERSION )
 	table.insert( STEPS.addonMsgTable, "r:"..STEPS.realm )
@@ -86,10 +86,14 @@ function STEPS.BuildAddonMessage( )
 	end
 	return table.concat( STEPS.addonMsgTable, "," )
 end
+function STEPS.VersionStrToVal( verStr )
+	local loc, _, major, minor, patch = string.find( verStr, "^(%d+)%.(%d+)%.*(%d*)" )
+	return (loc and math.floor((major*10000)+(minor*100)+(patch and tonumber(patch) or 0)) or 0)
+end
 STEPS.keyFunctions = {
 	v = function(val)
 		STEPS.importVersion = val
-		if not STEPS.versionAlerted and val ~= STEPS_MSG_VERSION then
+		if not STEPS.versionAlerted and STEPS.VersionStrToVal(val) > STEPS.VersionStrToVal( STEPS_MSG_VERSION ) then
 			STEPS.versionAlerted = true
 			STEPS.Print("There is a new version available.")
 		end

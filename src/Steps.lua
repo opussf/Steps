@@ -23,6 +23,7 @@ STEPS.pruneDays = 91
 STEPS.min = 0
 STEPS.ave = 0
 STEPS.max = 0
+STEPS.commPrefix = "STEPS"
 
 -- Setup
 function STEPS.OnLoad()
@@ -31,11 +32,14 @@ function STEPS.OnLoad()
 	STEPS.lastSpeed = 0
 	Steps_Frame:RegisterEvent( "ADDON_LOADED" )
 	Steps_Frame:RegisterEvent( "VARIABLES_LOADED" )
+	Steps_Frame:RegisterEvent( "LOADING_SCREEN_DISABLED" )
+	Steps_Frame:RegisterEvent( "CHAT_MSG_ADDON" )
 end
 function STEPS.ADDON_LOADED()
 	Steps_Frame:UnregisterEvent( "ADDON_LOADED" )
 	STEPS.name = UnitName("player")
 	STEPS.realm = GetRealmName()
+	STEPS.msgRealm = string.gsub( STEPS.realm, " ", "" )
 	STEPS.InitChat()
 end
 function STEPS.VARIABLES_LOADED()
@@ -48,6 +52,79 @@ function STEPS.VARIABLES_LOADED()
 	STEPS.mine[date("%Y%m%d")] = STEPS.mine[date("%Y%m%d")] or { ["steps"] = 0 }
 	STEPS.min, STEPS.ave, STEPS.max = STEPS.CalcMinAveMax()
 	STEPS.Prune()
+end
+function STEPS.LOADING_SCREEN_DISABLED()
+	if not C_ChatInfo.IsAddonMessagePrefixRegistered(STEPS.commPrefix) then
+		C_ChatInfo.RegisterAddonMessagePrefix(STEPS.commPrefix)
+	end
+
+	STEPS.addonMsg = STEPS.BuildAddonMessage()
+	if IsInGuild() then
+		C_ChatInfo.SendAddonMessage( STEPS.commPrefix, STEPS.addonMsg, "GUILD" )
+	end
+	if IsInGroup() then
+		C_ChatInfo.SendAddonMessage( STEPS.commPrefix, STEPS.addonMsg, "PARTY" )
+	end
+end
+function STEPS.CHAT_MSG_ADDON(...)
+	self, prefix, message, distType, sender = ...
+	-- STEPS.Print( "p:"..prefix.." m:"..message.." d:"..distType.." s:"..sender )
+	if prefix == STEPS.commPrefix and sender ~= STEPS.name.."-"..STEPS.msgRealm then
+		STEPS.DecodeMessage( message )
+	end
+end
+function STEPS.BuildAddonMessage( )
+	STEPS.addonMsgTable = {}
+	table.insert( STEPS.addonMsgTable, "v:"..STEPS_MSG_VERSION )
+	table.insert( STEPS.addonMsgTable, "r:"..STEPS.realm )
+	table.insert( STEPS.addonMsgTable, "n:"..STEPS.name )
+	table.insert( STEPS.addonMsgTable, "s:"..math.ceil( STEPS.mine.steps ) )
+	for _,dayStr in pairs({ date("%Y%m%d"), date("%Y%m%d", time()-86400) }) do
+		if STEPS.mine[dayStr] then
+			table.insert( STEPS.addonMsgTable, "t:"..dayStr.."<"..math.ceil(STEPS.mine[dayStr].steps) )
+		end
+	end
+	return table.concat( STEPS.addonMsgTable, "," )
+end
+STEPS.keyFunctions = {
+	v = function(val)
+		STEPS.importVersion = val
+		if not STEPS.versionAlerted and val ~= STEPS_MSG_VERSION then
+			STEPS.versionAlerted = true
+			STEPS.Print("There is a new version available.")
+		end
+	end,
+	r = function(val)
+		STEPS.importRealm = val
+	end,
+	n = function(val)
+		STEPS.importName = val
+	end,
+	s = function(val)
+		if STEPS.importRealm and STEPS.importName then
+			Steps_data[STEPS.importRealm] = Steps_data[STEPS.importRealm] or {}
+			Steps_data[STEPS.importRealm][STEPS.importName] = Steps_data[STEPS.importRealm][STEPS.importName] or {}
+			Steps_data[STEPS.importRealm][STEPS.importName].steps = tonumber(val)
+			Steps_data[STEPS.importRealm][STEPS.importName].version = STEPS.importVersion
+		end
+	end,
+	t = function(val)
+		local loc, _, date, steps = string.find(val, "(.+)<(.+)")
+		if loc and STEPS.importRealm and STEPS.importName then
+			Steps_data[STEPS.importRealm] = Steps_data[STEPS.importRealm] or {}
+			Steps_data[STEPS.importRealm][STEPS.importName] = Steps_data[STEPS.importRealm][STEPS.importName] or {}
+			Steps_data[STEPS.importRealm][STEPS.importName][date] = { ["steps"] = steps }
+		end
+	end,
+}
+function STEPS.DecodeMessage( msgIn )
+	for k,v in string.gmatch( msgIn, "(.):([^,]+)" ) do
+		-- print(k.."-"..v)
+		if STEPS.keyFunctions[k] then
+			STEPS.keyFunctions[k](v)
+		end
+	end
+	STEPS.importRealm, STEPS.importName = nil, nil
 end
 
 -- OnUpdate
@@ -109,7 +186,7 @@ function STEPS.CalcMinAveMax()
 	local sum, count = 0, 0
 	local dateStr = date("%Y%m%d")
 	for date, struct in pairs( STEPS.mine ) do
-		if date ~= "steps" and date ~= dateStr then
+		if string.len(date) == 8 and date ~= dateStr then
 			dSteps = struct.steps
 			min = min and math.min(min, dSteps) or dSteps
 			max = max and math.max(max, dSteps) or dSteps
@@ -130,7 +207,7 @@ function STEPS.Prune()
 		for n, _ in pairs( Steps_data[r] ) do
 			local kcount = 0
 			for k, _ in pairs( Steps_data[r][n] ) do
-				if k ~= "steps" then
+				if string.len(k) == 8 then
 					local y = strsub( k, 1, 4 )
 					local m = strsub( k, 5, 6 )
 					local d = strsub( k, 7, 8 )

@@ -39,6 +39,7 @@ function STEPS.ADDON_LOADED()
 	Steps_Frame:UnregisterEvent( "ADDON_LOADED" )
 	STEPS.name = UnitName("player")
 	STEPS.realm = GetRealmName()
+	STEPS.msgRealm = string.gsub( STEPS.realm, " ", "" )
 	STEPS.InitChat()
 end
 function STEPS.VARIABLES_LOADED()
@@ -57,15 +58,18 @@ function STEPS.LOADING_SCREEN_DISABLED()
 		C_ChatInfo.RegisterAddonMessagePrefix(STEPS.commPrefix)
 	end
 
+	STEPS.addonMsg = STEPS.BuildAddonMessage()
 	if IsInGuild() then
-		STEPS.addonMsg = STEPS.BuildAddonMessage()
 		C_ChatInfo.SendAddonMessage( STEPS.commPrefix, STEPS.addonMsg, "GUILD" )
+	end
+	if IsInGroup() then
+		C_ChatInfo.SendAddonMessage( STEPS.commPrefix, STEPS.addonMsg, "PARTY" )
 	end
 end
 function STEPS.CHAT_MSG_ADDON(...)
 	self, prefix, message, distType, sender = ...
-	if prefix == STEPS.commPrefix then
-		STEPS.Print( "p:"..prefix.." m:"..message.." d:"..distType.." s:"..sender )
+	-- STEPS.Print( "p:"..prefix.." m:"..message.." d:"..distType.." s:"..sender )
+	if prefix == STEPS.commPrefix and sender ~= STEPS.name.."-"..STEPS.msgRealm then
 		STEPS.DecodeMessage( message )
 	end
 end
@@ -85,7 +89,7 @@ end
 STEPS.keyFunctions = {
 	v = function(val)
 		STEPS.importVersion = val
-		if not STEPS.versionAlerted and val ~= "1.1" then
+		if not STEPS.versionAlerted and val ~= STEPS_MSG_VERSION then
 			STEPS.versionAlerted = true
 			STEPS.Print("There is a new version available.")
 		end
@@ -106,7 +110,6 @@ STEPS.keyFunctions = {
 	end,
 	t = function(val)
 		local loc, _, date, steps = string.find(val, "(.+)<(.+)")
-		print(val..":"..date..">>"..steps)
 		if loc and STEPS.importRealm and STEPS.importName then
 			Steps_data[STEPS.importRealm] = Steps_data[STEPS.importRealm] or {}
 			Steps_data[STEPS.importRealm][STEPS.importName] = Steps_data[STEPS.importRealm][STEPS.importName] or {}
@@ -116,7 +119,7 @@ STEPS.keyFunctions = {
 }
 function STEPS.DecodeMessage( msgIn )
 	for k,v in string.gmatch( msgIn, "(.):([^,]+)" ) do
-		print(k.."-"..v)
+		-- print(k.."-"..v)
 		if STEPS.keyFunctions[k] then
 			STEPS.keyFunctions[k](v)
 		end
@@ -183,7 +186,7 @@ function STEPS.CalcMinAveMax()
 	local sum, count = 0, 0
 	local dateStr = date("%Y%m%d")
 	for date, struct in pairs( STEPS.mine ) do
-		if date ~= "steps" and date ~= dateStr then
+		if string.len(date) == 8 and date ~= dateStr then
 			dSteps = struct.steps
 			min = min and math.min(min, dSteps) or dSteps
 			max = max and math.max(max, dSteps) or dSteps

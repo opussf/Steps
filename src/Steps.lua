@@ -78,10 +78,10 @@ function STEPS.BuildAddonMessage( )
 	table.insert( STEPS.addonMsgTable, "v:"..STEPS_MSG_VERSION )
 	table.insert( STEPS.addonMsgTable, "r:"..STEPS.realm )
 	table.insert( STEPS.addonMsgTable, "n:"..STEPS.name )
-	table.insert( STEPS.addonMsgTable, "s:"..STEPS.mine.steps )
+	table.insert( STEPS.addonMsgTable, "s:"..math.ceil( STEPS.mine.steps ) )
 	for _,dayStr in pairs({ date("%Y%m%d"), date("%Y%m%d", time()-86400) }) do
 		if STEPS.mine[dayStr] then
-			table.insert( STEPS.addonMsgTable, "t:"..dayStr.."<"..STEPS.mine[dayStr].steps )
+			table.insert( STEPS.addonMsgTable, "t:"..dayStr.."<"..math.ceil(STEPS.mine[dayStr].steps) )
 		end
 	end
 	return table.concat( STEPS.addonMsgTable, "," )

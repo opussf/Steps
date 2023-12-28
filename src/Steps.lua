@@ -289,6 +289,10 @@ STEPS.CommandList = {
 		["func"] = STEPS.PrintHelp,
 		["help"] = {"",STEPS.L["Print this help."]}
 	},
+	[STEPS.L["display"]] = {
+		["func"] = STEPS.ChangeDisplay,
+		["help"] = {"",STEPS.L[""]}
+	},
 }
 
 --[[

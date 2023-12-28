@@ -32,7 +32,7 @@ function ExportXML()
 		for name, c in pairs( chars ) do
 			strOut = strOut .. string.format( "<char realm=\"%s\" name=\"%s\" steps=\"%s\">\n", realm, name, math.ceil( c.steps ) )
 			for date, dateStruct in pairs( c ) do
-				if date ~= "steps" then
+				if string.len(date) == 8 then
 					strOut = strOut .. string.format( "\t<day date=\"%s-%s-%s\" steps=\"%s\"/>\n", string.sub(date,1,4), string.sub(date,5,6), string.sub(date,7,8), math.ceil( dateStruct.steps ) )
 				end
 			end
@@ -53,7 +53,7 @@ function ExportJSON()
 			table.insert( charOut, string.format( "\t{\"realm\":\"%s\", \"name\":\"%s\", \"steps\":%s, \"days\":[", realm, name, math.ceil( c.steps ) ) )
 			days = {}
 			for date, dateStruct in pairs( c ) do
-				if date ~= "steps" then
+				if string.len(date) == 8 then
 					table.insert( days, string.format( "\t\t{\"date\":\"%s-%s-%s\", \"steps\":%s}", string.sub(date,1,4), string.sub(date,5,6), string.sub(date,7,8), math.ceil( dateStruct.steps ) ) )
 				end
 			end

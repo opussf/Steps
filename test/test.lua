@@ -170,4 +170,14 @@ function test.test_minavemax_max()
 	assertEquals( 200, max )
 end
 
+--  SEND_ADDON_MESSAGES
+function test.test_send()
+end
+function test.test_receive()
+	STEPS.CHAT_MSG_ADDON("a","pre","VERSION:0.0","dist","sender")
+end
+function test.test_decode()
+	STEPS.DecodeMessage( "v:1.1-version,r:testRealm,n:testPlayer,s:993.324" )
+end
+
 test.run()

@@ -23,6 +23,7 @@ STEPS.pruneDays = 91
 STEPS.min = 0
 STEPS.ave = 0
 STEPS.max = 0
+STEPS.commPrefix = "STEPS"
 
 -- Setup
 function STEPS.OnLoad()
@@ -31,6 +32,8 @@ function STEPS.OnLoad()
 	STEPS.lastSpeed = 0
 	Steps_Frame:RegisterEvent( "ADDON_LOADED" )
 	Steps_Frame:RegisterEvent( "VARIABLES_LOADED" )
+	Steps_Frame:RegisterEvent( "LOADING_SCREEN_DISABLED" )
+	Steps_Frame:RegisterEvent( "CHAT_MSG_ADDON" )
 end
 function STEPS.ADDON_LOADED()
 	Steps_Frame:UnregisterEvent( "ADDON_LOADED" )
@@ -48,6 +51,63 @@ function STEPS.VARIABLES_LOADED()
 	STEPS.mine[date("%Y%m%d")] = STEPS.mine[date("%Y%m%d")] or { ["steps"] = 0 }
 	STEPS.min, STEPS.ave, STEPS.max = STEPS.CalcMinAveMax()
 	STEPS.Prune()
+end
+function STEPS.LOADING_SCREEN_DISABLED()
+	if not C_ChatInfo.IsAddonMessagePrefixRegistered(STEPS.commPrefix) then
+		C_ChatInfo.RegisterAddonMessagePrefix(STEPS.commPrefix)
+	end
+
+	if IsInGuild() then
+		STEPS.addonMsg = STEPS.BuildAddonMessage()
+		C_ChatInfo.SendAddonMessage( STEPS.commPrefix, STEPS.addonMsg, "GUILD" )
+	end
+end
+function STEPS.CHAT_MSG_ADDON(...)
+	self, prefix, message, distType, sender = ...
+	if prefix == STEPS.commPrefix then
+		STEPS.Print( "p:"..prefix.." m:"..message.." d:"..distType.." s:"..sender )
+		STEPS.DecodeMessage( message )
+	end
+end
+function STEPS.BuildAddonMessage( )
+	STEPS.addonMsgTable = {}
+	table.insert( STEPS.addonMsgTable, "v:"..STEPS_MSG_VERSION )
+	table.insert( STEPS.addonMsgTable, "r:"..STEPS.realm )
+	table.insert( STEPS.addonMsgTable, "n:"..STEPS.name )
+	table.insert( STEPS.addonMsgTable, "s:"..STEPS.mine.steps )
+	return table.concat( STEPS.addonMsgTable, "," )
+end
+STEPS.keyFunctions = {
+	v = function(val)
+		STEPS.importVersion = val
+		if not STEPS.versionAlerted and val ~= "1.1" then
+			STEPS.versionAlerted = true
+			STEPS.Print("There is a new version available.")
+		end
+	end,
+	r = function(val)
+		STEPS.importRealm = val
+	end,
+	n = function(val)
+		STEPS.importName = val
+	end,
+	s = function(val)
+		if STEPS.importRealm and STEPS.importName then
+			Steps_data[STEPS.importRealm] = Steps_data[STEPS.importRealm] or {}
+			Steps_data[STEPS.importRealm][STEPS.importName] = Steps_data[STEPS.importRealm][STEPS.importName] or {}
+			Steps_data[STEPS.importRealm][STEPS.importName].steps = val
+			Steps_data[STEPS.importRealm][STEPS.importName].version = STEPS.importVersion
+			STEPS.importRealm, STEPS.importName = nil, nil
+		end
+	end,
+}
+function STEPS.DecodeMessage( msgIn )
+	for k,v in string.gmatch( msgIn, "(.):([^,]+)" ) do
+		print(k.."-"..v)
+		if STEPS.keyFunctions[k] then
+			STEPS.keyFunctions[k](v)
+		end
+	end
 end
 
 -- OnUpdate

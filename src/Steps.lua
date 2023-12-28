@@ -52,6 +52,11 @@ function STEPS.VARIABLES_LOADED()
 	STEPS.mine[date("%Y%m%d")] = STEPS.mine[date("%Y%m%d")] or { ["steps"] = 0 }
 	STEPS.min, STEPS.ave, STEPS.max = STEPS.CalcMinAveMax()
 	STEPS.Prune()
+	if Steps_options.show then
+		Steps_Frame:SetAlpha(1)
+	else
+		Steps_Frame:SetAlpha(0)
+	end
 end
 function STEPS.LOADING_SCREEN_DISABLED()
 	if not C_ChatInfo.IsAddonMessagePrefixRegistered(STEPS.commPrefix) then
@@ -95,7 +100,7 @@ STEPS.keyFunctions = {
 		STEPS.importVersion = val
 		if not STEPS.versionAlerted and STEPS.VersionStrToVal(val) > STEPS.VersionStrToVal( STEPS_MSG_VERSION ) then
 			STEPS.versionAlerted = true
-			STEPS.Print("There is a new version available.")
+			STEPS.Print(STEPS.L["There is a new version available."])
 		end
 	end,
 	r = function(val)
@@ -162,7 +167,7 @@ function STEPS.OnUpdate()
 			STEPS.mine[dateStr].steps = STEPS.mine[dateStr].steps + newSteps
 		end
 	end
-	if nowTS ~= STEPS.lastUpdate then
+	if Steps_options.show and nowTS ~= STEPS.lastUpdate then
 		STEPS.max = math.floor( math.max( STEPS.max, STEPS.mine[dateStr].steps ) )
 		Steps_StepBar_1:SetMinMaxValues( 0, STEPS.max )
 		Steps_StepBar_2:SetMinMaxValues( 0, STEPS.max )
@@ -281,6 +286,8 @@ function STEPS.PrintHelp()
 		end
 	end
 end
+function STEPS.ChangeDisplay()
+end
 STEPS.CommandList = {
 	[""] = {
 		["help"] = {STEPS.L["{steps}"], STEPS.L["Send steps to any chat"]},
@@ -288,6 +295,22 @@ STEPS.CommandList = {
 	[STEPS.L["help"]] = {
 		["func"] = STEPS.PrintHelp,
 		["help"] = {"",STEPS.L["Print this help."]}
+	},
+	[STEPS.L["show"]] = {
+		["func"] = function() Steps_options.show = not Steps_options.show;
+						if Steps_options.show then
+							Steps_Frame:SetAlpha(1)
+						else
+							Steps_StepBar_1:Hide()
+							Steps_StepBar_2:Hide()
+							Steps_Frame:SetAlpha(0)
+						end
+					end,
+		["help"] = {"", STEPS.L["Toggle display."]}
+	},
+	[STEPS.L["display"]] = {
+		["func"] = STEPS.ChangeDisplay,
+		["help"] = {"",STEPS.L["Cycle through display options."]}
 	},
 }
 

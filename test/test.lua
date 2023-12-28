@@ -20,6 +20,7 @@ STEPS.realm = "testRealm"
 STEPS.faction = "Alliance"
 dateStr = date("%Y%m%d")
 STEPS.commPrefix = "STEPS"
+Steps_options.show = true
 
 function test.before()
 	STEPS.OnLoad()

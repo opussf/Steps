@@ -19,6 +19,7 @@ STEPS.name = "testName"
 STEPS.realm = "testRealm"
 STEPS.faction = "Alliance"
 dateStr = date("%Y%m%d")
+STEPS.commPrefix = "STEPS"
 
 function test.before()
 	STEPS.OnLoad()
@@ -173,11 +174,24 @@ end
 --  SEND_ADDON_MESSAGES
 function test.test_send()
 end
-function test.test_receive()
-	STEPS.CHAT_MSG_ADDON("a","pre","VERSION:0.0","dist","sender")
+
+function test.test_decode_steps_single()
+	STEPS.CHAT_MSG_ADDON( {}, "STEPS", "v:0.0,r:wonkRealm,n:wonkPlayer,s:993.324", "GUILD", "joeBob" )
+	assertEquals( 993.324, Steps_data["wonkRealm"]["wonkPlayer"].steps )
+	assertEquals( "0.0", Steps_data["wonkRealm"]["wonkPlayer"].version )
+	assertTrue( Steps_data["wonkRealm"]["wonkPlayer"] )
+	assertIsNil( STEPS.importRealm )
+	assertIsNil( STEPS.importName )
 end
-function test.test_decode()
-	STEPS.DecodeMessage( "v:1.1-version,r:testRealm,n:testPlayer,s:993.324" )
+function test.test_decode_steps_multiple_singleRealm()
+	STEPS.CHAT_MSG_ADDON( {}, "STEPS", "v:0.0,r:wonkRealm,n:wonkPlayer,s:993.324,n:vader,s:123.456", "GUILD", "joeBob" )
+	assertEquals( 993.324, Steps_data["wonkRealm"]["wonkPlayer"].steps )
+	assertEquals( "0.0", Steps_data["wonkRealm"]["wonkPlayer"].version )
+	assertEquals( 123.456, Steps_data["wonkRealm"]["vader"].steps )
+	assertEquals( "0.0", Steps_data["wonkRealm"]["vader"].version )
+
+	assertIsNil( STEPS.importRealm )
+	assertIsNil( STEPS.importName )
 end
 
 test.run()

@@ -65,7 +65,7 @@ end
 function STEPS.CHAT_MSG_ADDON(...)
 	self, prefix, message, distType, sender = ...
 	if prefix == STEPS.commPrefix then
-		STEPS.Print( "p:"..prefix.." m:"..message.." d:"..distType.." s:"..sender )
+		-- STEPS.Print( "p:"..prefix.." m:"..message.." d:"..distType.." s:"..sender )
 		STEPS.DecodeMessage( message )
 	end
 end
@@ -95,19 +95,19 @@ STEPS.keyFunctions = {
 		if STEPS.importRealm and STEPS.importName then
 			Steps_data[STEPS.importRealm] = Steps_data[STEPS.importRealm] or {}
 			Steps_data[STEPS.importRealm][STEPS.importName] = Steps_data[STEPS.importRealm][STEPS.importName] or {}
-			Steps_data[STEPS.importRealm][STEPS.importName].steps = val
+			Steps_data[STEPS.importRealm][STEPS.importName].steps = tonumber(val)
 			Steps_data[STEPS.importRealm][STEPS.importName].version = STEPS.importVersion
-			STEPS.importRealm, STEPS.importName = nil, nil
 		end
 	end,
 }
 function STEPS.DecodeMessage( msgIn )
 	for k,v in string.gmatch( msgIn, "(.):([^,]+)" ) do
-		print(k.."-"..v)
+		--print(k.."-"..v)
 		if STEPS.keyFunctions[k] then
 			STEPS.keyFunctions[k](v)
 		end
 	end
+	STEPS.importRealm, STEPS.importName = nil, nil
 end
 
 -- OnUpdate

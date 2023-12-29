@@ -73,6 +73,7 @@ function STEPS.LOADING_SCREEN_DISABLED()
 	if IsInGroup(LE_PARTY_CATEGORY_INSTANCE) then
 		C_ChatInfo.SendAddonMessage( STEPS.commPrefix, STEPS.addonMsg, "INSTANCE_CHAT" )
 	end
+	STEPS.totalK = math.floor( STEPS.mine.steps / 1000 )
 end
 function STEPS.CHAT_MSG_ADDON(...)
 	self, prefix, message, distType, sender = ...
@@ -191,6 +192,9 @@ function STEPS.OnUpdate()
 		Steps_StepBarText:SetText( STEPS.L["Steps"]..": "..math.floor( STEPS.mine[dateStr].steps ).." ("..STEPS.ave..":"..STEPS.max..")" )
 	end
 	STEPS.lastUpdate = nowTS
+	if math.floor( STEPS.mine.steps / 1000 ) > STEPS.totalK then
+		STEPS.LOADING_SCREEN_DISABLED()
+	end
 end
 function STEPS.CalcMinAveMax()
 	-- returns: min, ave, max

@@ -26,6 +26,7 @@ function test.before()
 	STEPS.OnLoad()
 	STEPS.ADDON_LOADED()
 	STEPS.VARIABLES_LOADED()
+	STEPS.LOADING_SCREEN_DISABLED()
 end
 function test.after()
 	Steps_log = {}

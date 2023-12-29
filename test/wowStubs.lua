@@ -1664,6 +1664,13 @@ TooltipDataProcessor = {}
 function TooltipDataProcessor.AddTooltipPostCall()
 end
 
+C_ChatInfo = {}
+function C_ChatInfo.IsAddonMessagePrefixRegistered()
+	return true
+end
+function C_ChatInfo.SendAddonMessage()
+	return true
+end
 -----------------------------------------
 -- XML functions
 function ParseXML( xmlFile )

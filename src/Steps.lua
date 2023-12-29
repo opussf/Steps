@@ -291,6 +291,20 @@ function STEPS.PrintHelp()
 end
 function STEPS.ChangeDisplay()
 end
+-- UI
+function STEPS.OnDragStart()
+	if Steps_options.unlocked then
+		Steps_Frame:StartMoving()
+	end
+end
+function STEPS.OnDragStop()
+	Steps_Frame:StopMovingOrSizing()
+end
+function STEPS.UIReset()
+	Steps_Frame:SetSize( 200, 12 )
+	Steps_Frame:ClearAllPoints()
+	Steps_Frame:SetPoint("BOTTOMLEFT", "$parent", "BOTTOMLEFT")
+end
 STEPS.CommandList = {
 	[""] = {
 		["help"] = {STEPS.L["{steps}"], STEPS.L["Send steps to any chat"]},
@@ -311,11 +325,22 @@ STEPS.CommandList = {
 					end,
 		["help"] = {"", STEPS.L["Toggle display."]}
 	},
-	[STEPS.L["display"]] = {
-		["func"] = STEPS.ChangeDisplay,
-		["help"] = {"",STEPS.L["Cycle through display options."]}
+	[STEPS.L["lock"]] = {
+		["func"] = function() Steps_options.unlocked = not Steps_options.unlocked
+						STEPS.Print( Steps_options.unlocked and STEPS.L["UI unlocked"] or STEPS.L["UI locked"] )
+					end,
+		["help"] = {"", STEPS.L["Toggle display lock."]}
 	},
+	[STEPS.L["reset"]] = {
+		["func"] = STEPS.UIReset,
+		["help"] = {"", "Reset the position of the UI"}
+	}
+	-- [STEPS.L["display"]] = {
+	-- 	["func"] = STEPS.ChangeDisplay,
+	-- 	["help"] = {"",STEPS.L["Cycle through display options."]}
+	-- },
 }
+
 
 --[[
 https://wowwiki-archive.fandom.com/wiki/API_GetUnitSpeed

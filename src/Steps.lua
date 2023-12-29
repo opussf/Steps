@@ -67,8 +67,11 @@ function STEPS.LOADING_SCREEN_DISABLED()
 	if IsInGuild() then
 		C_ChatInfo.SendAddonMessage( STEPS.commPrefix, STEPS.addonMsg, "GUILD" )
 	end
-	if IsInGroup() then
+	if IsInGroup(LE_PARTY_CATEGORY_HOME) then
 		C_ChatInfo.SendAddonMessage( STEPS.commPrefix, STEPS.addonMsg, "PARTY" )
+	end
+	if IsInGroup(LE_PARTY_CATEGORY_INSTANCE) then
+		C_ChatInfo.SendAddonMessage( STEPS.commPrefix, STEPS.addonMsg, "INSTANCE_CHAT" )
 	end
 end
 function STEPS.CHAT_MSG_ADDON(...)

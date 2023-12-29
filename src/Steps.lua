@@ -24,6 +24,7 @@ STEPS.min = 0
 STEPS.ave = 0
 STEPS.max = 0
 STEPS.commPrefix = "STEPS"
+STEPS.stepsColor = { 0.73, 0.52, 0.18, 1 }
 
 -- Setup
 function STEPS.OnLoad()
@@ -179,12 +180,12 @@ function STEPS.OnUpdate()
 			Steps_StepBar_1:SetValue( STEPS.ave )
 			Steps_StepBar_1:SetStatusBarColor( 0, 0, 1, 1 )
 			Steps_StepBar_2:SetValue( STEPS.mine[dateStr].steps )
-			Steps_StepBar_2:SetStatusBarColor( 0.5, 0.5, 0, 1 )
+			Steps_StepBar_2:SetStatusBarColor( unpack( STEPS.stepsColor ) )
 		else
 			Steps_StepBar_2:SetValue( STEPS.ave )
 			Steps_StepBar_2:SetStatusBarColor( 0, 0, 1, 1 )
 			Steps_StepBar_1:SetValue( STEPS.mine[dateStr].steps )
-			Steps_StepBar_1:SetStatusBarColor( 0.5, 0.5, 0, 1 )
+			Steps_StepBar_1:SetStatusBarColor( unpack( STEPS.stepsColor ) )
 		end
 		Steps_StepBar_1:Show()
 		Steps_StepBar_2:Show()

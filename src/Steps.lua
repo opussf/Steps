@@ -125,7 +125,7 @@ STEPS.keyFunctions = {
 		if loc and STEPS.importRealm and STEPS.importName then
 			Steps_data[STEPS.importRealm] = Steps_data[STEPS.importRealm] or {}
 			Steps_data[STEPS.importRealm][STEPS.importName] = Steps_data[STEPS.importRealm][STEPS.importName] or {}
-			Steps_data[STEPS.importRealm][STEPS.importName][date] = { ["steps"] = steps }
+			Steps_data[STEPS.importRealm][STEPS.importName][date] = { ["steps"] = tonumber(steps) }
 		end
 	end,
 }

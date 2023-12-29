@@ -179,9 +179,9 @@ end
 function test.test_decode_steps_single()
 	STEPS.versionAlerted = nil
 	STEPS.CHAT_MSG_ADDON( {}, "STEPS", "v:0.0,r:wonkRealm,n:wonkPlayer,s:993.324,t:"..dateStr.."<42.634,t:"..date("%Y%m%d", time()-86400).."<15.2", "GUILD", "joeBob" )
+	assertTrue( Steps_data["wonkRealm"]["wonkPlayer"] )
 	assertEquals( 993.324, Steps_data["wonkRealm"]["wonkPlayer"].steps )
 	assertEquals( "0.0", Steps_data["wonkRealm"]["wonkPlayer"].version )
-	assertTrue( Steps_data["wonkRealm"]["wonkPlayer"] )
 	assertIsNil( STEPS.importRealm )
 	assertIsNil( STEPS.importName )
 	assertIsNil( STEPS.versionAlerted )
@@ -197,6 +197,13 @@ function test.test_decode_steps_multiple_singleRealm()
 	assertIsNil( STEPS.importName )
 	assertTrue( STEPS.versionAlerted )
 end
+function test.test_send_info_again()
+	Steps_data = { wonkRealm = { wonkPlayer = { steps = 15, [date("%Y%m%d")] = { steps = 15 } } } }
+	STEPS.CHAT_MSG_ADDON( {}, "STEPS", "v:0.1,r:wonkRealm,n:wonkPlayer,s:42,t:"..date("%Y%m%d").."<42", "GUILD", "wonkPlayer-wonkRealm")
+	assertEquals( 42, Steps_data["wonkRealm"]["wonkPlayer"].steps )
+	assertEquals( 42, Steps_data["wonkRealm"]["wonkPlayer"][date("%Y%m%d")].steps )
+end
+-- Version tests
 function test.test_version_to_str_tag_2()
 	assertEquals( 10200, STEPS.VersionStrToVal( "1.2" ) )
 end

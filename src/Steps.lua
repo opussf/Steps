@@ -29,7 +29,7 @@ STEPS.stepsColor = { 0.73, 0.52, 0.18, 1 }
 -- Setup
 function STEPS.OnLoad()
 	SLASH_STEPS1 = "/STEPS"
-	SlashCmdList["STEPS"] = function(msg) STEPS.command(msg); end
+	SlashCmdList["STEPS"] = function(msg) STEPS.Command(msg); end
 	STEPS.lastSpeed = 0
 	Steps_Frame:RegisterEvent( "ADDON_LOADED" )
 	Steps_Frame:RegisterEvent( "VARIABLES_LOADED" )
@@ -89,7 +89,8 @@ function STEPS.BuildAddonMessage()
 	table.insert( STEPS.addonMsgTable, "r:"..STEPS.realm )
 	table.insert( STEPS.addonMsgTable, "n:"..STEPS.name )
 	table.insert( STEPS.addonMsgTable, "s:"..math.ceil( STEPS.mine.steps ) )
-	for _,dayStr in pairs({ date("%Y%m%d"), date("%Y%m%d", time()-86400) }) do
+	for dayBack=0,10 do
+		dayStr = date("%Y%m%d", time() - (dayBack*86400) )
 		if STEPS.mine[dayStr] then
 			table.insert( STEPS.addonMsgTable, "t:"..dayStr.."<"..math.ceil(STEPS.mine[dayStr].steps) )
 		end
@@ -255,7 +256,7 @@ function STEPS.Print( msg, showName)
 	end
 	DEFAULT_CHAT_FRAME:AddMessage( msg )
 end
-function STEPS.parseCmd(msg)
+function STEPS.ParseCmd(msg)
 	if msg then
 		msg = string.lower(msg)
 		local a,b,c = strfind(msg, "(%S+)")  --contiguous string of non-space characters
@@ -267,12 +268,12 @@ function STEPS.parseCmd(msg)
 		end
 	end
 end
-function STEPS.command( msg )
-	local cmd, param = STEPS.parseCmd(msg)
-	if STEPS.CommandList[cmd] and STEPS.CommandList[cmd].alias then
-		cmd = STEPS.CommandList[cmd].alias
+function STEPS.Command( msg )
+	local cmd, param = STEPS.ParseCmd(msg)
+	if STEPS.commandList[cmd] and STEPS.commandList[cmd].alias then
+		cmd = STEPS.commandList[cmd].alias
 	end
-	local cmdFunc = STEPS.CommandList[cmd]
+	local cmdFunc = STEPS.commandList[cmd]
 	if cmdFunc and cmdFunc.func then
 		cmdFunc.func(param)
 	else
@@ -281,10 +282,10 @@ function STEPS.command( msg )
 end
 function STEPS.PrintHelp()
 	STEPS.Print( string.format(STEPS.L["%s (%s) by %s"], STEPS_MSG_ADDONNAME, STEPS_MSG_VERSION, STEPS_MSG_AUTHOR ) )
-	for cmd, info in pairs(STEPS.CommandList) do
+	for cmd, info in pairs(STEPS.commandList) do
 		if info.help then
 			local cmdStr = cmd
-			for c2, i2 in pairs(STEPS.CommandList) do
+			for c2, i2 in pairs(STEPS.commandList) do
 				if i2.alias and i2.alias == cmd then
 					cmdStr = string.format( "%s / %s", cmdStr, c2 )
 				end
@@ -310,7 +311,7 @@ function STEPS.UIReset()
 	Steps_Frame:ClearAllPoints()
 	Steps_Frame:SetPoint("BOTTOMLEFT", "$parent", "BOTTOMLEFT")
 end
-STEPS.CommandList = {
+STEPS.commandList = {
 	[""] = {
 		["help"] = {STEPS.L["{steps}"], STEPS.L["Send steps to any chat"]},
 	},

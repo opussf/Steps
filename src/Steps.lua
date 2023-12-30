@@ -105,7 +105,7 @@ STEPS.keyFunctions = {
 		STEPS.importVersion = val
 		if not STEPS.versionAlerted and STEPS.VersionStrToVal(val) > STEPS.VersionStrToVal( STEPS_MSG_VERSION ) then
 			STEPS.versionAlerted = true
-			STEPS.Print(STEPS.L["There is a new version available."])
+			STEPS.Print(STEPS.L["A new version of Steps is available."])
 		end
 	end,
 	r = function(val)

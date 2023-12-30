@@ -7,5 +7,5 @@ if GetLocale() == "esES" or GetLocale() == "esMX" then
     L.L["Print this help."] = "Imprime esta ayuda."
     L.L["help"] = "ayuda"
     L.L["Send steps to any chat"] = "Enviar pasos a cualquier chat"
-    --L.L["There is a new version available."]
+    L.L["A new version of Steps is available."] = "Hay una nueva versión de Steps disponible."
 end

@@ -103,10 +103,10 @@ function test.test_replace_plural()
 	assertEquals( "My steps today: 2", STEPS.ReplaceMessage( "{steps}" ) )
 end
 function test.test_command()
-	STEPS.command()
+	STEPS.Command()
 end
 function test.test_commandHelp()
-	STEPS.command( "help" )
+	STEPS.Command( "help" )
 end
 function test.test_UI_Text()
 	unitSpeeds.player = 7

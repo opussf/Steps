@@ -252,7 +252,7 @@ function STEPS.Print( msg, showName)
 	-- print to the chat frame
 	-- set showName to false to suppress the addon name printing
 	if (showName == nil) or (showName) then
-		msg = COLOR_PURPLE..STEPS_MSG_ADDONNAME.."> "..COLOR_END..msg
+		msg = COLOR_GOLD..STEPS_MSG_ADDONNAME.."> "..COLOR_END..msg
 	end
 	DEFAULT_CHAT_FRAME:AddMessage( msg )
 end

@@ -344,10 +344,12 @@ STEPS.commandList = {
 		["func"] = function() Steps_options.enableChat = not Steps_options.enableChat;
 						if Steps_options.enableChat then
 							STEPS.InitChat()
+							STEPS.Print(STEPS.L["{steps} now enabled."])
 						else
 							STEPS.Print(STEPS.L["Please /reload to disable chat integration."])
 						end
 					end,
+		["help"] = {"", STEPS.L["Toggle chat {steps} integration."]}
 	}
 	-- [STEPS.L["display"]] = {
 	-- 	["func"] = STEPS.ChangeDisplay,

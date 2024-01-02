@@ -41,7 +41,6 @@ function STEPS.ADDON_LOADED()
 	STEPS.name = UnitName("player")
 	STEPS.realm = GetRealmName()
 	STEPS.msgRealm = string.gsub( STEPS.realm, " ", "" )
-	STEPS.InitChat()
 end
 function STEPS.VARIABLES_LOADED()
 	-- Unregister the event for this method.
@@ -57,6 +56,9 @@ function STEPS.VARIABLES_LOADED()
 		Steps_Frame:SetAlpha(1)
 	else
 		Steps_Frame:SetAlpha(0)
+	end
+	if Steps_options.enableChat then
+		STEPS.InitChat()
 	end
 end
 function STEPS.LOADING_SCREEN_DISABLED()
@@ -312,9 +314,6 @@ function STEPS.UIReset()
 	Steps_Frame:SetPoint("BOTTOMLEFT", "$parent", "BOTTOMLEFT")
 end
 STEPS.commandList = {
-	[""] = {
-		["help"] = {STEPS.L["{steps}"], STEPS.L["Send steps to any chat"]},
-	},
 	[STEPS.L["help"]] = {
 		["func"] = STEPS.PrintHelp,
 		["help"] = {"",STEPS.L["Print this help."]}
@@ -340,6 +339,17 @@ STEPS.commandList = {
 	[STEPS.L["reset"]] = {
 		["func"] = STEPS.UIReset,
 		["help"] = {"", "Reset the position of the UI"}
+	},
+	[STEPS.L["chat"]] = {
+		["func"] = function() Steps_options.enableChat = not Steps_options.enableChat;
+						if Steps_options.enableChat then
+							STEPS.InitChat()
+							STEPS.Print(STEPS.L["{steps} now enabled."])
+						else
+							STEPS.Print(STEPS.L["Please /reload to disable chat integration."])
+						end
+					end,
+		["help"] = {"", STEPS.L["Toggle chat {steps} integration."]}
 	}
 	-- [STEPS.L["display"]] = {
 	-- 	["func"] = STEPS.ChangeDisplay,

@@ -5,6 +5,9 @@ function STEPS.InitChat()
 	SendChatMessage = STEPS.SendChatMessage
 	STEPS.OriginalBNSendWhisper = BNSendWhisper
 	BNSendWhisper = STEPS.BNSendWhisper
+	STEPS.commandList[""] = {
+		["help"] = {STEPS.L["{steps}"], STEPS.L["Send steps to any chat"]},
+	}
 end
 function STEPS.ReplaceMessage( msgIn )
 	-- search for and replace {FB}

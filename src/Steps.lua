@@ -35,6 +35,8 @@ function STEPS.OnLoad()
 	Steps_Frame:RegisterEvent( "VARIABLES_LOADED" )
 	Steps_Frame:RegisterEvent( "LOADING_SCREEN_DISABLED" )
 	Steps_Frame:RegisterEvent( "CHAT_MSG_ADDON" )
+	Steps_Frame:RegisterEvent( "GROUP_ROSTER_UPDATE" )
+	Steps_Frame:RegisterEvent( "INSTANCE_GROUP_SIZE_CHANGED" )
 end
 function STEPS.ADDON_LOADED()
 	Steps_Frame:UnregisterEvent( "ADDON_LOADED" )
@@ -61,7 +63,7 @@ function STEPS.VARIABLES_LOADED()
 		STEPS.InitChat()
 	end
 end
-function STEPS.LOADING_SCREEN_DISABLED()
+function STEPS.SendMessages()
 	if not C_ChatInfo.IsAddonMessagePrefixRegistered(STEPS.commPrefix) then
 		C_ChatInfo.RegisterAddonMessagePrefix(STEPS.commPrefix)
 	end
@@ -78,6 +80,9 @@ function STEPS.LOADING_SCREEN_DISABLED()
 	end
 	STEPS.totalK = math.floor( STEPS.mine.steps / 1000 )
 end
+STEPS.LOADING_SCREEN_DISABLED = STEPS.SendMessages
+STEPS.GROUP_ROSTER_UPDATE = STEPS.SendMessages
+STEPS.INSTANCE_GROUP_SIZE_CHANGED = STEPS.SendMessages
 function STEPS.CHAT_MSG_ADDON(...)
 	self, prefix, message, distType, sender = ...
 	-- STEPS.Print( "p:"..prefix.." m:"..message.." d:"..distType.." s:"..sender )

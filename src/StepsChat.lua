@@ -12,6 +12,7 @@ end
 function STEPS.ReplaceMessage( msgIn )
 	-- search for and replace {FB}
 	--print( "msgIn: "..msgIn )
+	STEPS.SendMessages()
 	msgNew = nil
 	local tokenStart, tokenEnd  = strfind( msgIn, "{[sS][tT][eE][pP][sS]*}" )
 	if tokenStart then

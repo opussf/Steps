@@ -79,7 +79,7 @@ function STEPS.SendMessages()
 	if IsInGroup(LE_PARTY_CATEGORY_INSTANCE) then
 		C_ChatInfo.SendAddonMessage( STEPS.commPrefix, STEPS.addonMsg, "INSTANCE_CHAT" )
 	end
-	STEPS.totalK = math.floor( STEPS.mine.steps / 1000 )
+	STEPS.totalC = math.floor( STEPS.mine.steps / 100 )
 end
 STEPS.LOADING_SCREEN_DISABLED = STEPS.SendMessages
 STEPS.GROUP_ROSTER_UPDATE = STEPS.SendMessages
@@ -202,7 +202,7 @@ function STEPS.OnUpdate()
 		Steps_StepBarText:SetText( STEPS.L["Steps"]..": "..math.floor( STEPS.mine[dateStr].steps ).." ("..STEPS.ave..":"..STEPS.max..")" )
 	end
 	STEPS.lastUpdate = nowTS
-	if math.floor( STEPS.mine.steps / 1000 ) > STEPS.totalK then
+	if math.floor( STEPS.mine.steps / 100 ) > STEPS.totalC then
 		STEPS.LOADING_SCREEN_DISABLED()
 	end
 end
@@ -330,8 +330,7 @@ function STEPS.TooltipSetUnit( arg1, arg2 )
 		end
 	end
 	if name and Steps_data[realm] and Steps_data[realm][name] then
-		GameTooltip:AddLine( "Steps today: "..math.floor( Steps_data[realm][name][date("%Y%m%d")].steps or 0 )..
-			" total: "..math.floor( Steps_data[realm][name].steps ) )
+		GameTooltip:AddLine( "Steps total: "..math.floor( Steps_data[realm][name].steps ) )
 	end
 end
 

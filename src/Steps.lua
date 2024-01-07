@@ -330,7 +330,8 @@ function STEPS.TooltipSetUnit( arg1, arg2 )
 		end
 	end
 	if name and Steps_data[realm] and Steps_data[realm][name] then
-		GameTooltip:AddLine( "Steps today: "..( Steps_data[realm][name][date("%Y%m%d")].steps or 0).." total: "..Steps_data[realm][name].steps )
+		GameTooltip:AddLine( "Steps today: "..math.floor( Steps_data[realm][name][date("%Y%m%d")].steps or 0 )..
+			" total: "..math.floor( Steps_data[realm][name].steps ) )
 	end
 end
 

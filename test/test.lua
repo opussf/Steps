@@ -13,6 +13,7 @@ Steps_Frame = CreateFrame()
 Steps_StepBar_1 = CreateStatusBar()
 Steps_StepBar_2 = CreateStatusBar()
 Steps_StepBarText = CreateFrame()
+GameTooltip = FrameGameTooltip
 
 -- addon setup
 STEPS.name = "testName"

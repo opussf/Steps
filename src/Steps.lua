@@ -43,6 +43,7 @@ function STEPS.ADDON_LOADED()
 	STEPS.name = UnitName("player")
 	STEPS.realm = GetRealmName()
 	STEPS.msgRealm = string.gsub( STEPS.realm, " ", "" )
+	TooltipDataProcessor.AddTooltipPostCall( Enum.TooltipDataType.Unit, STEPS.TooltipSetUnit )
 end
 function STEPS.VARIABLES_LOADED()
 	-- Unregister the event for this method.
@@ -318,6 +319,21 @@ function STEPS.UIReset()
 	Steps_Frame:ClearAllPoints()
 	Steps_Frame:SetPoint("BOTTOMLEFT", "$parent", "BOTTOMLEFT")
 end
+-- Tooltip
+function STEPS.TooltipSetUnit( arg1, arg2 )
+	local name = GameTooltip:GetUnit()
+	local realm = ""
+	if UnitName( "mouseover" ) == name then
+		_, realm = UnitName( "mouseover" )
+		if not realm then
+			realm = GetRealmName()
+		end
+	end
+	if name and Steps_data[realm] and Steps_data[realm][name] then
+		GameTooltip:AddLine( "Steps today: "..( Steps_data[realm][name][date("%Y%m%d")].steps or 0).." total: "..Steps_data[realm][name].steps )
+	end
+end
+
 STEPS.commandList = {
 	[STEPS.L["help"]] = {
 		["func"] = STEPS.PrintHelp,

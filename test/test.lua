@@ -13,6 +13,7 @@ Steps_Frame = CreateFrame()
 Steps_StepBar_1 = CreateStatusBar()
 Steps_StepBar_2 = CreateStatusBar()
 Steps_StepBarText = CreateFrame()
+GameTooltip = FrameGameTooltip
 
 -- addon setup
 STEPS.name = "testName"
@@ -150,7 +151,7 @@ function test.test_missing_key()
 	assertEquals( 0, Steps_data["testRealm"]["testPlayer"][date("%Y%m%d")].steps )
 end
 function test.prep_minavemax_data()
-	for dayBack = 0,100 do
+	for dayBack = 0,80 do
 		dataDay = date( "%Y%m%d", time() - (dayBack * 86400) )
 		Steps_data["testRealm"]["testPlayer"][dataDay] = {["steps"] = dayBack*2000}
 		Steps_data["testRealm"]["testPlayer"].steps = Steps_data["testRealm"]["testPlayer"].steps + dayBack
@@ -164,12 +165,12 @@ end
 function test.test_minavemax_ave()
 	test.prep_minavemax_data()
 	min, ave, max = STEPS.CalcMinAveMax()
-	assertEquals( 101000, ave )
+	assertEquals( 81000, ave )
 end
 function test.test_minavemax_max()
 	test.prep_minavemax_data()
 	min, ave, max = STEPS.CalcMinAveMax()
-	assertEquals( 200000, max )
+	assertEquals( 160000, max )
 end
 
 --  SEND_ADDON_MESSAGES
@@ -177,7 +178,7 @@ function test.test_send()
 	test.prep_minavemax_data()
 	STEPS.LOADING_SCREEN_DISABLED()
 	assertTrue( string.len( STEPS.addonMsg ) < 250, "STEPS.addonMsg length ("..string.len( STEPS.addonMsg )..") is 250 or more characters." )
-	assertEquals( "v:@VERSION@,r:testRealm,n:testPlayer,s:5050,t:", string.sub( STEPS.addonMsg, 1, 46 ) )
+	assertEquals( "v:@VERSION@,r:testRealm,n:testPlayer,s:3240,t:", string.sub( STEPS.addonMsg, 1, 46 ) )
 end
 
 function test.test_decode_steps_single()

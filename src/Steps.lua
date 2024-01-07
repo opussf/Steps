@@ -348,7 +348,9 @@ STEPS.commandList = {
 	[STEPS.L["chat"]] = {
 		["func"] = function() Steps_options.enableChat = not Steps_options.enableChat;
 						if Steps_options.enableChat then
-							STEPS.InitChat()
+							if not STEPS.OriginalSendChatMessage then
+								STEPS.InitChat()
+							end
 							STEPS.Print(STEPS.L["{steps} now enabled."])
 						else
 							STEPS.Print(STEPS.L["Please /reload to disable chat integration."])

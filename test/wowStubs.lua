@@ -413,9 +413,11 @@ Frame = {
 FrameGameTooltip = {
 		["HookScript"] = function( self, callback ) end,
 		["GetName"] = function(self) return self.name end,
+		["GetUnit"] = function(self) return self.name end,
 		["SetOwner"] = function(self, newOwner) end, -- this is only for tooltip frames...
 		["ClearLines"] = function(self) end, -- this is only for tooltip frames...
 		["SetHyperlink"] = function(self, hyperLink) end, -- this is only for tooltip frames...
+		["AddLine"] = function(self, line) self.line = line end,
 		["init"] = function(frameName)
 			_G[frameName.."TextLeft2"] = CreateFontString(frameName.."TextLeft2")
 			_G[frameName.."TextLeft3"] = CreateFontString(frameName.."TextLeft3")
@@ -478,6 +480,16 @@ Units = {
 		["name"] = "connectedUnit",
 		["realm"] = "connectedRealm",
 		["realmRelationship"] = 3,
+	},
+	["mouseover"] = {
+		["class"] = "Priest",
+		["classCAPS"] = "PRIEST",
+		["classIndex"] = 99999,  -- find this out
+		["faction"] = {"Alliance", "Alliance"},
+		["name"] = "mousename",
+		["race"] = "Dwarf",
+		["realm"] = "mouserealm",
+		["sex"] = 1,
 	},
 
 }
@@ -1499,7 +1511,7 @@ function UnitLevel( who )
 	return unitLevels[who]
 end
 function UnitName( who )
-	return Units[who].name
+	return Units[who].name, Units[who].realm
 end
 function UnitPowerMax( who, powerType )
 	-- http://wowwiki.wikia.com/wiki/API_UnitPowerMax

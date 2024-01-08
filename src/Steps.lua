@@ -331,8 +331,8 @@ function STEPS.TooltipSetUnit( arg1, arg2 )
 	end
 	if name and Steps_data[realm] and Steps_data[realm][name] then
 		for dayBack=-1,1 do
-			local dateStr = date("%Y%m%d", time() - (dayBack*86400))
-			if not today and Steps_data[realm][name][dateStr] then
+			local dateStr = date("%Y%m%d", time() + (dayBack*86400))
+			if Steps_data[realm][name][dateStr] then
 				today = Steps_data[realm][name][dateStr].steps
 			end
 		end

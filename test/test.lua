@@ -208,6 +208,16 @@ function test.test_send_info_again()
 	assertEquals( 42, Steps_data["wonkRealm"]["wonkPlayer"].steps )
 	assertEquals( 42, Steps_data["wonkRealm"]["wonkPlayer"][date("%Y%m%d")].steps )
 end
+function test.test_send_info_timezones()
+	GameTooltip.name = "mousename"
+	Steps_data = { mouserealm = { mousename = { steps = 15,
+			[date("%Y%m%d", time()+86400)] = { steps = 6 },
+			[date("%Y%m%d", time())] = { steps = 5 },
+			[date("%Y%m%d", time()-86400)] = { steps = 4 },
+	} } }
+	STEPS.TooltipSetUnit( )
+	assertEquals( "Steps today: 6 total: 15", GameTooltip.line )
+end
 -- Version tests
 function test.test_version_to_str_tag_2()
 	assertEquals( 10200, STEPS.VersionStrToVal( "1.2" ) )

@@ -68,7 +68,7 @@ function ExportJSON()
 end
 function sorted_pairs( tableIn )
 	local keys = {}
-	for k in pairs( tableIn ) do table.insert( keys, k ); print(k) 	end
+	for k in pairs( tableIn ) do table.insert( keys, k ) end
 	table.sort( keys )
 	local lcv = 0
 	local iter = function()

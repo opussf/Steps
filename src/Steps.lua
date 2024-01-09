@@ -364,8 +364,12 @@ function STEPS.AddToDropDownMenu( frame, _, _, level )
 		if today then
 			UIDropDownMenu_AddSeparator()
 			local steps_info = UIDropDownMenu_CreateInfo()
-			steps_info.text = "Steps today: "..today.." total: "..total
 			steps_info.notCheckable = true
+			steps_info.isTitle = true
+			steps_info.text = "Steps"
+			UIDropDownMenu_AddButton( steps_info, 1 )
+			steps_info.isTitle = false
+			steps_info.text = "today: "..today.." total: "..total
 			UIDropDownMenu_AddButton( steps_info, 1 )
 		end
 	end

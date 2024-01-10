@@ -348,18 +348,24 @@ end
 -- DropDownMenu
 function STEPS.AddToDropDownMenu( frame, _, _, level )
 	local clicked_frame
+	local name, realm
 	if isElvUIInstalled or isShadowedUnitFrames then
 		clicked_frame = frame.unit
 	else
-		if frame:GetParent() then
-			clicked_frame = frame:GetParent().unit
-		end
+		clicked_frame = frame
 	end
+	if frame then
+		name = frame.name
+		realm = frame.server
+	end
+
 	if clicked_frame and level == 1 then
-		local name, realm = UnitName( clicked_frame )
-		if not realm then
+		if not realm then  -- frame does not have .server
 			realm = GetRealmName()
 		end
+--		STEPS.Print(" name: "..name )
+--		STEPS.Print("realm: "..realm )
+
 		today, total = STEPS.GetTodayTotal( name, realm )
 		if today then
 			UIDropDownMenu_AddSeparator()

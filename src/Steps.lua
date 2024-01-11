@@ -382,6 +382,9 @@ function STEPS.AddToDropDownMenu( frame, _, _, level )
 end
 hooksecurefunc( "UIDropDownMenu_Initialize", STEPS.AddToDropDownMenu )
 -- Post
+function STEPS.GetPostString()
+	return string.format("%s: %i", STEPS.L["My steps today"], math.floor( STEPS.mine[dateStr].steps or "0" ) )
+end
 function STEPS.Post( param )
 end
 STEPS.commandList = {

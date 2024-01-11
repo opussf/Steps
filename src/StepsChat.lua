@@ -16,13 +16,9 @@ function STEPS.ReplaceMessage( msgIn )
 	msgNew = nil
 	local tokenStart, tokenEnd  = strfind( msgIn, "{[sS][tT][eE][pP][sS]*}" )
 	if tokenStart then
-		--print( "tokenStart: "..tokenStart )
-		--print( "tokenEnd: "..tokenEnd )
-		--print( "index: "..index )
 		local dateStr = date("%Y%m%d")
-		local stepsStr = string.format("%s: %i", STEPS.L["My steps today"], math.floor( STEPS.mine[dateStr].steps or "0" ) )
 		msgNew = string.sub( msgIn, 1, tokenStart-1 )..
-				stepsStr..
+				STEPS.GetPostString()..
 				string.sub( msgIn, tokenEnd+1 )
 	end
 	return( ( msgNew or msgIn ) )

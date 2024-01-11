@@ -235,6 +235,14 @@ function test.test_version_replacestr()
 	assertEquals( 0, STEPS.VersionStrToVal( "@VERSION@" ) )
 end
 -- Post
+function test.test_get_postString()
+	assertEquals( "My steps today: 0", STEPS.GetPostString() )
+end
+function test.test_post_none()
+	chatLog = {}
+	STEPS.Command( "post" )
+	-- should report an oops (print help?)
+end
 function test.test_post_guild()
 	chatLog = {}
 	STEPS.Command( "post guild" )

@@ -381,6 +381,9 @@ function STEPS.AddToDropDownMenu( frame, _, _, level )
 	end
 end
 hooksecurefunc( "UIDropDownMenu_Initialize", STEPS.AddToDropDownMenu )
+-- Post
+function STEPS.Post( param )
+end
 STEPS.commandList = {
 	[STEPS.L["help"]] = {
 		["func"] = STEPS.PrintHelp,
@@ -406,7 +409,7 @@ STEPS.commandList = {
 	},
 	[STEPS.L["reset"]] = {
 		["func"] = STEPS.UIReset,
-		["help"] = {"", "Reset the position of the UI"}
+		["help"] = {"", STEPS.L["Reset the position of the UI"]}
 	},
 	[STEPS.L["chat"]] = {
 		["func"] = function() Steps_options.enableChat = not Steps_options.enableChat;
@@ -420,7 +423,11 @@ STEPS.commandList = {
 						end
 					end,
 		["help"] = {"", STEPS.L["Toggle chat {steps} integration."]}
-	}
+	},
+	[STEPS.L["post"]] = {
+		["func"] = STEPS.Post,
+		["help"] = { "[guild|party|instance|raid|<playerName>]", "Print score to channel or player." }
+	},
 	-- [STEPS.L["display"]] = {
 	-- 	["func"] = STEPS.ChangeDisplay,
 	-- 	["help"] = {"",STEPS.L["Cycle through display options."]}

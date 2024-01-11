@@ -234,5 +234,41 @@ end
 function test.test_version_replacestr()
 	assertEquals( 0, STEPS.VersionStrToVal( "@VERSION@" ) )
 end
-
+-- Post
+function test.test_post_guild()
+	chatLog = {}
+	STEPS.Command( "post guild" )
+	for k, v in pairs( chatLog ) do
+		print( k )
+	end
+	assertEquals( "GUILD", chatLog.chatType )
+end
+function test.test_post_party()
+	STEPS.Command( "post party" )
+	for k, v in pairs( chatLog ) do
+		print( k )
+	end
+	assertEquals( "PARTY", chatLog.chatType )
+end
+function test.test_post_instance()
+	STEPS.Command( "post instance" )
+	for k, v in pairs( chatLog ) do
+		print( k )
+	end
+	assertEquals( "INSTANCE", chatLog.chatType )
+end
+function test.test_post_raid()
+	STEPS.Command( "post raid" )
+	for k, v in pairs( chatLog ) do
+		print( k )
+	end
+	assertEquals( "RAID", chatLog.chatType )
+end
+function test.test_post_whisper()
+	STEPS.Command( "post otherPlayer" )
+	for k, v in pairs( chatLog ) do
+		print( k )
+	end
+	assertEquals( "WHISPER", chatLog.chatType )
+end
 test.run()

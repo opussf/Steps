@@ -1,5 +1,9 @@
 # Features
 
+## post
+
+Add an option to post to channels without the chat integration.
+
 ## targetDropdown
 
 https://wowpedia.fandom.com/wiki/Using_UIDropDownMenu

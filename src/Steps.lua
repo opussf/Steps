@@ -386,6 +386,25 @@ function STEPS.GetPostString()
 	return string.format("%s: %i", STEPS.L["My steps today"], math.floor( STEPS.mine[dateStr].steps or "0" ) )
 end
 function STEPS.Post( param )
+	local chatChannel, toWhom
+	if( param ) then
+		if( param == "guild" and IsInGuild() ) then
+			chatChannel = "GUILD"
+		elseif( param == "party" and IsInGroup() ) then
+			chatChannel = "PARTY"
+		elseif( param == "instance" and IsInGroup( LE_PARTY_CATEGORY_INSTANCE ) ) then
+			chatChannel = "INSTANCE"
+		elseif( param == 'raid' and IsInRaid() ) then
+			chatChannel = "RAID"
+		elseif( param ~= "" ) then
+			chatChannel = "WHISPER"
+			toWhom = param
+		end
+
+		if( chatChannel ) then
+			SendChatMessage( STEPS.GetPostString(), chatChannel, nil, toWhom )  -- toWhom will be nil for most
+		end
+	end
 end
 STEPS.commandList = {
 	[STEPS.L["help"]] = {

@@ -204,6 +204,9 @@ Achievements = {
 EquipmentSets = {
 	{["name"] = "testSet", ["icon"] = "icon", ["items"] = {[1] = "113596"},},
 }
+-- Instance variables
+LE_PARTY_CATEGORY_HOME = 1
+LE_PARTY_CATEGORY_INSTANCE = 2
 -- WowToken
 TokenPrice = 123456 -- 12G 34S 45C
 --- Factions

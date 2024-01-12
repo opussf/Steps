@@ -32,6 +32,7 @@ end
 function test.after()
 	Steps_log = {}
 	Steps_data = {}
+	myParty = { ["group"] = nil, ["raid"] = nil, ["roster"] = {} }
 end
 function test.test_playerStartsMoving()
 	unitSpeeds.player = 7 -- 100% speed
@@ -234,5 +235,42 @@ end
 function test.test_version_replacestr()
 	assertEquals( 0, STEPS.VersionStrToVal( "@VERSION@" ) )
 end
-
+-- Post
+function test.test_get_postString()
+	assertEquals( "My steps today: 0", STEPS.GetPostString() )
+end
+function test.test_post_none()
+	chatLog = {}
+	STEPS.Command( "post" )
+	-- should report an oops (print help?)
+end
+function test.test_post_guild()
+	chatLog = {}
+	STEPS.Command( "post guild" )
+	assertEquals( "GUILD", chatLog[#chatLog].chatType )
+	assertEquals( "My steps today: 0", chatLog[#chatLog].msg )
+end
+function test.test_post_party()
+	myParty.party = true
+	STEPS.Command( "post party" )
+	assertEquals( "PARTY", chatLog[#chatLog].chatType )
+	assertEquals( "My steps today: 0", chatLog[#chatLog].msg )
+end
+function test.test_post_instance()
+	myParty.instance = true
+	STEPS.Command( "post instance" )
+	assertEquals( "INSTANCE", chatLog[#chatLog].chatType )
+	assertEquals( "My steps today: 0", chatLog[#chatLog].msg )
+end
+function test.test_post_raid()
+	myParty.raid = true
+	STEPS.Command( "post raid" )
+	assertEquals( "RAID", chatLog[#chatLog].chatType )
+	assertEquals( "My steps today: 0", chatLog[#chatLog].msg )
+end
+function test.test_post_whisper()
+	STEPS.Command( "post otherPlayer" )
+	assertEquals( "WHISPER", chatLog[#chatLog].chatType )
+	assertEquals( "My steps today: 0", chatLog[#chatLog].msg )
+end
 test.run()

@@ -270,9 +270,6 @@ function test.test_post_raid()
 end
 function test.test_post_whisper()
 	STEPS.Command( "post otherPlayer" )
-	for k, v in pairs( chatLog[#chatLog] ) do
-		print( k )
-	end
 	assertEquals( "WHISPER", chatLog[#chatLog].chatType )
 	assertEquals( "My steps today: 0", chatLog[#chatLog].msg )
 end

@@ -16,7 +16,6 @@ function STEPS.ReplaceMessage( msgIn )
 	msgNew = nil
 	local tokenStart, tokenEnd  = strfind( msgIn, "{[sS][tT][eE][pP][sS]*}" )
 	if tokenStart then
-		local dateStr = date("%Y%m%d")
 		msgNew = string.sub( msgIn, 1, tokenStart-1 )..
 				STEPS.GetPostString()..
 				string.sub( msgIn, tokenEnd+1 )

@@ -383,12 +383,15 @@ end
 hooksecurefunc( "UIDropDownMenu_Initialize", STEPS.AddToDropDownMenu )
 -- Post
 function STEPS.GetPostString()
+	local dateStr = date("%Y%m%d")
 	return string.format("%s: %i", STEPS.L["My steps today"], math.floor( STEPS.mine[dateStr].steps or "0" ) )
 end
 function STEPS.Post( param )
 	local chatChannel, toWhom
 	if( param ) then
-		if( param == "guild" and IsInGuild() ) then
+		if( param == "say" ) then
+			chatChannel = "SAY"
+		elseif( param == "guild" and IsInGuild() ) then
 			chatChannel = "GUILD"
 		elseif( param == "party" and IsInGroup() ) then
 			chatChannel = "PARTY"
@@ -448,7 +451,7 @@ STEPS.commandList = {
 	},
 	[STEPS.L["post"]] = {
 		["func"] = STEPS.Post,
-		["help"] = { "[guild|party|instance|raid|<playerName>]", "Print score to channel or player." }
+		["help"] = { "[say|guild|party|instance|raid|<playerName>]", "Post steps report to channel or player." }
 	},
 	-- [STEPS.L["display"]] = {
 	-- 	["func"] = STEPS.ChangeDisplay,

@@ -327,7 +327,7 @@ function STEPS.GetTodayTotal( name, realm )
 				today = Steps_data[realm][name][dateStr].steps
 			end
 		end
-		return math.floor( today ), math.floor( Steps_data[realm][name].steps )
+		return math.floor( today or 0 ), math.floor( Steps_data[realm][name].steps or 0 )
 	end
 end
 -- Tooltip

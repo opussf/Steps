@@ -1,0 +1,23 @@
+
+
+     Options:
+
+         UI:
+           ┌──┐        ┌──┐         ┌─────┐
+           │  │ Show   │  │  Lock   │Reset│
+           └──┘        └──┘         └─────┘
+         Bars:
+           ┌──┐        ┌──┐
+           │  │  Ave   │  │  Maximum
+           └──┘        └──┘
+         Text:
+           ┌────────────────────────────────────┐
+           │Steps: $c ($a:$m)                   │
+           └────────────────────────────────────┘
+               $c  Current
+               $a  Average
+               $m  Maximum
+
+         Share:
+
+Created with Monodraw

@@ -1,5 +1,14 @@
 # Features
 
+## Options
+
+[ ] Show the UI
+[ ] Lock the UI from moving
+[ ] Reset the UI Location
+[ ] Chat - enable {STEPS} integration
+[ ] Post - default channel?
+
+
 ## post
 
 Add an option to post to channels without the chat integration.

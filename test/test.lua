@@ -274,7 +274,7 @@ end
 function test.test_post_instance()
 	myParty.instance = true
 	STEPS.Command( "post instance" )
-	assertEquals( "INSTANCE", chatLog[#chatLog].chatType )
+	assertEquals( "INSTANCE_CHAT", chatLog[#chatLog].chatType )
 	assertEquals( "My steps today: 0", chatLog[#chatLog].msg )
 end
 function test.test_post_raid()

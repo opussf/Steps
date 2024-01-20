@@ -396,7 +396,7 @@ function STEPS.Post( param )
 		elseif( param == "party" and IsInGroup() ) then
 			chatChannel = "PARTY"
 		elseif( param == "instance" and IsInGroup( LE_PARTY_CATEGORY_INSTANCE ) ) then
-			chatChannel = "INSTANCE"
+			chatChannel = "INSTANCE_CHAT"
 		elseif( param == 'raid' and IsInRaid() ) then
 			chatChannel = "RAID"
 		elseif( param ~= "" ) then

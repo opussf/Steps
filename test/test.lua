@@ -173,6 +173,21 @@ function test.test_minavemax_max()
 	min, ave, max = STEPS.CalcMinAveMax()
 	assertEquals( 160000, max )
 end
+function test.test_minavemax_min_withZeros()
+	test.prep_minavemax_data()
+	dataDay = date( "%Y%m%d", time() - (1 * 86400) )
+	Steps_data["testRealm"]["testPlayer"][dataDay] = {["steps"] = 0}
+	min, ave, max = STEPS.CalcMinAveMax()
+	assertEquals( 4000, min )
+end
+function test.test_minavemax_ave_withZeros()
+	test.prep_minavemax_data()
+	dataDay = date( "%Y%m%d", time() - (1 * 86400) )
+	Steps_data["testRealm"]["testPlayer"][dataDay] = {["steps"] = 0}
+	min, ave, max = STEPS.CalcMinAveMax()
+	assertEquals( 82000, ave )
+end
+
 
 --  SEND_ADDON_MESSAGES
 function test.test_send()

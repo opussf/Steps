@@ -1,23 +1,27 @@
 
+   Options:
 
-     Options:
+       Bars:
+         ┌──┐         ┌──┐         ┌─────┐
+         │  │ Show    │  │ Lock    │Reset│
+         └──┘         └──┘         └─────┘
+         ┌──┐         ┌──┐
+         │  │ Average │  │ Maximum
+         └──┘         └──┘
+       Text:
+         ┌────────────────────────────────────┐
+         │Steps: $c ($a:$m)                   │
+         └────────────────────────────────────┘
+             $c  Current
+             $a  Average
+             $m  Maximum
 
-         UI:
-           ┌──┐        ┌──┐         ┌─────┐
-           │  │ Show   │  │  Lock   │Reset│
-           └──┘        └──┘         └─────┘
-         Bars:
-           ┌──┐        ┌──┐
-           │  │  Ave   │  │  Maximum
-           └──┘        └──┘
-         Text:
-           ┌────────────────────────────────────┐
-           │Steps: $c ($a:$m)                   │
-           └────────────────────────────────────┘
-               $c  Current
-               $a  Average
-               $m  Maximum
-
-         Share:
+       Share:
+         ┌────────────────────────────────────┐
+         │My Steps today: $c                  │
+         └────────────────────────────────────┘
+         ┌──┐
+         │  │ Enable chat integration
+         └──┘ Type {steps} in any chat channel
 
 Created with Monodraw

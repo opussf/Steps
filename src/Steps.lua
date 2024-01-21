@@ -391,9 +391,13 @@ function STEPS.Post( param )
 	if( param ) then
 		if( param == "say" ) then
 			chatChannel = "SAY"
+		elseif( param == "yell") then
+			chatChannel = "YELL"
 		elseif( param == "guild" and IsInGuild() ) then
 			chatChannel = "GUILD"
 		elseif( param == "party" and IsInGroup() ) then
+			chatChannel = "PARTY"
+		elseif( param == "instance" and IsInGroup() ) then
 			chatChannel = "PARTY"
 		elseif( param == "instance" and IsInGroup( LE_PARTY_CATEGORY_INSTANCE ) ) then
 			chatChannel = "INSTANCE_CHAT"
@@ -450,9 +454,27 @@ STEPS.commandList = {
 					end,
 		["help"] = {"", STEPS.L["Toggle chat {steps} integration."]}
 	},
-	[STEPS.L["post"]] = {
-		["func"] = STEPS.Post,
-		["help"] = { "[say|guild|party|instance| raid|<playerName>]", "Post steps report to channel or player." }
+	[STEPS.L["say"]] = {
+		["func"] = function() STEPS.Post("say") end,
+		["help"] = { "| guild | party | instance | raid | whisper <playerName>", "Post steps report to channel or player."}
+	},
+	[STEPS.L["yell"]] = {
+		["func"] = function() STEPS.Post("yell") end,
+	},
+	[STEPS.L["guild"]] = {
+		["func"] = function() STEPS.Post("guild") end,
+	},
+	[STEPS.L["party"]] = {
+		["func"] = function() STEPS.Post("party") end,
+	},
+	[STEPS.L["instance"]] = {
+		["func"] = function() STEPS.Post("instance") end,
+	},
+	[STEPS.L["raid"]] = {
+		["func"] = function() STEPS.Post("raid") end,
+	},
+	[STEPS.L["whisper"]] = {
+		["func"] = function(target) STEPS.Post("whisper "..target) end,
 	},
 	-- [STEPS.L["display"]] = {
 	-- 	["func"] = STEPS.ChangeDisplay,

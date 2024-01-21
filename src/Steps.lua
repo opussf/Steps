@@ -406,6 +406,7 @@ function STEPS.Post( param )
 
 		if( chatChannel ) then
 			SendChatMessage( STEPS.GetPostString(), chatChannel, nil, toWhom )  -- toWhom will be nil for most
+			STEPS.SendMessages()
 		end
 	end
 end

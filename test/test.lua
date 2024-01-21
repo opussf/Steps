@@ -173,6 +173,21 @@ function test.test_minavemax_max()
 	min, ave, max = STEPS.CalcMinAveMax()
 	assertEquals( 160000, max )
 end
+function test.test_minavemax_min_withZeros()
+	test.prep_minavemax_data()
+	dataDay = date( "%Y%m%d", time() - (1 * 86400) )
+	Steps_data["testRealm"]["testPlayer"][dataDay] = {["steps"] = 0}
+	min, ave, max = STEPS.CalcMinAveMax()
+	assertEquals( 4000, min )
+end
+function test.test_minavemax_ave_withZeros()
+	test.prep_minavemax_data()
+	dataDay = date( "%Y%m%d", time() - (1 * 86400) )
+	Steps_data["testRealm"]["testPlayer"][dataDay] = {["steps"] = 0}
+	min, ave, max = STEPS.CalcMinAveMax()
+	assertEquals( 82000, ave )
+end
+
 
 --  SEND_ADDON_MESSAGES
 function test.test_send()
@@ -239,37 +254,50 @@ end
 function test.test_get_postString()
 	assertEquals( "My steps today: 0", STEPS.GetPostString() )
 end
-function test.test_post_none()
+function test.test_post_say()
 	chatLog = {}
-	STEPS.Command( "post" )
-	-- should report an oops (print help?)
+	STEPS.Command( "say" )
+	assertEquals( "SAY", chatLog[#chatLog].chatType )
+	assertEquals( "My steps today: 0", chatLog[#chatLog].msg )
+end
+function test.test_post_yell()
+	chatLog = {}
+	STEPS.Command( "yell" )
+	assertEquals( "YELL", chatLog[#chatLog].chatType )
+	assertEquals( "My steps today: 0", chatLog[#chatLog].msg )
 end
 function test.test_post_guild()
 	chatLog = {}
-	STEPS.Command( "post guild" )
+	STEPS.Command( "guild" )
 	assertEquals( "GUILD", chatLog[#chatLog].chatType )
 	assertEquals( "My steps today: 0", chatLog[#chatLog].msg )
 end
 function test.test_post_party()
 	myParty.party = true
-	STEPS.Command( "post party" )
+	STEPS.Command( "party" )
+	assertEquals( "PARTY", chatLog[#chatLog].chatType )
+	assertEquals( "My steps today: 0", chatLog[#chatLog].msg )
+end
+function test.test_post_party2()
+	myParty.party = true
+	STEPS.Command( "instance" )
 	assertEquals( "PARTY", chatLog[#chatLog].chatType )
 	assertEquals( "My steps today: 0", chatLog[#chatLog].msg )
 end
 function test.test_post_instance()
 	myParty.instance = true
-	STEPS.Command( "post instance" )
+	STEPS.Command( "instance" )
 	assertEquals( "INSTANCE_CHAT", chatLog[#chatLog].chatType )
 	assertEquals( "My steps today: 0", chatLog[#chatLog].msg )
 end
 function test.test_post_raid()
 	myParty.raid = true
-	STEPS.Command( "post raid" )
+	STEPS.Command( "raid" )
 	assertEquals( "RAID", chatLog[#chatLog].chatType )
 	assertEquals( "My steps today: 0", chatLog[#chatLog].msg )
 end
 function test.test_post_whisper()
-	STEPS.Command( "post otherPlayer" )
+	STEPS.Command( "whisper otherPlayer" )
 	assertEquals( "WHISPER", chatLog[#chatLog].chatType )
 	assertEquals( "My steps today: 0", chatLog[#chatLog].msg )
 end

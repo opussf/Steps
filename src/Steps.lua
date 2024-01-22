@@ -395,12 +395,12 @@ function STEPS.Post( param )
 			chatChannel = "YELL"
 		elseif( param == "guild" and IsInGuild() ) then
 			chatChannel = "GUILD"
-		elseif( param == "party" and IsInGroup() ) then
-			chatChannel = "PARTY"
-		elseif( param == "instance" and IsInGroup() ) then
+		elseif( param == "party" and IsInGroup( LE_PARTY_CATEGORY_HOME ) ) then
 			chatChannel = "PARTY"
 		elseif( param == "instance" and IsInGroup( LE_PARTY_CATEGORY_INSTANCE ) ) then
 			chatChannel = "INSTANCE_CHAT"
+		elseif( param == "instance" and IsInGroup( LE_PARTY_CATEGORY_HOME ) ) then
+			chatChannel = "PARTY"
 		elseif( param == 'raid' and IsInRaid() ) then
 			chatChannel = "RAID"
 		elseif( param ~= "" ) then
@@ -474,7 +474,7 @@ STEPS.commandList = {
 		["func"] = function() STEPS.Post("raid") end,
 	},
 	[STEPS.L["whisper"]] = {
-		["func"] = function(target) STEPS.Post("whisper "..target) end,
+		["func"] = function(target) STEPS.Post(target) end,
 	},
 	-- [STEPS.L["display"]] = {
 	-- 	["func"] = STEPS.ChangeDisplay,

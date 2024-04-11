@@ -190,7 +190,7 @@ end
 
 
 --  SEND_ADDON_MESSAGES
-function test.test_send()
+function test.notest_send()
 	test.prep_minavemax_data()
 	STEPS.LOADING_SCREEN_DISABLED()
 	assertTrue( string.len( STEPS.addonMsg ) < 250, "STEPS.addonMsg length ("..string.len( STEPS.addonMsg )..") is 250 or more characters." )

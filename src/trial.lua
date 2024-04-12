@@ -1,33 +1,25 @@
 function toBytes(num)
     -- returns a table of bits, most significant first.
     local t = {} -- will contain the bits
-    local r = 0
-    while num > 0 do
-        table.insert(t,math.fmod(num, 256))
-        num = math.floor((num - t[#t]) / 256)
-    end
-    for b = 1,#t do
-        t[b] = (t[b] << b-1) + r     -- Shift left digit-1 places
-        r = t[b] >> 7                -- Shift right by 7 bits (want to keep 7) to get remainder
-        t[b] = (t[b] & 127) + 128    -- 0 the 8th bit, and set to 1  ( or it buy 128? )
-    end
-    if r > 0 then                    -- if there is a remining remainder, add 128 to it - larger numbers might need to revisit this.
-        table.insert(t,r+128)
-    end
-    if #t == 0 then                  -- if no values where inserted (a zero was given), encode it by adding 128
+    local strOut = ""
+
+    if num == 0 then
         t[1] = 128
+        strOut = string.char(128)
+    else
+        while num > 0 do
+            local byte = ( ( num & 0x7f ) | 0x80 )
+            table.insert( t, byte )
+            strOut = string.char( byte ) .. strOut
+            num = num >> 7
+        end
     end
 
-    for _,i in ipairs( t ) do
-        print( string.format( "%s %d %s %x", _, i, string.char(i), i ) )
+    for _, v in ipairs(t) do
+        print( _, v )
     end
 
-    local byteStr = ""
-    for i = #t,1,-1 do
-        byteStr = byteStr..string.char(t[i])
-    end
-
-    return t, byteStr
+    return t, strOut
 end
 
 

@@ -22,7 +22,12 @@ function toBytes(num)
         print( string.format( "%s %d %s %x", _, i, string.char(i), i ) )
     end
 
-    return t
+    local byteStr = ""
+    for i = #t,1,-1 do
+        byteStr = byteStr..string.char(t[i])
+    end
+
+    return t, byteStr
 end
 
 

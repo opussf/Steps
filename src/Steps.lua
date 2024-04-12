@@ -100,9 +100,9 @@ function STEPS.toBytes(num)
 		num = math.floor((num - t[#t]) / 256)
 	end
 	for b = 1,#t do
-		t[b] = (t[b] << b-1) + r     -- Shift left digit-1 places
-		r = t[b] >> 7                -- Shift right by 7 bits (want to keep 7) to get remainder
-		t[b] = (t[b] & 127) + 128    -- 0 the 8th bit, and set to 1  ( or it buy 128? )
+		t[b] = bit.lshift(t[b], b-1) + r     -- Shift left digit-1 places
+		r = bit.rshift(t[b], 7)                -- Shift right by 7 bits (want to keep 7) to get remainder
+		t[b] = bit.band(t[b], 127) + 128    -- 0 the 8th bit, and set to 1  ( or it buy 128? )
 	end
 	if r > 0 then                    -- if there is a remining remainder, add 128 to it - larger numbers might need to revisit this.
 		table.insert(t,r+128)
@@ -119,22 +119,26 @@ function STEPS.toBytes(num)
 end
 function STEPS.BuildAddonMessage2()
 	STEPS.addonMsgTable = {}
+	local prefixLen = string.len( STEPS.commPrefix ) + 1
 	table.insert( STEPS.addonMsgTable, STEPS_MSG_VERSION )
 	table.insert( STEPS.addonMsgTable, STEPS.realm )
 	table.insert( STEPS.addonMsgTable, STEPS.name )
 	table.insert( STEPS.addonMsgTable, select(2, STEPS.toBytes( math.ceil( STEPS.mine.steps ) ) ) )
-	for dayBack=0,10 do
+	local msgStr = table.concat( STEPS.addonMsgTable, "|" )
+	for dayBack=0,STEPS.pruneDays do
 		dayStr = date("%Y%m%d", time() - (dayBack*86400) )
 		if STEPS.mine[dayStr] then
-			table.insert( STEPS.addonMsgTable,
-					string.format("%s%s",
-							select(2, STEPS.toBytes( tonumber( dayStr ) ) ),
-							select(2, STEPS.toBytes( math.ceil( STEPS.mine[dayStr].steps ) ) )
-					)
+			local daySteps = string.format("%s%s",
+					select(2, STEPS.toBytes( tonumber( dayStr ) ) ),
+					select(2, STEPS.toBytes( math.ceil( STEPS.mine[dayStr].steps ) ) )
 			)
+			if ( prefixLen + string.len( msgStr ) + string.len( daySteps ) + 1 >= 255 ) then
+				break
+			end
+			msgStr = msgStr .. "|" .. daySteps
 		end
 	end
-	return table.concat( STEPS.addonMsgTable, "|" )
+	return msgStr
 end
 function STEPS.BuildAddonMessage()
 	STEPS.addonMsgTable = {}
@@ -193,6 +197,9 @@ function STEPS.DecodeMessage( msgIn )
 		end
 	end
 	STEPS.importRealm, STEPS.importName = nil, nil
+end
+function STEPS.DecodeMessage2( msgIn )
+
 end
 
 -- OnUpdate

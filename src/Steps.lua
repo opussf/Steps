@@ -71,6 +71,7 @@ function STEPS.SendMessages()
 	end
 
 	STEPS.addonMsg = STEPS.BuildAddonMessage2()
+	print( STEPS.commPrefix )
 	if IsInGuild() then
 		C_ChatInfo.SendAddonMessage( STEPS.commPrefix, STEPS.addonMsg, "GUILD" )
 	end
@@ -106,6 +107,9 @@ function STEPS.toBytes(num)
 			num = bit.rshift( num, 7 )
 		end
 	end
+	for _, v in ipairs(t) do
+		print( string.format( "%d %d 0x%x", _, v, v ) )
+	end
 
 	return t, strOut
 end
@@ -115,21 +119,22 @@ function STEPS.BuildAddonMessage2()
 	table.insert( STEPS.addonMsgTable, STEPS_MSG_VERSION )
 	table.insert( STEPS.addonMsgTable, STEPS.realm )
 	table.insert( STEPS.addonMsgTable, STEPS.name )
-	table.insert( STEPS.addonMsgTable, select(2, STEPS.toBytes( math.ceil( STEPS.mine.steps ) ) ) )
-	local msgStr = table.concat( STEPS.addonMsgTable, "|" )
-	for dayBack=0,STEPS.pruneDays do
-		dayStr = date("%Y%m%d", time() - (dayBack*86400) )
-		if STEPS.mine[dayStr] then
-			local daySteps = string.format("%s%s",
-					select(2, STEPS.toBytes( tonumber( dayStr ) ) ),
-					select(2, STEPS.toBytes( math.ceil( STEPS.mine[dayStr].steps ) ) )
-			)
-			if ( prefixLen + string.len( msgStr ) + string.len( daySteps ) + 1 >= 255 ) then
-				break
-			end
-			msgStr = msgStr .. "|" .. daySteps
-		end
-	end
+	-- table.insert( STEPS.addonMsgTable, select(2, STEPS.toBytes( math.ceil( STEPS.mine.steps ) ) ) )
+	-- local msgStr = table.concat( STEPS.addonMsgTable, "|" )
+	-- for dayBack=0,5 do
+	-- 	dayStr = date("%Y%m%d", time() - (dayBack*86400) )
+	-- 	if STEPS.mine[dayStr] then
+	-- 		local daySteps = string.format("%s%s",
+	-- 				select(2, STEPS.toBytes( tonumber( dayStr ) ) ),
+	-- 				select(2, STEPS.toBytes( math.ceil( STEPS.mine[dayStr].steps ) ) )
+	-- 		)
+	-- 		if ( prefixLen + string.len( msgStr ) + string.len( daySteps ) + 1 >= 255 ) then
+	-- 			break
+	-- 		end
+	-- 		msgStr = msgStr .. "|" .. daySteps
+	-- 		print( dayStr..":"..msgStr )
+	-- 	end
+	-- end
 	return msgStr
 end
 function STEPS.BuildAddonMessage()

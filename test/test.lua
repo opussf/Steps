@@ -188,13 +188,17 @@ function test.test_minavemax_ave_withZeros()
 	assertEquals( 82000, ave )
 end
 
-
 --  SEND_ADDON_MESSAGES
 function test.notest_send()
 	test.prep_minavemax_data()
 	STEPS.LOADING_SCREEN_DISABLED()
-	assertTrue( string.len( STEPS.addonMsg ) < 250, "STEPS.addonMsg length ("..string.len( STEPS.addonMsg )..") is 250 or more characters." )
-	assertEquals( "v:@VERSION@,r:testRealm,n:testPlayer,s:3240,t:", string.sub( STEPS.addonMsg, 1, 46 ) )
+	for i = 1,string.len(STEPS.addonMsg) do
+		print( string.format( "%s = 0x%x", string.sub( STEPS.addonMsg, i, i ), string.byte( STEPS.addonMsg, i ) ) )
+	end
+
+	assertTrue( string.len( STEPS.addonMsg ) < 255, "STEPS.addonMsg length ("..string.len( STEPS.addonMsg )..") is 255 or more characters." )
+	assertEquals( "@VERSION@|testRealm|testPlayer|"..string.char(0x99)..string.char(0xa8)..string.char(0x80).."|", STEPS.addonMsg )
+	assertEquals( "@VERSION@|testRealm|testPlayer|"..string.char(0x99)..string.char(0xa8)..string.char(0x80).."|", string.sub( STEPS.addonMsg, 1, 34 ) )
 end
 
 function test.notest_decode_steps_single()

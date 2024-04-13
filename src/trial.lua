@@ -16,7 +16,7 @@ function toBytes(num)
     end
 
     for _, v in ipairs(t) do
-        print( _, v )
+        print( string.format( "%d %d 0x%x", _, v, v ) )
     end
 
     return t, strOut
@@ -35,28 +35,15 @@ fromBytes( string.char( 0x81 )..string.char( 0xd3 )..string.char( 0xb4 )..string
 ]]
 function fromBytes( bytes )
     local num = 0
-    local multiplier = 1
 
-    for i = #bytes,1,-1 do
-        local byte = string.byte( bytes, i )
-        print( string.format( "%d %x %d %d", i, byte, byte, #bytes-i))
-        local value = byte % 128           -- remove encoding bit
-        value = value >> (#bytes-i)
-        print( value )
-        -- 'steal' (#bytes-i+1) bytes from left byte
-        stealByte = string.byte( bytes, i-1)
-        print( stealByte, ( ( 2 ^ ( #bytes-i+1 ) ) - 1 ) )
-        if stealByte then
-            stealByte = stealByte & ( ( 2 ^ ( #bytes-i+1 ) ) - 1 )
-            print( stealByte )
-        end
+    for i = 1,#bytes do
+        local b = string.byte( bytes, i )
+        print( string.format( "%d 0x%x %d %d", i, b, b, #bytes-i))
+        num = num << 7
+        print( string.format( "<< 7: 0x%x + 0x%x", num, b & 0x7f ) )
 
-        num = num + value * multiplier
-        if byte >= 128 then
-            multiplier = multiplier * 256
-        else
-            break
-        end
+        num = num + (b & 0x7f)
+        print( string.format( "num: %d 0x%x", num, num ) )
     end
 
     return num
@@ -71,10 +58,11 @@ function d( str )
             outTable[k] = fromBytes(outTable[k])
         end
         if k >= 5 then
-            outTable[k] = string.format( "%s%s", fromBytes(outTable[k], "") )
+            outTable[k] = string.format( "%s%s", fromBytes(string.sub(outTable[k],1,4)), "" )
         end
         print( k, outTable[k] )
         k = k + 1
     end
+    return outTable
 end
 

@@ -88,34 +88,26 @@ function STEPS.CHAT_MSG_ADDON(...)
 	self, prefix, message, distType, sender = ...
 	-- STEPS.Print( "p:"..prefix.." m:"..message.." d:"..distType.." s:"..sender )
 	if prefix == STEPS.commPrefix and sender ~= STEPS.name.."-"..STEPS.msgRealm then
-		STEPS.DecodeMessage( message )
+		STEPS.DecodeMessage2( message )
 	end
 end
 function STEPS.toBytes(num)
-	-- returns a table of bits, most significant last.
+	-- returns a table and string of bytes.  MSB first
 	local t = {} -- will contain the bits
 	local r = 0
-	while num > 0 do
-		table.insert(t,math.fmod(num, 256))
-		num = math.floor((num - t[#t]) / 256)
-	end
-	for b = 1,#t do
-		t[b] = bit.lshift(t[b], b-1) + r     -- Shift left digit-1 places
-		r = bit.rshift(t[b], 7)                -- Shift right by 7 bits (want to keep 7) to get remainder
-		t[b] = bit.band(t[b], 127) + 128    -- 0 the 8th bit, and set to 1  ( or it buy 128? )
-	end
-	if r > 0 then                    -- if there is a remining remainder, add 128 to it - larger numbers might need to revisit this.
-		table.insert(t,r+128)
-	end
-	if #t == 0 then                  -- if no values where inserted (a zero was given), encode it by adding 128
+	if num == 0 then
 		t[1] = 128
-	end
-	local byteStr = ""
-	for i = #t,1,-1 do
-		byteStr = byteStr..string.char(t[i])
+		strOut = string.char(128)
+	else
+		while num > 0 do
+			local bytes = bit.bor( bit.band( num, 0x7f ), 0x80 )
+			table.insert( t, 1, byte )
+			strOut = string.char( byte ) .. strOut
+			num = bit.rshift( num, 7 )
+		end
 	end
 
-	return t, byteStr
+	return t, strOut
 end
 function STEPS.BuildAddonMessage2()
 	STEPS.addonMsgTable = {}
@@ -199,7 +191,11 @@ function STEPS.DecodeMessage( msgIn )
 	STEPS.importRealm, STEPS.importName = nil, nil
 end
 function STEPS.DecodeMessage2( msgIn )
-
+	print( "Decode2" )
+	local decodeTable = {}
+	k = 1
+	for v in string.gmatch( msgIn, "([^|]+)" ) do
+	end
 end
 
 -- OnUpdate

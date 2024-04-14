@@ -202,9 +202,7 @@ STEPS.keyFunctions = {
 	end,
 }
 function STEPS.DecodeMessage( msgIn )
-	STEPS.Print( "Decode1( "..msgIn.." )" )
 	for k,v in string.gmatch( msgIn, "(.):([^,]+)" ) do
-		-- print(k.."-"..v)
 		if STEPS.keyFunctions[k] then
 			STEPS.keyFunctions[k](v)
 		end
@@ -213,7 +211,6 @@ function STEPS.DecodeMessage( msgIn )
 end
 STEPS.keyMap = { "v", "r", "n", "s2" }
 function STEPS.DecodeMessage2( msgIn )
-	STEPS.Print( "Decode2( "..msgIn.." )" )
 	local decodeTable = {}
 	k = 1
 	for v in string.gmatch( msgIn, "([^|]+)" ) do

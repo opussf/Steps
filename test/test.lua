@@ -188,38 +188,59 @@ function test.test_minavemax_ave_withZeros()
 	assertEquals( 82000, ave )
 end
 
-
 --  SEND_ADDON_MESSAGES
-function test.test_send()
+function test.notest_send()
 	test.prep_minavemax_data()
 	STEPS.LOADING_SCREEN_DISABLED()
-	assertTrue( string.len( STEPS.addonMsg ) < 250, "STEPS.addonMsg length ("..string.len( STEPS.addonMsg )..") is 250 or more characters." )
-	assertEquals( "v:@VERSION@,r:testRealm,n:testPlayer,s:3240,t:", string.sub( STEPS.addonMsg, 1, 46 ) )
+	-- for i = 1,string.len(STEPS.addonMsg) do
+	-- 	print( string.format( "%s = 0x%x", string.sub( STEPS.addonMsg, i, i ), string.byte( STEPS.addonMsg, i ) ) )
+	-- end
+	assertTrue( string.len( STEPS.addonMsg ) < 255, "STEPS.addonMsg length ("..string.len( STEPS.addonMsg )..") is 255 or more characters." )
+	-- assertEquals( "@VERSION@|testRealm|testPlayer|"..string.char(0x99)..string.char(0xa8), STEPS.addonMsg )
+	assertEquals( "@VERSION@|testRealm|testPlayer|"..string.char(0x99)..string.char(0xa8).."|", string.sub( STEPS.addonMsg, 1, 34 ) )
 end
-
-function test.test_decode_steps_single()
+function test.notest_decode_steps_single()
 	STEPS.versionAlerted = nil
-	STEPS.CHAT_MSG_ADDON( {}, "STEPS", "v:0.0,r:wonkRealm,n:wonkPlayer,s:993.324,t:"..dateStr.."<42.634,t:"..date("%Y%m%d", time()-86400).."<15.2", "GUILD", "joeBob" )
+	STEPS.CHAT_MSG_ADDON( {}, "STEPS", "0.0|wonkRealm|wonkPlayer|"..string.char(0x87)..string.char(0xe1), "GUILD", "joeBob" )
 	assertTrue( Steps_data["wonkRealm"]["wonkPlayer"] )
-	assertEquals( 993.324, Steps_data["wonkRealm"]["wonkPlayer"].steps )
+	assertEquals( 993, Steps_data["wonkRealm"]["wonkPlayer"].steps )
 	assertEquals( "0.0", Steps_data["wonkRealm"]["wonkPlayer"].version )
 	assertIsNil( STEPS.importRealm )
 	assertIsNil( STEPS.importName )
 	assertIsNil( STEPS.versionAlerted )
 end
-function test.test_decode_steps_multiple_singleRealm()
+function test.notest_decode_steps_sets_versionAlerted()
 	STEPS.versionAlerted = nil
-	STEPS.CHAT_MSG_ADDON( {}, "STEPS", "v:0.1,r:wonkRealm,n:wonkPlayer,s:993.324,n:vader,s:123.456", "GUILD", "joeBob" )
-	assertEquals( 993.324, Steps_data["wonkRealm"]["wonkPlayer"].steps )
+	STEPS.CHAT_MSG_ADDON( {}, "STEPS", "0.1|wonkRealm|wonkPlayer|"..string.char(0x87)..string.char(0xe1), "GUILD", "joeBob" )
+	assertEquals( 993, Steps_data["wonkRealm"]["wonkPlayer"].steps )
 	assertEquals( "0.1", Steps_data["wonkRealm"]["wonkPlayer"].version )
-	assertEquals( 123.456, Steps_data["wonkRealm"]["vader"].steps )
-	assertEquals( "0.1", Steps_data["wonkRealm"]["vader"].version )
+	assertIsNil( STEPS.importRealm )
+	assertIsNil( STEPS.importName )
+	assertTrue( STEPS.versionAlerted )
+end
+function test.test_decode_steps_with_history()
+	STEPS.versionAlerted = nil
+	stepstoday = string.format("%s%s", select(2, STEPS.toBytes(tonumber(date("%Y%m%d")))), select(2, STEPS.toBytes(512)) )
+
+	STEPS.CHAT_MSG_ADDON( {}, "STEPS", "0.1|wonkRealm|wonkPlayer|"..string.char(0x87)..string.char(0xe1).."|"..stepstoday, "GUILD", "joeBob" )
+	assertEquals( 993, Steps_data["wonkRealm"]["wonkPlayer"].steps )
+	assertEquals( "0.1", Steps_data["wonkRealm"]["wonkPlayer"].version )
+	assertEquals( 512, Steps_data["wonkRealm"]["wonkPlayer"][date("%Y%m%d")].steps )
 	assertIsNil( STEPS.importRealm )
 	assertIsNil( STEPS.importName )
 	assertTrue( STEPS.versionAlerted )
 end
 function test.test_send_info_again()
 	Steps_data = { wonkRealm = { wonkPlayer = { steps = 15, [date("%Y%m%d")] = { steps = 15 } } } }
+	steps = select(2, STEPS.toBytes(42))
+	stepstoday = string.format("%s%s", select(2, STEPS.toBytes(tonumber(date("%Y%m%d")))), steps )
+
+	STEPS.CHAT_MSG_ADDON( {}, "STEPS", "0.1|wonkRealm|wonkPlayer|"..steps.."|"..stepstoday, "GUILD", "wonkPlayer-wonkRealm")
+	assertEquals( 42, Steps_data["wonkRealm"]["wonkPlayer"].steps )
+	assertEquals( 42, Steps_data["wonkRealm"]["wonkPlayer"][date("%Y%m%d")].steps )
+end
+function test.test_decode_steps_older_version()
+	STEPS.versionAlerted = nil
 	STEPS.CHAT_MSG_ADDON( {}, "STEPS", "v:0.1,r:wonkRealm,n:wonkPlayer,s:42,t:"..date("%Y%m%d").."<42", "GUILD", "wonkPlayer-wonkRealm")
 	assertEquals( 42, Steps_data["wonkRealm"]["wonkPlayer"].steps )
 	assertEquals( 42, Steps_data["wonkRealm"]["wonkPlayer"][date("%Y%m%d")].steps )

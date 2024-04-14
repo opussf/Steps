@@ -71,7 +71,6 @@ function STEPS.SendMessages()
 	end
 
 	STEPS.addonMsg = STEPS.BuildAddonMessage2()
-	print( STEPS.commPrefix )
 	if IsInGuild() then
 		C_ChatInfo.SendAddonMessage( STEPS.commPrefix, STEPS.addonMsg, "GUILD" )
 	end
@@ -90,16 +89,22 @@ function STEPS.CHAT_MSG_ADDON(...)
 	self, prefix, message, distType, sender = ...
 	-- STEPS.Print( "p:"..prefix.." m:"..message.." d:"..distType.." s:"..sender )
 	if prefix == STEPS.commPrefix and sender ~= STEPS.name.."-"..STEPS.msgRealm then
-		STEPS.DecodeMessage2( message )
+		if string.find(message, "v:") then
+			STEPS.DecodeMessage( message )
+		else
+			STEPS.DecodeMessage2( message )
+		end
 	end
 end
 function STEPS.toBytes(num)
+	-- print( "toBytes( "..num.." )" )
 	-- returns a table and string of bytes.  MSB first
 	local t = {} -- will contain the bits
 	if num == 0 then
 		t[1] = 128
 		strOut = string.char(128)
 	else
+		strOut = ""
 		while num > 0 do
 			local byte = bit.bor( bit.band( num, 0x7f ), 0x80 )
 			table.insert( t, 1, byte )
@@ -107,34 +112,36 @@ function STEPS.toBytes(num)
 			num = bit.rshift( num, 7 )
 		end
 	end
-	for _, v in ipairs(t) do
-		print( string.format( "%d %d 0x%x", _, v, v ) )
-	end
-
 	return t, strOut
 end
+function STEPS.fromBytes( bytes )
+	local num = 0
+
+	for i = 1,#bytes do
+		local b = string.byte( bytes, i )
+		num = bit.lshift(num, 7) + bit.band( b, 0x7f )
+	end
+
+	return num
+end
 function STEPS.BuildAddonMessage2()
-	STEPS.addonMsgTable = {}
 	local prefixLen = string.len( STEPS.commPrefix ) + 1
-	table.insert( STEPS.addonMsgTable, STEPS_MSG_VERSION )
-	table.insert( STEPS.addonMsgTable, STEPS.realm )
-	table.insert( STEPS.addonMsgTable, STEPS.name )
-	-- table.insert( STEPS.addonMsgTable, select(2, STEPS.toBytes( math.ceil( STEPS.mine.steps ) ) ) )
-	-- local msgStr = table.concat( STEPS.addonMsgTable, "|" )
-	-- for dayBack=0,5 do
-	-- 	dayStr = date("%Y%m%d", time() - (dayBack*86400) )
-	-- 	if STEPS.mine[dayStr] then
-	-- 		local daySteps = string.format("%s%s",
-	-- 				select(2, STEPS.toBytes( tonumber( dayStr ) ) ),
-	-- 				select(2, STEPS.toBytes( math.ceil( STEPS.mine[dayStr].steps ) ) )
-	-- 		)
-	-- 		if ( prefixLen + string.len( msgStr ) + string.len( daySteps ) + 1 >= 255 ) then
-	-- 			break
-	-- 		end
-	-- 		msgStr = msgStr .. "|" .. daySteps
-	-- 		print( dayStr..":"..msgStr )
-	-- 	end
-	-- end
+	local msgStr = string.format("%s|%s|%s|%s",
+			STEPS_MSG_VERSION, STEPS.realm, STEPS.name, select(2, STEPS.toBytes( math.ceil( STEPS.mine.steps ) ) )
+	)
+	for dayBack=0,STEPS.pruneDays do
+		dayStr = date("%Y%m%d", time() - (dayBack*86400) )
+		if STEPS.mine[dayStr] and STEPS.mine[dayStr].steps > 0 then
+			local daySteps = string.format("%s%s",
+					select(2, STEPS.toBytes( tonumber( dayStr ) ) ),
+					select(2, STEPS.toBytes( math.ceil( STEPS.mine[dayStr].steps ) ) )
+			)
+			if ( prefixLen + string.len( msgStr ) + string.len( daySteps ) + 1 >= 255 ) then
+				break
+			end
+			msgStr = msgStr .. "|" .. daySteps
+		end
+	end
 	return msgStr
 end
 function STEPS.BuildAddonMessage()
@@ -185,8 +192,17 @@ STEPS.keyFunctions = {
 			Steps_data[STEPS.importRealm][STEPS.importName][date] = { ["steps"] = tonumber(steps) }
 		end
 	end,
+	s2 = function(val)
+		STEPS.keyFunctions.s( STEPS.fromBytes( val ) )
+	end,
+	t2 = function(val)
+		STEPS.keyFunctions.t( string.format( "%d<%d",
+				STEPS.fromBytes( string.sub( val, 1, 4 ) ), STEPS.fromBytes( string.sub( val, 5, -1 ) )
+		) )
+	end,
 }
 function STEPS.DecodeMessage( msgIn )
+	print( "decode1( "..msgIn.." )" )
 	for k,v in string.gmatch( msgIn, "(.):([^,]+)" ) do
 		-- print(k.."-"..v)
 		if STEPS.keyFunctions[k] then
@@ -195,12 +211,20 @@ function STEPS.DecodeMessage( msgIn )
 	end
 	STEPS.importRealm, STEPS.importName = nil, nil
 end
+STEPS.keyMap = { "v", "r", "n", "s2" }
 function STEPS.DecodeMessage2( msgIn )
-	print( "Decode2" )
+	print( "Decode2( "..msgIn.." )" )
 	local decodeTable = {}
 	k = 1
 	for v in string.gmatch( msgIn, "([^|]+)" ) do
+		if k <= #STEPS.keyMap then
+			STEPS.keyFunctions[STEPS.keyMap[k]](v)
+		else
+			STEPS.keyFunctions.t2(v)
+		end
+		k = k + 1
 	end
+	STEPS.importRealm, STEPS.importName = nil, nil
 end
 
 -- OnUpdate

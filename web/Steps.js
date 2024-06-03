@@ -5,9 +5,12 @@ $scope.sortReverse = true;
 $scope.currentDate = new Date();
 $scope.yesterday = new Date(new Date().setDate(new Date().getDate()-1));
 $scope.daybefore = new Date(new Date().setDate(new Date().getDate()-2));
-$scope.lastMonth = new Date(new Date().setDate(new Date().getDate()-31));
-$scope.beforeMonth = new Date(new Date().setDate(new Date().getDate()-61));
-$scope.b2Month = new Date(new Date().setDate(new Date().getDate()-91));
+$scope.lastMonth = new Date(new Date().setDate(1));
+$scope.lastMonth.setMonth($scope.lastMonth.getMonth()-1);
+$scope.beforeMonth = new Date(new Date().setDate(1));
+$scope.beforeMonth.setMonth($scope.beforeMonth.getMonth()-2);
+$scope.b2Month = new Date(new Date().setDate(1));
+$scope.b2Month.setMonth($scope.b2Month.getMonth()-3);
 
 $scope.dayStr = function( day ) {
 	let dayStr = day.getFullYear() + "-" + day.toLocaleString('default', { month: '2-digit' }) + "-" + day.toLocaleString('default', { day: '2-digit' });

@@ -1,18 +1,18 @@
 -- STEPSOptions @VERSION@
 function STEPS.OptionsPanel_OnLoad( panel )
 	panel.name = "Steps"
-	STEPSOptionsFrame_Title:SetText(STEPS_MSG_ADDONNAME.." "..STEPS_MSG_VERSION)
-	panel.okay = STEPS.OptionsPanel_OKAY
+	STEPSOptionsFrame_Title:SetText(STEPS_MSG_ADDONNAME.." v"..STEPS_MSG_VERSION)
+
+	-- These NEED to be set
+	panel.OnDefault = function() end
+	panel.OnRefresh = function() end
+	panel.OnCommit = STEPS.OptionsPanel_OKAY
 	panel.cancel = STEPS.OptionsPanel_Cancel
-	-- panel.refresh = INEED.OptionsPanel_Refresh
 
-	InterfaceOptions_AddCategory(panel)
+	local category, layout = Settings.RegisterCanvasLayoutCategory( panel, panel.name )
+	panel.category = category
+	Settings.RegisterAddOnCategory(category)
 end
-
--- function INEED.OptionsPanel_Reset()
--- 	-- Called from Addon_Loaded
--- 	INEED.OptionsPanel_Refresh()
--- end
 function STEPS.OptionsPanel_OKAY()
 	-- Data was recorded, clear the temp
 	STEPS.oldValues = nil
@@ -26,8 +26,6 @@ function STEPS.OptionsPanel_Cancel()
 	end
 	STEPS.oldValues = nil
 end
-
-
 function STEPS.OptionPanel_KeepOriginalValue( option )
 	if STEPS.oldValues then
 		STEPS.oldValues[option] = STEPS.oldValues[option] or Steps_options[option]
@@ -35,7 +33,6 @@ function STEPS.OptionPanel_KeepOriginalValue( option )
 		STEPS.oldValues={[option] = Steps_options[option]}
 	end
 end
-
 function STEPS.OptionsPanel_CheckButton_OnLoad( self, option, text )
 	--FB.Print("CheckButton_OnLoad( "..option..", "..text.." ) -> "..(FB_options[option] and "checked" or "nil"));
 	getglobal(self:GetName().."Text"):SetText(text)
@@ -47,16 +44,7 @@ function STEPS.OptionsPanel_CheckButton_OnClick( self, option )
 	Steps_options[option] = self:GetChecked()
 end
 
-
--- Steps_options = {
--- 	["show"] = false,
--- 	["enableChat"] = false,
--- 	["unlocked"] = false,
--- }
-
-
-
 STEPS.commandList["options"] = {
-	["func"] = function() InterfaceOptionsFrame_OpenToCategory( STEPS_MSG_ADDONNAME ) end,
+	["func"] = function() Settings.OpenToCategory( STEPSOptionsFrame.category:GetID() ) end,
 	["help"] = {"", "Open the options panel"},
 }

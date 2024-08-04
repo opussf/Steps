@@ -322,4 +322,9 @@ function test.test_post_whisper()
 	assertEquals( "WHISPER", chatLog[#chatLog].chatType )
 	assertEquals( "My steps today: 0", chatLog[#chatLog].msg )
 end
+function test.test_denormalize_01()
+	assertEquals( "Aerie Peak", STEPS.DeNormalizeRealm( "AeriePeak") )
+	assertEquals( "Sisters of Elune", STEPS.DeNormalizeRealm( "SistersofElune") )
+	assertEquals( "The Forgotten Coast", STEPS.DeNormalizeRealm( "TheForgottenCoast" ) )
+end
 test.run()

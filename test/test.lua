@@ -17,7 +17,7 @@ GameTooltip = FrameGameTooltip
 
 -- addon setup
 STEPS.name = "testName"
-STEPS.realm = "testRealm"
+STEPS.realm = "Test Realm"
 STEPS.faction = "Alliance"
 dateStr = date("%Y%m%d")
 STEPS.commPrefix = "STEPS"
@@ -70,7 +70,7 @@ function test.test_speed7()
 	STEPS.lastSpeed = 7
 	STEPS.lastUpdate = time() - 1
 	STEPS.OnUpdate()
-	assertEquals( 2, Steps_data["testRealm"]["testPlayer"][dateStr].steps )
+	assertEquals( 2, Steps_data["Test Realm"]["testPlayer"][dateStr].steps )
 end
 function test.test_speed12_5()
 	unitSpeeds.player = 12.5
@@ -78,7 +78,7 @@ function test.test_speed12_5()
 	STEPS.lastSpeed = 12.5
 	STEPS.lastUpdate = time() - 1
 	STEPS.OnUpdate()
-	assertEquals( 357, math.floor( Steps_data["testRealm"]["testPlayer"][dateStr].steps * 100) )
+	assertEquals( 357, math.floor( Steps_data["Test Realm"]["testPlayer"][dateStr].steps * 100) )
 end
 function test.test_speed14()
 	unitSpeeds.player = 14
@@ -86,7 +86,7 @@ function test.test_speed14()
 	STEPS.lastSpeed = 14
 	STEPS.lastUpdate = time() - 1
 	STEPS.OnUpdate()
-	assertEquals( 4, Steps_data["testRealm"]["testPlayer"][dateStr].steps )
+	assertEquals( 4, Steps_data["Test Realm"]["testPlayer"][dateStr].steps )
 end
 function test.test_replace_single()
 	unitSpeeds.player = 7
@@ -121,20 +121,20 @@ end
 function test.test_prune_removeDays()
 	-- just remove old data
 	oldDateStr = date( "%Y%m%d", time() - (92*86400) )
-	Steps_data["testRealm"]["testPlayer"][oldDateStr] = {["steps"] = 500}
-	Steps_data["testRealm"]["testPlayer"][date("%Y%m%d")] = {["steps"] = 100}
-	Steps_data["testRealm"]["testPlayer"].steps = 600
+	Steps_data["Test Realm"]["testPlayer"][oldDateStr] = {["steps"] = 500}
+	Steps_data["Test Realm"]["testPlayer"][date("%Y%m%d")] = {["steps"] = 100}
+	Steps_data["Test Realm"]["testPlayer"].steps = 600
 	STEPS.Prune()
-	assertIsNil( Steps_data["testRealm"]["testPlayer"][oldDateStr] )
-	assertEquals( 100, Steps_data["testRealm"]["testPlayer"][date("%Y%m%d")].steps )
+	assertIsNil( Steps_data["Test Realm"]["testPlayer"][oldDateStr] )
+	assertEquals( 100, Steps_data["Test Realm"]["testPlayer"][date("%Y%m%d")].steps )
 end
 function test.test_prune_removePlayer()
 	oldDateStr = date( "%Y%m%d", time() - (95*86400) )
-	Steps_data["testRealm"]["otherPlayer"] = {[oldDateStr] = {["steps"] = 500}, ["steps"] = 500}
-	Steps_data["testRealm"]["otherPlayer"].steps = 500
-	Steps_data["testRealm"]["testPlayer"] = {[date("%Y%m%d")] = {["steps"] = 100}, ["steps"] = 100}
+	Steps_data["Test Realm"]["otherPlayer"] = {[oldDateStr] = {["steps"] = 500}, ["steps"] = 500}
+	Steps_data["Test Realm"]["otherPlayer"].steps = 500
+	Steps_data["Test Realm"]["testPlayer"] = {[date("%Y%m%d")] = {["steps"] = 100}, ["steps"] = 100}
 	STEPS.Prune()
-	assertIsNil( Steps_data["testRealm"]["otherPlayer"] )
+	assertIsNil( Steps_data["Test Realm"]["otherPlayer"] )
 end
 function test.test_prune_removeRealm()
 	Steps_data["otherRealm"] = {}
@@ -147,15 +147,15 @@ function test.test_missing_key()
 	STEPS.lastSpeed = 7
 	STEPS.lastUpdate = time() - 1
 	STEPS.OnUpdate()
-	Steps_data["testRealm"]["testPlayer"][date("%Y%m%d")] = nil
+	Steps_data["Test Realm"]["testPlayer"][date("%Y%m%d")] = nil
 	STEPS.OnUpdate()
-	assertEquals( 0, Steps_data["testRealm"]["testPlayer"][date("%Y%m%d")].steps )
+	assertEquals( 0, Steps_data["Test Realm"]["testPlayer"][date("%Y%m%d")].steps )
 end
 function test.prep_minavemax_data()
 	for dayBack = 0,80 do
 		dataDay = date( "%Y%m%d", time() - (dayBack * 86400) )
-		Steps_data["testRealm"]["testPlayer"][dataDay] = {["steps"] = dayBack*2000}
-		Steps_data["testRealm"]["testPlayer"].steps = Steps_data["testRealm"]["testPlayer"].steps + dayBack
+		Steps_data["Test Realm"]["testPlayer"][dataDay] = {["steps"] = dayBack*2000}
+		Steps_data["Test Realm"]["testPlayer"].steps = Steps_data["Test Realm"]["testPlayer"].steps + dayBack
 	end
 end
 function test.test_minavemax_min()
@@ -176,14 +176,14 @@ end
 function test.test_minavemax_min_withZeros()
 	test.prep_minavemax_data()
 	dataDay = date( "%Y%m%d", time() - (1 * 86400) )
-	Steps_data["testRealm"]["testPlayer"][dataDay] = {["steps"] = 0}
+	Steps_data["Test Realm"]["testPlayer"][dataDay] = {["steps"] = 0}
 	min, ave, max = STEPS.CalcMinAveMax()
 	assertEquals( 4000, min )
 end
 function test.test_minavemax_ave_withZeros()
 	test.prep_minavemax_data()
 	dataDay = date( "%Y%m%d", time() - (1 * 86400) )
-	Steps_data["testRealm"]["testPlayer"][dataDay] = {["steps"] = 0}
+	Steps_data["Test Realm"]["testPlayer"][dataDay] = {["steps"] = 0}
 	min, ave, max = STEPS.CalcMinAveMax()
 	assertEquals( 82000, ave )
 end
@@ -196,8 +196,8 @@ function test.notest_send()
 	-- 	print( string.format( "%s = 0x%x", string.sub( STEPS.addonMsg, i, i ), string.byte( STEPS.addonMsg, i ) ) )
 	-- end
 	assertTrue( string.len( STEPS.addonMsg ) < 255, "STEPS.addonMsg length ("..string.len( STEPS.addonMsg )..") is 255 or more characters." )
-	-- assertEquals( "@VERSION@|testRealm|testPlayer|"..string.char(0x99)..string.char(0xa8), STEPS.addonMsg )
-	assertEquals( "@VERSION@|testRealm|testPlayer|"..string.char(0x99)..string.char(0xa8).."|", string.sub( STEPS.addonMsg, 1, 34 ) )
+	-- assertEquals( "@VERSION@|Test Realm|testPlayer|"..string.char(0x99)..string.char(0xa8), STEPS.addonMsg )
+	assertEquals( "@VERSION@|Test Realm|testPlayer|"..string.char(0x99)..string.char(0xa8).."|", string.sub( STEPS.addonMsg, 1, 34 ) )
 end
 function test.notest_decode_steps_single()
 	STEPS.versionAlerted = nil

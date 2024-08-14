@@ -1,8 +1,8 @@
 -- STEPS @VERSION@
-STEPS_SLUG, STEPS = ...
-STEPS_MSG_ADDONNAME = GetAddOnMetadata( STEPS_SLUG, "Title" )
-STEPS_MSG_VERSION   = GetAddOnMetadata( STEPS_SLUG, "Version" )
-STEPS_MSG_AUTHOR    = GetAddOnMetadata( STEPS_SLUG, "Author" )
+STEPS_SLUG, STEPS   = ...
+STEPS_MSG_ADDONNAME = C_AddOns.GetAddOnMetadata( STEPS_SLUG, "Title" )
+STEPS_MSG_VERSION   = C_AddOns.GetAddOnMetadata( STEPS_SLUG, "Version" )
+STEPS_MSG_AUTHOR    = C_AddOns.GetAddOnMetadata( STEPS_SLUG, "Author" )
 
 -- Colours
 COLOR_RED = "|cffff0000"

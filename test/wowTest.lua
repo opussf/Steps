@@ -1,7 +1,7 @@
 -----------------------------------------
 -- Author  :  Opussf
--- Date    :  August 19 2024
--- Revision:  9.5
+-- Date    :  August 25 2024
+-- Revision:  9.5-2-gba37ab3
 -----------------------------------------
 -- This is an uber simple unit test implementation
 -- It creates a dictionary called test.
@@ -29,7 +29,6 @@ function assertAlmostEquals( expected, actual, msg, places, delta)
 	places = tonumber(places) or 7
 	delta = delta and tonumber(delta) or nil
 	msg = msg or ( "Failure: expected ("..(expected or "nil")..") actual ("..(actual or "nil")..")" )
-	--diff = tonumber( string.format( "%."..places.."f", math.abs( expected - actual ) ) )
 	diff = math.abs( expected - actual )
 
 	if delta and delta == tonumber(delta) then

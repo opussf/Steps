@@ -73,7 +73,8 @@
 </div>
 </div> <!-- row -->
 <div class="row StepsWrapper" ng-repeat="char in steps | orderBy:sortType:sortReverse | filter:stepsFilter track by $index" ng-value="{{$index}}">
-<div class="col col-xs-2 col-md-2 StepsName"><span>{{$index+1}} - {{char.name}}-{{char.realm}}</span></div>
+<div class="col col-xs-2 col-md-2 StepsName">
+	<span>{{$index+1}} - <a href="mysteps.html?{{char.name}}-{{char.realm}}">{{char.name}}-{{char.realm}}</a></span></div>
 <div class="col col-xs-1 col-md-1 StepsSteps"><span>{{ char.steps }}</span></div>
 <div class="col col-xs-1 col-md-1 StepsStepsDays"><span>{{ stepsInDay(currentDate, char.days) }}</span></div>
 <div class="col col-xs-1 col-md-1 StepsStepsDays"><span>{{ stepsInDay(yesterday, char.days) }}</span></div>

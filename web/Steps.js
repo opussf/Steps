@@ -41,7 +41,7 @@ $scope.stepsInMonth = function( month, days ) {
 	}
 }
 
-$http.get("Steps.json")
+$http.get("Steps.json?date="+ new Date())
 .then( function( response) { 
 $scope.steps = response.data.steps;
 dayStrs = [];
@@ -50,7 +50,6 @@ dayStrs.push($scope.dayStr( $scope.yesterday) );
 dayStrs.push($scope.dayStr( $scope.daybefore) );
 dayKeys = ["today", "yesterday", "daybefore"];
 
-console.log("Hello - " + $scope.dayStr( $scope.currentDate ));
 for( ch in $scope.steps ) {
 	for( dStr in dayStrs ) {
 		$scope.steps[ch][dayKeys[dStr]] = -1;

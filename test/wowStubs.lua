@@ -1,7 +1,7 @@
 -----------------------------------------
 -- Author  :  Opussf
--- Date    :  August 19 2024
--- Revision:  9.5
+-- Date    :  August 25 2024
+-- Revision:  9.5-2-gba37ab3
 -----------------------------------------
 -- These are functions from wow that have been needed by addons so far
 -- Not a complete list of the functions.
@@ -334,7 +334,7 @@ format = string.format
 strmatch = string.match
 strfind = string.find
 strsub = string.sub
-strtolower = string.lower
+strlower = string.lower
 strlen = string.len
 time = os.time
 date = os.date

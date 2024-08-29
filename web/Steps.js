@@ -1,5 +1,9 @@
+google.charts.load("current", {packages:["calendar"]});
+google.charts.setOnLoadCallback( function() {console.log("OnLoadCallBack"); });
+
 var app = angular.module('myApp', []);
 app.controller('StepsDisplay', function( $scope, $http ) {
+$scope.calNameRealm = '';
 $scope.sortType = 'steps';
 $scope.sortReverse = true;
 $scope.currentDate = new Date();
@@ -39,6 +43,44 @@ $scope.stepsInMonth = function( month, days ) {
 	if( stepCounter > 0 ) {
 		return stepCounter + " (" + count + ")";
 	}
+}
+
+$scope.nameOnClick = function(name, realm) {
+	if( $scope.calNameRealm == name+"-"+realm ) {
+		$scope.calNameRealm = "";
+	} else {
+		$scope.calNameRealm = name+"-"+realm;
+	}
+	$scope.drawChart(name, realm);
+}
+
+$scope.drawChart = function(name, realm) {
+	console.log("drawChart( "+name+", "+realm+" )");
+	charData = new Array();
+	for( i in $scope.steps ) {
+		if( $scope.steps[i].realm == realm && $scope.steps[i].name == name ) {
+			console.log( $scope.steps[i] );
+			for( day in $scope.steps[i].days ) {
+				dInfo = $scope.steps[i].days[day].date.split("-");
+				charData.push( new Array( new Date(dInfo[0], dInfo[1]-1, dInfo[2]), $scope.steps[i].days[day].steps ) );
+			}
+		}
+	}
+	console.log(charData);
+
+	var dataTable = new google.visualization.DataTable();
+	dataTable.addColumn({ type: 'date', id: 'Date' });
+	dataTable.addColumn({ type: 'number', id: 'Number of steps' });
+	dataTable.addRows( charData );
+
+	var chart = new google.visualization.Calendar(document.getElementById('chart_div'));
+
+	var options = {
+		title: "Steps for "+name+"-"+realm,
+		height: 175,
+	};
+
+	chart.draw(dataTable, options);
 }
 
 $http.get("Steps.json?date="+ new Date())

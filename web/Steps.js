@@ -1,9 +1,11 @@
 google.charts.load("current", {packages:["calendar"]});
-google.charts.setOnLoadCallback( function() {console.log("OnLoadCallBack"); });
+//google.charts.setOnLoadCallback( function() {console.log("OnLoadCallBack"); });
+google.charts.setOnLoadCallback( function() { });
 
 var app = angular.module('myApp', []);
 app.controller('StepsDisplay', function( $scope, $http ) {
 $scope.calNameRealm = '';
+$scope.calAllData = new Array();
 $scope.sortType = 'steps';
 $scope.sortReverse = true;
 $scope.currentDate = new Date();
@@ -48,6 +50,7 @@ $scope.stepsInMonth = function( month, days ) {
 $scope.nameOnClick = function(name, realm) {
 	if( $scope.calNameRealm == name+"-"+realm ) {
 		$scope.calNameRealm = "";
+		name = ""; realm = "";
 	} else {
 		$scope.calNameRealm = name+"-"+realm;
 	}
@@ -57,12 +60,17 @@ $scope.nameOnClick = function(name, realm) {
 $scope.drawChart = function(name, realm) {
 	console.log("drawChart( "+name+", "+realm+" )");
 	charData = new Array();
-	for( i in $scope.steps ) {
-		if( $scope.steps[i].realm == realm && $scope.steps[i].name == name ) {
-			console.log( $scope.steps[i] );
-			for( day in $scope.steps[i].days ) {
-				dInfo = $scope.steps[i].days[day].date.split("-");
-				charData.push( new Array( new Date(dInfo[0], dInfo[1]-1, dInfo[2]), $scope.steps[i].days[day].steps ) );
+	if( name == "" && realm == "" ) {
+		charData = $scope.calAllData;
+		name = "All"; realm = "Characters";
+	} else {
+		for( i in $scope.steps ) {
+			if( $scope.steps[i].realm == realm && $scope.steps[i].name == name ) {
+				console.log( $scope.steps[i] );
+				for( day in $scope.steps[i].days ) {
+					dInfo = $scope.steps[i].days[day].date.split("-");
+					charData.push( new Array( new Date(dInfo[0], dInfo[1]-1, dInfo[2]), $scope.steps[i].days[day].steps ) );
+				}
 			}
 		}
 	}
@@ -103,6 +111,24 @@ for( ch in $scope.steps ) {
 		}
 	}
 }
+tempHash = {};
+for( ch in $scope.steps ) {
+	for( day in $scope.steps[ch].days ) {
+		dateKey = $scope.steps[ch].days[day].date;
+		if( tempHash.hasOwnProperty(dateKey) ) {
+			tempHash[dateKey] = tempHash[dateKey] + $scope.steps[ch].days[day].steps;
+		} else {
+			tempHash[dateKey] = $scope.steps[ch].days[day].steps;
+		}
+	}
+}
+for( dateStr in tempHash) {
+	steps = tempHash[dateStr];
+	dInfo = dateStr.split("-");
+	$scope.calAllData.push( new Array( new Date(dInfo[0], dInfo[1]-1, dInfo[2]), steps ) );
+}
+
+
 //	$scope.steps[ch][$scope.dayStr($scope.currentDate)] =
 //		$scope.steps[ch]
 //	console.log(JSON.stringify($scope.steps[ch]));

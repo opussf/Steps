@@ -1,6 +1,5 @@
 google.charts.load("current", {packages:["calendar"]});
 //google.charts.setOnLoadCallback( function() {console.log("OnLoadCallBack"); });
-google.charts.setOnLoadCallback( function() { });
 
 var app = angular.module('myApp', []);
 app.controller('StepsDisplay', function( $scope, $http ) {
@@ -58,7 +57,6 @@ $scope.nameOnClick = function(name, realm) {
 }
 
 $scope.drawChart = function(name, realm) {
-	console.log("drawChart( "+name+", "+realm+" )");
 	charData = new Array();
 	if( name == "" && realm == "" ) {
 		charData = $scope.calAllData;
@@ -66,7 +64,6 @@ $scope.drawChart = function(name, realm) {
 	} else {
 		for( i in $scope.steps ) {
 			if( $scope.steps[i].realm == realm && $scope.steps[i].name == name ) {
-				console.log( $scope.steps[i] );
 				for( day in $scope.steps[i].days ) {
 					dInfo = $scope.steps[i].days[day].date.split("-");
 					charData.push( new Array( new Date(dInfo[0], dInfo[1]-1, dInfo[2]), $scope.steps[i].days[day].steps ) );
@@ -74,7 +71,6 @@ $scope.drawChart = function(name, realm) {
 			}
 		}
 	}
-	console.log(charData);
 
 	var dataTable = new google.visualization.DataTable();
 	dataTable.addColumn({ type: 'date', id: 'Date' });
@@ -128,13 +124,9 @@ for( dateStr in tempHash) {
 	$scope.calAllData.push( new Array( new Date(dInfo[0], dInfo[1]-1, dInfo[2]), steps ) );
 }
 
-
-//	$scope.steps[ch][$scope.dayStr($scope.currentDate)] =
-//		$scope.steps[ch]
-//	console.log(JSON.stringify($scope.steps[ch]));
-	
-
-//$scope.steps.today = 
-});
+}); // http.get.then
 });
 
+google.charts.setOnLoadCallback( function() {
+//	app.element(document.getElementById('stepsApp')).scope().drawChart();
+});

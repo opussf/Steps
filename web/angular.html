@@ -9,15 +9,15 @@
 <link rel="stylesheet" href="Steps.css" type="text/css"/>
 <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css" type="text/css"/>
 <title ng-bind="limitSize + 'Steps'">Steps</title>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script src="/js/bootstrap.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <script src="/js/angular.min.js"></script>
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script src="Steps.js"></script>
 </head>
 <body>
 <div class="container-fluid">
-<div class="main" ng-app="myApp" ng-controller="StepsDisplay">
+<div class="main" id="stepsApp" ng-app="myApp" ng-controller="StepsDisplay">
 <div class="row">
 <div class="col-12">
 <div id="chart_div" style="height: 175px"></div>

@@ -70,7 +70,7 @@ xsi:schemaLocation="http://www.blizzard.com/wow/ui/
 				STEPS.OnUpdate()
 			</OnUpdate>
 			<OnEvent>
-				STEPS[event](self, ...)
+				STEPS[event]( ... )
 			</OnEvent>
 			<OnMouseDown>
 				STEPS.OnDragStart()

@@ -28,8 +28,8 @@ Steps.stepsColor = { 0.73, 0.52, 0.18, 1 }
 
 -- Setup
 function Steps.OnLoad()
-	SLASH_Steps1 = "/Steps"
-	SlashCmdList["Steps"] = function(msg) Steps.Command(msg); end
+	SLASH_STEPS1 = "/STEPS"
+	SlashCmdList["STEPS"] = function(msg) Steps.Command(msg); end
 	Steps.lastSpeed = 0
 	Steps_Frame:RegisterEvent( "ADDON_LOADED" )
 	Steps_Frame:RegisterEvent( "VARIABLES_LOADED" )

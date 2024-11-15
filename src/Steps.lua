@@ -375,7 +375,7 @@ function Steps.PrintHelp()
 				end
 			end
 			Steps.Print(string.format("%s %s %s -> %s",
-				SLASH_Steps1, cmdStr, info.help[1], info.help[2]))
+				SLASH_STEPS1, cmdStr, info.help[1], info.help[2]))
 		end
 	end
 end

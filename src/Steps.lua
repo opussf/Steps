@@ -29,21 +29,21 @@ Steps.stepsColor = { 0.73, 0.52, 0.18, 1 }
 -- Setup
 function Steps.OnLoad()
 	SLASH_STEPS1 = "/Steps"
-	SlashCmdList["STEPS"] = function(msg) Steps.Command(msg); end
+	SlashCmdList["STEPS"] = function(msg) Steps.Command(msg) end
 	Steps.lastSpeed = 0
 	Steps_Frame:RegisterEvent( "ADDON_LOADED" )
 	Steps_Frame:RegisterEvent( "VARIABLES_LOADED" )
 	Steps_Frame:RegisterEvent( "LOADING_SCREEN_DISABLED" )
 	Steps_Frame:RegisterEvent( "CHAT_MSG_ADDON" )
-	-- Steps_Frame:RegisterEvent( "GROUP_ROSTER_UPDATE" )
-	-- Steps_Frame:RegisterEvent( "INSTANCE_GROUP_SIZE_CHANGED" )
+	Steps_Frame:RegisterEvent( "GROUP_ROSTER_UPDATE" )
+	Steps_Frame:RegisterEvent( "INSTANCE_GROUP_SIZE_CHANGED" )
 end
 function Steps.ADDON_LOADED()
 	Steps_Frame:UnregisterEvent( "ADDON_LOADED" )
 	Steps.name = UnitName("player")
 	Steps.realm = GetRealmName()
 	Steps.msgRealm = string.gsub( Steps.realm, " ", "" )
-	-- TooltipDataProcessor.AddTooltipPostCall( Enum.TooltipDataType.Unit, Steps.TooltipSetUnit )
+	TooltipDataProcessor.AddTooltipPostCall( Enum.TooltipDataType.Unit, Steps.TooltipSetUnit )
 end
 function Steps.VARIABLES_LOADED()
 	-- Unregister the event for this method.
@@ -85,8 +85,12 @@ end
 function Steps.LOADING_SCREEN_DISABLED()
 	Steps.SendMessages()
 end
--- Steps.GROUP_ROSTER_UPDATE = Steps.SendMessages
--- Steps.INSTANCE_GROUP_SIZE_CHANGED = Steps.SendMessages
+function Steps.GROUP_ROSTER_UPDATE()
+	Steps.SendMessages()
+end
+function Steps.INSTANCE_GROUP_SIZE_CHANGED()
+	Steps.SendMessages()
+end
 function Steps.CHAT_MSG_ADDON(...)
 	self, prefix, message, distType, sender = ...
 	-- Steps.Print( "p:"..prefix.." m:"..message.." d:"..distType.." s:"..sender )
@@ -336,14 +340,14 @@ function Steps.Prune()
 		end
 	end
 end
--- function Steps.Print( msg, showName)
--- 	-- print to the chat frame
--- 	-- set showName to false to suppress the addon name printing
--- 	if (showName == nil) or (showName) then
--- 		msg = COLOR_GOLD..STEPS_MSG_ADDONNAME.."> "..COLOR_END..msg
--- 	end
--- 	DEFAULT_CHAT_FRAME:AddMessage( msg )
--- end
+function Steps.Print( msg, showName)
+	-- print to the chat frame
+	-- set showName to false to suppress the addon name printing
+	if (showName == nil) or (showName) then
+		msg = COLOR_GOLD..STEPS_MSG_ADDONNAME.."> "..COLOR_END..msg
+	end
+	DEFAULT_CHAT_FRAME:AddMessage( msg )
+end
 -- function Steps.ParseCmd(msg)
 -- 	if msg then
 -- 		msg = string.lower(msg)
@@ -413,32 +417,32 @@ end
 -- 	end
 -- 	return string.sub( realmOut, 2, -1 )
 -- end
--- function Steps.GetTodayTotal( name, realm )
--- 	if name and Steps_data[realm] and Steps_data[realm][name] then
--- 		for dayBack = -1,1 do
--- 			local dateStr = date("%Y%m%d", time() + (dayBack*86400))
--- 			if Steps_data[realm][name][dateStr] then
--- 				today = Steps_data[realm][name][dateStr].steps
--- 			end
--- 		end
--- 		return math.floor( today or 0 ), math.floor( Steps_data[realm][name].steps or 0 )
--- 	end
--- end
--- -- Tooltip
--- function Steps.TooltipSetUnit( arg1, arg2 )
--- 	local name = GameTooltip:GetUnit()
--- 	local realm = ""
--- 	if UnitName( "mouseover" ) == name then
--- 		_, realm = UnitName( "mouseover" )
--- 		if not realm then
--- 			realm = GetRealmName()
--- 		end
--- 	end
--- 	today, total = Steps.GetTodayTotal( name, realm )
--- 	if today then
--- 		GameTooltip:AddLine( "Steps today: "..today.." total: "..total )
--- 	end
--- end
+function Steps.GetTodayTotal( name, realm )
+	if name and Steps_data[realm] and Steps_data[realm][name] then
+		for dayBack = -1,1 do
+			local dateStr = date("%Y%m%d", time() + (dayBack*86400))
+			if Steps_data[realm][name][dateStr] then
+				today = Steps_data[realm][name][dateStr].steps
+			end
+		end
+		return math.floor( today or 0 ), math.floor( Steps_data[realm][name].steps or 0 )
+	end
+end
+-- Tooltip
+function Steps.TooltipSetUnit( arg1, arg2 )
+	local name = GameTooltip:GetUnit()
+	local realm = ""
+	if UnitName( "mouseover" ) == name then
+		_, realm = UnitName( "mouseover" )
+		if not realm then
+			realm = GetRealmName()
+		end
+	end
+	today, total = Steps.GetTodayTotal( name, realm )
+	if today then
+		GameTooltip:AddLine( "Steps today: "..today.." total: "..total )
+	end
+end
 -- -- DropDownMenu
 -- function Steps.ModifyMenu( owner, rootDescription, contextData )
 -- 	today, total = Steps.GetTodayTotal( contextData.name, (contextData.server and Steps.DeNormalizeRealm( contextData.server ) or GetRealmName()) )

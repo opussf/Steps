@@ -285,7 +285,7 @@ function Steps.OnUpdate()
 	end
 	Steps.lastUpdate = nowTS
 	if math.floor( Steps.mine.steps / 100 ) > Steps.totalC then
-		-- Steps.LOADING_SCREEN_DISABLED()
+		Steps.SendMessages()
 	end
 end
 function Steps.CalcMinAveMax()

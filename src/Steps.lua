@@ -348,45 +348,45 @@ function Steps.Print( msg, showName)
 	end
 	DEFAULT_CHAT_FRAME:AddMessage( msg )
 end
--- function Steps.ParseCmd(msg)
--- 	if msg then
--- 		msg = string.lower(msg)
--- 		local a,b,c = strfind(msg, "(%S+)")  --contiguous string of non-space characters
--- 		if a then
--- 			-- c is the matched string, strsub is everything after that, skipping the space
--- 			return c, strsub(msg, b+2)
--- 		else
--- 			return ""
--- 		end
--- 	end
--- end
--- function Steps.Command( msg )
--- 	local cmd, param = Steps.ParseCmd(msg)
--- 	if Steps.commandList[cmd] and Steps.commandList[cmd].alias then
--- 		cmd = Steps.commandList[cmd].alias
--- 	end
--- 	local cmdFunc = Steps.commandList[cmd]
--- 	if cmdFunc and cmdFunc.func then
--- 		cmdFunc.func(param)
--- 	else
--- 		Steps.PrintHelp()
--- 	end
--- end
--- function Steps.PrintHelp()
--- 	Steps.Print( string.format(Steps.L["%s (%s) by %s"], STEPS_MSG_ADDONNAME, STEPS_MSG_VERSION, STEPS_MSG_AUTHOR ) )
--- 	for cmd, info in pairs(Steps.commandList) do
--- 		if info.help then
--- 			local cmdStr = cmd
--- 			for c2, i2 in pairs(Steps.commandList) do
--- 				if i2.alias and i2.alias == cmd then
--- 					cmdStr = string.format( "%s / %s", cmdStr, c2 )
--- 				end
--- 			end
--- 			Steps.Print(string.format("%s %s %s -> %s",
--- 				SLASH_Steps1, cmdStr, info.help[1], info.help[2]))
--- 		end
--- 	end
--- end
+function Steps.ParseCmd(msg)
+	if msg then
+		msg = string.lower(msg)
+		local a,b,c = strfind(msg, "(%S+)")  --contiguous string of non-space characters
+		if a then
+			-- c is the matched string, strsub is everything after that, skipping the space
+			return c, strsub(msg, b+2)
+		else
+			return ""
+		end
+	end
+end
+function Steps.Command( msg )
+	local cmd, param = Steps.ParseCmd(msg)
+	if Steps.commandList[cmd] and Steps.commandList[cmd].alias then
+		cmd = Steps.commandList[cmd].alias
+	end
+	local cmdFunc = Steps.commandList[cmd]
+	if cmdFunc and cmdFunc.func then
+		cmdFunc.func(param)
+	else
+		Steps.PrintHelp()
+	end
+end
+function Steps.PrintHelp()
+	Steps.Print( string.format(Steps.L["%s (%s) by %s"], STEPS_MSG_ADDONNAME, STEPS_MSG_VERSION, STEPS_MSG_AUTHOR ) )
+	for cmd, info in pairs(Steps.commandList) do
+		if info.help then
+			local cmdStr = cmd
+			for c2, i2 in pairs(Steps.commandList) do
+				if i2.alias and i2.alias == cmd then
+					cmdStr = string.format( "%s / %s", cmdStr, c2 )
+				end
+			end
+			Steps.Print(string.format("%s %s %s -> %s",
+				SLASH_Steps1, cmdStr, info.help[1], info.help[2]))
+		end
+	end
+end
 -- function Steps.ChangeDisplay()
 -- end
 -- -- UI

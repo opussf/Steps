@@ -98,24 +98,24 @@ end
 -- 		end
 -- 	end
 -- end
--- function Steps.toBytes(num)
--- 	-- print( "toBytes( "..num.." )" )
--- 	-- returns a table and string of bytes.  MSB first
--- 	local t = {} -- will contain the bits
--- 	if num == 0 then
--- 		t[1] = 128
--- 		strOut = string.char(128)
--- 	else
--- 		strOut = ""
--- 		while num > 0 do
--- 			local byte = bit.bor( bit.band( num, 0x7f ), 0x80 )
--- 			table.insert( t, 1, byte )
--- 			strOut = string.char( byte ) .. strOut
--- 			num = bit.rshift( num, 7 )
--- 		end
--- 	end
--- 	return t, strOut
--- end
+function Steps.toBytes(num)
+	-- print( "toBytes( "..num.." )" )
+	-- returns a table and string of bytes.  MSB first
+	local t = {} -- will contain the bits
+	if num == 0 then
+		t[1] = 128
+		strOut = string.char(128)
+	else
+		strOut = ""
+		while num > 0 do
+			local byte = bit.bor( bit.band( num, 0x7f ), 0x80 )
+			table.insert( t, 1, byte )
+			strOut = string.char( byte ) .. strOut
+			num = bit.rshift( num, 7 )
+		end
+	end
+	return t, strOut
+end
 -- function Steps.fromBytes( bytes )
 -- 	local num = 0
 

@@ -43,7 +43,7 @@ function Steps.ADDON_LOADED()
 	Steps.name = UnitName("player")
 	Steps.realm = GetRealmName()
 	Steps.msgRealm = string.gsub( Steps.realm, " ", "" )
-	TooltipDataProcessor.AddTooltipPostCall( Enum.TooltipDataType.Unit, Steps.TooltipSetUnit )
+	-- TooltipDataProcessor.AddTooltipPostCall( Enum.TooltipDataType.Unit, Steps.TooltipSetUnit )
 end
 function Steps.VARIABLES_LOADED()
 	-- Unregister the event for this method.

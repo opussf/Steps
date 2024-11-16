@@ -34,7 +34,7 @@ function Steps.OnLoad()
 	Steps_Frame:RegisterEvent( "ADDON_LOADED" )
 	Steps_Frame:RegisterEvent( "VARIABLES_LOADED" )
 	Steps_Frame:RegisterEvent( "LOADING_SCREEN_DISABLED" )
-	-- Steps_Frame:RegisterEvent( "CHAT_MSG_ADDON" )
+	Steps_Frame:RegisterEvent( "CHAT_MSG_ADDON" )
 	-- Steps_Frame:RegisterEvent( "GROUP_ROSTER_UPDATE" )
 	-- Steps_Frame:RegisterEvent( "INSTANCE_GROUP_SIZE_CHANGED" )
 end
@@ -87,17 +87,17 @@ function Steps.LOADING_SCREEN_DISABLED()
 end
 -- Steps.GROUP_ROSTER_UPDATE = Steps.SendMessages
 -- Steps.INSTANCE_GROUP_SIZE_CHANGED = Steps.SendMessages
--- function Steps.CHAT_MSG_ADDON(...)
--- 	self, prefix, message, distType, sender = ...
--- 	-- Steps.Print( "p:"..prefix.." m:"..message.." d:"..distType.." s:"..sender )
--- 	if prefix == Steps.commPrefix and sender ~= Steps.name.."-"..Steps.msgRealm then
--- 		if string.find(message, "v:") then
--- 			Steps.DecodeMessage( message )
--- 		else
--- 			Steps.DecodeMessage2( message )
--- 		end
--- 	end
--- end
+function Steps.CHAT_MSG_ADDON(...)
+	self, prefix, message, distType, sender = ...
+	-- Steps.Print( "p:"..prefix.." m:"..message.." d:"..distType.." s:"..sender )
+	if prefix == Steps.commPrefix and sender ~= Steps.name.."-"..Steps.msgRealm then
+		if string.find(message, "v:") then
+			Steps.DecodeMessage( message )
+		else
+			Steps.DecodeMessage2( message )
+		end
+	end
+end
 function Steps.toBytes(num)
 	-- print( "toBytes( "..num.." )" )
 	-- returns a table and string of bytes.  MSB first
@@ -116,34 +116,36 @@ function Steps.toBytes(num)
 	end
 	return t, strOut
 end
--- function Steps.fromBytes( bytes )
--- 	local num = 0
+function Steps.fromBytes( bytes )
+	local num = 0
 
--- 	for i = 1,#bytes do
--- 		local b = string.byte( bytes, i )
--- 		num = bit.lshift(num, 7) + bit.band( b, 0x7f )
--- 	end
+	for i = 1,#bytes do
+		local b = string.byte( bytes, i )
+		num = bit.lshift(num, 7) + bit.band( b, 0x7f )
+	end
 
--- 	return num
--- end
+	return num
+end
 function Steps.BuildAddonMessage2()
 	local prefixLen = string.len( Steps.commPrefix ) + 1
 	local msgStr = string.format("%s|%s|%s|%s",
 			STEPS_MSG_VERSION, Steps.realm, Steps.name, select(2, Steps.toBytes( math.ceil( Steps.mine.steps ) ) )
 	)
-	-- for dayBack=0,Steps.pruneDays do
-	-- 	dayStr = date("%Y%m%d", time() - (dayBack*86400) )
-	-- 	if Steps.mine[dayStr] and Steps.mine[dayStr].steps > 0 then
-	-- 		local daySteps = string.format("%s%s",
-	-- 				select(2, Steps.toBytes( tonumber( dayStr ) ) ),
-	-- 				select(2, Steps.toBytes( math.ceil( Steps.mine[dayStr].steps ) ) )
-	-- 		)
-	-- 		if ( prefixLen + string.len( msgStr ) + string.len( daySteps ) + 1 >= 255 ) then
-	-- 			break
-	-- 		end
-	-- 		msgStr = msgStr .. "|" .. daySteps
-	-- 	end
-	-- end
+	for dayBack=0,Steps.pruneDays do
+		dayStr = date("%Y%m%d", time() - (dayBack*86400) )
+		if Steps.mine[dayStr] and Steps.mine[dayStr].steps > 0 then
+			local daySteps = string.format("%s%s",
+					select(2, Steps.toBytes( tonumber( dayStr ) ) ),
+					select(2, Steps.toBytes( math.ceil( Steps.mine[dayStr].steps ) ) )
+			)
+			print( string.len( msgStr ).."+"..string.len( daySteps)..">=? 255" )
+			if ( prefixLen + string.len( msgStr ) + string.len( daySteps ) + 1 >= 255 ) then
+				print( "Broke: "..(prefixLen + string.len( msgStr ) + string.len( daySteps ) + 1).." >= 255" )
+				break
+			end
+			msgStr = msgStr .. "|" .. daySteps
+		end
+	end
 	return msgStr
 end
 function Steps.BuildAddonMessage()
@@ -160,73 +162,73 @@ function Steps.BuildAddonMessage()
 	end
 	return table.concat( Steps.addonMsgTable, "," )
 end
--- function Steps.VersionStrToVal( verStr )
--- 	local loc, _, major, minor, patch = string.find( verStr, "^(%d+)%.(%d+)%.*(%d*)" )
--- 	return (loc and math.floor((major*10000)+(minor*100)+(patch and tonumber(patch) or 0)) or 0)
--- end
--- Steps.keyFunctions = {
--- 	v = function(val)
--- 		Steps.importVersion = val
--- 		if not Steps.versionAlerted and Steps.VersionStrToVal(val) > Steps.VersionStrToVal( STEPS_MSG_VERSION ) then
--- 			Steps.versionAlerted = true
--- 			Steps.Print(Steps.L["A new version of Steps is available."])
--- 		end
--- 	end,
--- 	r = function(val)
--- 		Steps.importRealm = val
--- 	end,
--- 	n = function(val)
--- 		Steps.importName = val
--- 	end,
--- 	s = function(val)
--- 		if Steps.importRealm and Steps.importName then
--- 			Steps_data[Steps.importRealm] = Steps_data[Steps.importRealm] or {}
--- 			Steps_data[Steps.importRealm][Steps.importName] = Steps_data[Steps.importRealm][Steps.importName] or {}
--- 			Steps_data[Steps.importRealm][Steps.importName].steps = tonumber(val)
--- 			Steps_data[Steps.importRealm][Steps.importName].version = Steps.importVersion
--- 		end
--- 	end,
--- 	t = function(val)
--- 		local loc, _, date, steps = string.find(val, "(.+)<(.+)")
--- 		if loc and Steps.importRealm and Steps.importName then
--- 			Steps_data[Steps.importRealm] = Steps_data[Steps.importRealm] or {}
--- 			Steps_data[Steps.importRealm][Steps.importName] = Steps_data[Steps.importRealm][Steps.importName] or {}
--- 			Steps_data[Steps.importRealm][Steps.importName][date] = { ["steps"] = tonumber(steps) }
--- 		end
--- 	end,
--- 	s2 = function(val)
--- 		Steps.keyFunctions.s( Steps.fromBytes( val ) )
--- 	end,
--- 	t2 = function(val)
--- 		Steps.keyFunctions.t( string.format( "%d<%d",
--- 				Steps.fromBytes( string.sub( val, 1, 4 ) ), Steps.fromBytes( string.sub( val, 5, -1 ) )
--- 		) )
--- 	end,
--- }
--- function Steps.DecodeMessage( msgIn )
--- 	if Steps.debug then print( "Decode( "..msgIn.." )" ) end
--- 	for k,v in string.gmatch( msgIn, "(.):([^,]+)" ) do
--- 		if Steps.keyFunctions[k] then
--- 			Steps.keyFunctions[k](v)
--- 		end
--- 	end
--- 	Steps.importRealm, Steps.importName = nil, nil
--- end
--- Steps.keyMap = { "v", "r", "n", "s2" }
--- function Steps.DecodeMessage2( msgIn )
--- 	if Steps.debug then print( "Decode2( "..msgIn.." )" ) end
--- 	local decodeTable = {}
--- 	k = 1
--- 	for v in string.gmatch( msgIn, "([^|]+)" ) do
--- 		if k <= #Steps.keyMap then
--- 			Steps.keyFunctions[Steps.keyMap[k]](v)
--- 		else
--- 			Steps.keyFunctions.t2(v)
--- 		end
--- 		k = k + 1
--- 	end
--- 	Steps.importRealm, Steps.importName = nil, nil
--- end
+function Steps.VersionStrToVal( verStr )
+	local loc, _, major, minor, patch = string.find( verStr, "^(%d+)%.(%d+)%.*(%d*)" )
+	return (loc and math.floor((major*10000)+(minor*100)+(patch and tonumber(patch) or 0)) or 0)
+end
+Steps.keyFunctions = {
+	v = function(val)
+		Steps.importVersion = val
+		if not Steps.versionAlerted and Steps.VersionStrToVal(val) > Steps.VersionStrToVal( STEPS_MSG_VERSION ) then
+			Steps.versionAlerted = true
+			Steps.Print(Steps.L["A new version of Steps is available."])
+		end
+	end,
+	r = function(val)
+		Steps.importRealm = val
+	end,
+	n = function(val)
+		Steps.importName = val
+	end,
+	s = function(val)
+		if Steps.importRealm and Steps.importName then
+			Steps_data[Steps.importRealm] = Steps_data[Steps.importRealm] or {}
+			Steps_data[Steps.importRealm][Steps.importName] = Steps_data[Steps.importRealm][Steps.importName] or {}
+			Steps_data[Steps.importRealm][Steps.importName].steps = tonumber(val)
+			Steps_data[Steps.importRealm][Steps.importName].version = Steps.importVersion
+		end
+	end,
+	t = function(val)
+		local loc, _, date, steps = string.find(val, "(.+)<(.+)")
+		if loc and Steps.importRealm and Steps.importName then
+			Steps_data[Steps.importRealm] = Steps_data[Steps.importRealm] or {}
+			Steps_data[Steps.importRealm][Steps.importName] = Steps_data[Steps.importRealm][Steps.importName] or {}
+			Steps_data[Steps.importRealm][Steps.importName][date] = { ["steps"] = tonumber(steps) }
+		end
+	end,
+	s2 = function(val)
+		Steps.keyFunctions.s( Steps.fromBytes( val ) )
+	end,
+	t2 = function(val)
+		Steps.keyFunctions.t( string.format( "%d<%d",
+				Steps.fromBytes( string.sub( val, 1, 4 ) ), Steps.fromBytes( string.sub( val, 5, -1 ) )
+		) )
+	end,
+}
+function Steps.DecodeMessage( msgIn )
+	if Steps.debug then print( "Decode( "..msgIn.." )" ) end
+	for k,v in string.gmatch( msgIn, "(.):([^,]+)" ) do
+		if Steps.keyFunctions[k] then
+			Steps.keyFunctions[k](v)
+		end
+	end
+	Steps.importRealm, Steps.importName = nil, nil
+end
+Steps.keyMap = { "v", "r", "n", "s2" }
+function Steps.DecodeMessage2( msgIn )
+	if Steps.debug then print( "Decode2( "..msgIn.." )" ) end
+	local decodeTable = {}
+	k = 1
+	for v in string.gmatch( msgIn, "([^|]+)" ) do
+		if k <= #Steps.keyMap then
+			Steps.keyFunctions[Steps.keyMap[k]](v)
+		else
+			Steps.keyFunctions.t2(v)
+		end
+		k = k + 1
+	end
+	Steps.importRealm, Steps.importName = nil, nil
+end
 
 -- OnUpdate
 function Steps.OnUpdate()

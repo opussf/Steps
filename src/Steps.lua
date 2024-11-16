@@ -1,8 +1,8 @@
 -- Steps @VERSION@
-Steps_SLUG, Steps   = ...
-Steps_MSG_ADDONNAME = C_AddOns.GetAddOnMetadata( Steps_SLUG, "Title" )
-Steps_MSG_VERSION   = C_AddOns.GetAddOnMetadata( Steps_SLUG, "Version" )
-Steps_MSG_AUTHOR    = C_AddOns.GetAddOnMetadata( Steps_SLUG, "Author" )
+STEPS_SLUG, Steps   = ...
+STEPS_MSG_ADDONNAME = C_AddOns.GetAddOnMetadata( STEPS_SLUG, "Title" )
+STEPS_MSG_VERSION   = C_AddOns.GetAddOnMetadata( STEPS_SLUG, "Version" )
+STEPS_MSG_AUTHOR    = C_AddOns.GetAddOnMetadata( STEPS_SLUG, "Author" )
 
 -- Colours
 COLOR_RED = "|cffff0000"
@@ -33,7 +33,7 @@ function Steps.OnLoad()
 	Steps.lastSpeed = 0
 	Steps_Frame:RegisterEvent( "ADDON_LOADED" )
 	Steps_Frame:RegisterEvent( "VARIABLES_LOADED" )
-	-- Steps_Frame:RegisterEvent( "LOADING_SCREEN_DISABLED" )
+	Steps_Frame:RegisterEvent( "LOADING_SCREEN_DISABLED" )
 	-- Steps_Frame:RegisterEvent( "CHAT_MSG_ADDON" )
 	-- Steps_Frame:RegisterEvent( "GROUP_ROSTER_UPDATE" )
 	-- Steps_Frame:RegisterEvent( "INSTANCE_GROUP_SIZE_CHANGED" )
@@ -65,24 +65,26 @@ function Steps.VARIABLES_LOADED()
 		Steps.InitChat()
 	end
 end
--- function Steps.SendMessages()
--- 	if not C_ChatInfo.IsAddonMessagePrefixRegistered(Steps.commPrefix) then
--- 		C_ChatInfo.RegisterAddonMessagePrefix(Steps.commPrefix)
--- 	end
+function Steps.SendMessages()
+	if not C_ChatInfo.IsAddonMessagePrefixRegistered(Steps.commPrefix) then
+		C_ChatInfo.RegisterAddonMessagePrefix(Steps.commPrefix)
+	end
 
--- 	Steps.addonMsg = Steps.BuildAddonMessage2()
--- 	if IsInGuild() then
--- 		C_ChatInfo.SendAddonMessage( Steps.commPrefix, Steps.addonMsg, "GUILD" )
--- 	end
--- 	if IsInGroup(LE_PARTY_CATEGORY_HOME) then
--- 		C_ChatInfo.SendAddonMessage( Steps.commPrefix, Steps.addonMsg, "PARTY" )
--- 	end
--- 	if IsInGroup(LE_PARTY_CATEGORY_INSTANCE) then
--- 		C_ChatInfo.SendAddonMessage( Steps.commPrefix, Steps.addonMsg, "INSTANCE_CHAT" )
--- 	end
--- 	Steps.totalC = math.floor( Steps.mine.steps / 100 )
--- end
--- Steps.LOADING_SCREEN_DISABLED = Steps.SendMessages
+	Steps.addonMsg = Steps.BuildAddonMessage2()
+	if IsInGuild() then
+		C_ChatInfo.SendAddonMessage( Steps.commPrefix, Steps.addonMsg, "GUILD" )
+	end
+	if IsInGroup(LE_PARTY_CATEGORY_HOME) then
+		C_ChatInfo.SendAddonMessage( Steps.commPrefix, Steps.addonMsg, "PARTY" )
+	end
+	if IsInGroup(LE_PARTY_CATEGORY_INSTANCE) then
+		C_ChatInfo.SendAddonMessage( Steps.commPrefix, Steps.addonMsg, "INSTANCE_CHAT" )
+	end
+	Steps.totalC = math.floor( Steps.mine.steps / 100 )
+end
+function Steps.LOADING_SCREEN_DISABLED()
+	Steps.SendMessages()
+end
 -- Steps.GROUP_ROSTER_UPDATE = Steps.SendMessages
 -- Steps.INSTANCE_GROUP_SIZE_CHANGED = Steps.SendMessages
 -- function Steps.CHAT_MSG_ADDON(...)
@@ -124,40 +126,40 @@ end
 
 -- 	return num
 -- end
--- function Steps.BuildAddonMessage2()
--- 	local prefixLen = string.len( Steps.commPrefix ) + 1
--- 	local msgStr = string.format("%s|%s|%s|%s",
--- 			Steps_MSG_VERSION, Steps.realm, Steps.name, select(2, Steps.toBytes( math.ceil( Steps.mine.steps ) ) )
--- 	)
--- 	for dayBack=0,Steps.pruneDays do
--- 		dayStr = date("%Y%m%d", time() - (dayBack*86400) )
--- 		if Steps.mine[dayStr] and Steps.mine[dayStr].steps > 0 then
--- 			local daySteps = string.format("%s%s",
--- 					select(2, Steps.toBytes( tonumber( dayStr ) ) ),
--- 					select(2, Steps.toBytes( math.ceil( Steps.mine[dayStr].steps ) ) )
--- 			)
--- 			if ( prefixLen + string.len( msgStr ) + string.len( daySteps ) + 1 >= 255 ) then
--- 				break
--- 			end
--- 			msgStr = msgStr .. "|" .. daySteps
--- 		end
--- 	end
--- 	return msgStr
--- end
--- function Steps.BuildAddonMessage()
--- 	Steps.addonMsgTable = {}
--- 	table.insert( Steps.addonMsgTable, "v:"..Steps_MSG_VERSION )
--- 	table.insert( Steps.addonMsgTable, "r:"..Steps.realm )
--- 	table.insert( Steps.addonMsgTable, "n:"..Steps.name )
--- 	table.insert( Steps.addonMsgTable, "s:"..math.ceil( Steps.mine.steps ) )
--- 	for dayBack=0,10 do
--- 		dayStr = date("%Y%m%d", time() - (dayBack*86400) )
--- 		if Steps.mine[dayStr] then
--- 			table.insert( Steps.addonMsgTable, "t:"..dayStr.."<"..math.ceil(Steps.mine[dayStr].steps) )
--- 		end
--- 	end
--- 	return table.concat( Steps.addonMsgTable, "," )
--- end
+function Steps.BuildAddonMessage2()
+	local prefixLen = string.len( Steps.commPrefix ) + 1
+	local msgStr = string.format("%s|%s|%s|%s",
+			STEPS_MSG_VERSION, Steps.realm, Steps.name, select(2, Steps.toBytes( math.ceil( Steps.mine.steps ) ) )
+	)
+	-- for dayBack=0,Steps.pruneDays do
+	-- 	dayStr = date("%Y%m%d", time() - (dayBack*86400) )
+	-- 	if Steps.mine[dayStr] and Steps.mine[dayStr].steps > 0 then
+	-- 		local daySteps = string.format("%s%s",
+	-- 				select(2, Steps.toBytes( tonumber( dayStr ) ) ),
+	-- 				select(2, Steps.toBytes( math.ceil( Steps.mine[dayStr].steps ) ) )
+	-- 		)
+	-- 		if ( prefixLen + string.len( msgStr ) + string.len( daySteps ) + 1 >= 255 ) then
+	-- 			break
+	-- 		end
+	-- 		msgStr = msgStr .. "|" .. daySteps
+	-- 	end
+	-- end
+	return msgStr
+end
+function Steps.BuildAddonMessage()
+	Steps.addonMsgTable = {}
+	table.insert( Steps.addonMsgTable, "v:"..STEPS_MSG_VERSION )
+	table.insert( Steps.addonMsgTable, "r:"..Steps.realm )
+	table.insert( Steps.addonMsgTable, "n:"..Steps.name )
+	table.insert( Steps.addonMsgTable, "s:"..math.ceil( Steps.mine.steps ) )
+	for dayBack=0,10 do
+		dayStr = date("%Y%m%d", time() - (dayBack*86400) )
+		if Steps.mine[dayStr] then
+			table.insert( Steps.addonMsgTable, "t:"..dayStr.."<"..math.ceil(Steps.mine[dayStr].steps) )
+		end
+	end
+	return table.concat( Steps.addonMsgTable, "," )
+end
 -- function Steps.VersionStrToVal( verStr )
 -- 	local loc, _, major, minor, patch = string.find( verStr, "^(%d+)%.(%d+)%.*(%d*)" )
 -- 	return (loc and math.floor((major*10000)+(minor*100)+(patch and tonumber(patch) or 0)) or 0)
@@ -165,7 +167,7 @@ end
 -- Steps.keyFunctions = {
 -- 	v = function(val)
 -- 		Steps.importVersion = val
--- 		if not Steps.versionAlerted and Steps.VersionStrToVal(val) > Steps.VersionStrToVal( Steps_MSG_VERSION ) then
+-- 		if not Steps.versionAlerted and Steps.VersionStrToVal(val) > Steps.VersionStrToVal( STEPS_MSG_VERSION ) then
 -- 			Steps.versionAlerted = true
 -- 			Steps.Print(Steps.L["A new version of Steps is available."])
 -- 		end
@@ -336,7 +338,7 @@ end
 -- 	-- print to the chat frame
 -- 	-- set showName to false to suppress the addon name printing
 -- 	if (showName == nil) or (showName) then
--- 		msg = COLOR_GOLD..Steps_MSG_ADDONNAME.."> "..COLOR_END..msg
+-- 		msg = COLOR_GOLD..STEPS_MSG_ADDONNAME.."> "..COLOR_END..msg
 -- 	end
 -- 	DEFAULT_CHAT_FRAME:AddMessage( msg )
 -- end
@@ -365,7 +367,7 @@ end
 -- 	end
 -- end
 -- function Steps.PrintHelp()
--- 	Steps.Print( string.format(Steps.L["%s (%s) by %s"], Steps_MSG_ADDONNAME, Steps_MSG_VERSION, Steps_MSG_AUTHOR ) )
+-- 	Steps.Print( string.format(Steps.L["%s (%s) by %s"], STEPS_MSG_ADDONNAME, STEPS_MSG_VERSION, STEPS_MSG_AUTHOR ) )
 -- 	for cmd, info in pairs(Steps.commandList) do
 -- 		if info.help then
 -- 			local cmdStr = cmd

@@ -558,14 +558,3 @@ Steps.commandList = {
 	-- 	["help"] = {"",Steps.L["Cycle through display options."]}
 	-- },
 }
-
-
--- --[[
--- https://wowwiki-archive.fandom.com/wiki/API_GetUnitSpeed
--- value = GetUnitSpeed("unit")
-
--- Player unit moving at 100% -- value = 7
--- Player unit moving at 175% -- value = 12.25
--- Player unit moving at 200% -- value = 14
-
--- ]]

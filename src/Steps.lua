@@ -444,17 +444,17 @@ function Steps.TooltipSetUnit( arg1, arg2 )
 	end
 end
 -- DropDownMenu
-function Steps.ModifyMenu( owner, rootDescription, contextData )
-	today, total = Steps.GetTodayTotal( contextData.name, (contextData.server and Steps.DeNormalizeRealm( contextData.server ) or GetRealmName()) )
-	if today then
-		rootDescription:CreateDivider()
-		rootDescription:CreateTitle("Steps today: "..today.." total: "..total)
-	end
-end
-Menu.ModifyMenu("MENU_UNIT_SELF", Steps.ModifyMenu)
-Menu.ModifyMenu("MENU_UNIT_COMMUNITIES_GUILD_MEMBER", Steps.ModifyMenu)
-Menu.ModifyMenu("MENU_UNIT_PARTY", Steps.ModifyMenu)
-Menu.ModifyMenu("MENU_UNIT_RAID", Steps.ModifyMenu)
+-- function Steps.ModifyMenu( owner, rootDescription, contextData )
+-- 	today, total = Steps.GetTodayTotal( contextData.name, (contextData.server and Steps.DeNormalizeRealm( contextData.server ) or GetRealmName()) )
+-- 	if today then
+-- 		rootDescription:CreateDivider()
+-- 		rootDescription:CreateTitle("Steps today: "..today.." total: "..total)
+-- 	end
+-- end
+-- Menu.ModifyMenu("MENU_UNIT_SELF", Steps.ModifyMenu)
+-- Menu.ModifyMenu("MENU_UNIT_COMMUNITIES_GUILD_MEMBER", Steps.ModifyMenu)
+-- Menu.ModifyMenu("MENU_UNIT_PARTY", Steps.ModifyMenu)
+-- Menu.ModifyMenu("MENU_UNIT_RAID", Steps.ModifyMenu)
 -- Post
 function Steps.GetPostString()
 	local dateStr = date("%Y%m%d")

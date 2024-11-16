@@ -389,34 +389,34 @@ function Steps.PrintHelp()
 end
 -- function Steps.ChangeDisplay()
 -- end
--- -- UI
--- function Steps.OnDragStart()
--- 	if Steps_options.unlocked then
--- 		Steps_Frame:StartMoving()
--- 	end
--- end
--- function Steps.OnDragStop()
--- 	Steps_Frame:StopMovingOrSizing()
--- end
--- function Steps.UIReset()
--- 	Steps_Frame:SetSize( 200, 12 )
--- 	Steps_Frame:ClearAllPoints()
--- 	Steps_Frame:SetPoint("BOTTOMLEFT", "$parent", "BOTTOMLEFT")
--- end
--- function Steps.DeNormalizeRealm( realm )
--- 	local realmOut = ""
--- 	for s in string.gmatch( realm, "(.)" ) do
--- 		if string.find( s, "[A-Z]" ) then
--- 			s = " "..s
--- 		end
--- 		realmOut = realmOut..s
--- 	end
--- 	b = string.find( realmOut, "of " )
--- 	if b then
--- 		realmOut = string.sub( realmOut, 1, b-1 ).." "..string.sub( realmOut, b, -1 )
--- 	end
--- 	return string.sub( realmOut, 2, -1 )
--- end
+-- UI
+function Steps.OnDragStart()
+	if Steps_options.unlocked then
+		Steps_Frame:StartMoving()
+	end
+end
+function Steps.OnDragStop()
+	Steps_Frame:StopMovingOrSizing()
+end
+function Steps.UIReset()
+	Steps_Frame:SetSize( 200, 12 )
+	Steps_Frame:ClearAllPoints()
+	Steps_Frame:SetPoint("BOTTOMLEFT", "$parent", "BOTTOMLEFT")
+end
+function Steps.DeNormalizeRealm( realm )
+	local realmOut = ""
+	for s in string.gmatch( realm, "(.)" ) do
+		if string.find( s, "[A-Z]" ) then
+			s = " "..s
+		end
+		realmOut = realmOut..s
+	end
+	b = string.find( realmOut, "of " )
+	if b then
+		realmOut = string.sub( realmOut, 1, b-1 ).." "..string.sub( realmOut, b, -1 )
+	end
+	return string.sub( realmOut, 2, -1 )
+end
 function Steps.GetTodayTotal( name, realm )
 	if name and Steps_data[realm] and Steps_data[realm][name] then
 		for dayBack = -1,1 do
@@ -443,123 +443,123 @@ function Steps.TooltipSetUnit( arg1, arg2 )
 		GameTooltip:AddLine( "Steps today: "..today.." total: "..total )
 	end
 end
--- -- DropDownMenu
--- function Steps.ModifyMenu( owner, rootDescription, contextData )
--- 	today, total = Steps.GetTodayTotal( contextData.name, (contextData.server and Steps.DeNormalizeRealm( contextData.server ) or GetRealmName()) )
--- 	if today then
--- 		rootDescription:CreateDivider()
--- 		rootDescription:CreateTitle("Steps today: "..today.." total: "..total)
--- 	end
--- end
--- Menu.ModifyMenu("MENU_UNIT_SELF", Steps.ModifyMenu)
--- Menu.ModifyMenu("MENU_UNIT_COMMUNITIES_GUILD_MEMBER", Steps.ModifyMenu)
--- Menu.ModifyMenu("MENU_UNIT_PARTY", Steps.ModifyMenu)
--- Menu.ModifyMenu("MENU_UNIT_RAID", Steps.ModifyMenu)
--- -- Post
--- function Steps.GetPostString()
--- 	local dateStr = date("%Y%m%d")
--- 	return string.format("%s: %i", Steps.L["My steps today"], math.floor( Steps.mine[dateStr].steps or "0" ) )
--- end
--- function Steps.Post( param )
--- 	local chatChannel, toWhom
--- 	if( param ) then
--- 		if( param == "say" ) then
--- 			chatChannel = "SAY"
--- 		elseif( param == "yell") then
--- 			chatChannel = "YELL"
--- 		elseif( param == "guild" and IsInGuild() ) then
--- 			chatChannel = "GUILD"
--- 		elseif( param == "party" and IsInGroup( LE_PARTY_CATEGORY_HOME ) ) then
--- 			chatChannel = "PARTY"
--- 		elseif( param == "instance" and IsInGroup( LE_PARTY_CATEGORY_INSTANCE ) ) then
--- 			chatChannel = "INSTANCE_CHAT"
--- 		elseif( param == "instance" and IsInGroup( LE_PARTY_CATEGORY_HOME ) ) then
--- 			chatChannel = "PARTY"
--- 		elseif( param == 'raid' and IsInRaid() ) then
--- 			chatChannel = "RAID"
--- 		elseif( param ~= "" ) then
--- 			chatChannel = "WHISPER"
--- 			toWhom = param
--- 		end
+-- DropDownMenu
+function Steps.ModifyMenu( owner, rootDescription, contextData )
+	today, total = Steps.GetTodayTotal( contextData.name, (contextData.server and Steps.DeNormalizeRealm( contextData.server ) or GetRealmName()) )
+	if today then
+		rootDescription:CreateDivider()
+		rootDescription:CreateTitle("Steps today: "..today.." total: "..total)
+	end
+end
+Menu.ModifyMenu("MENU_UNIT_SELF", Steps.ModifyMenu)
+Menu.ModifyMenu("MENU_UNIT_COMMUNITIES_GUILD_MEMBER", Steps.ModifyMenu)
+Menu.ModifyMenu("MENU_UNIT_PARTY", Steps.ModifyMenu)
+Menu.ModifyMenu("MENU_UNIT_RAID", Steps.ModifyMenu)
+-- Post
+function Steps.GetPostString()
+	local dateStr = date("%Y%m%d")
+	return string.format("%s: %i", Steps.L["My steps today"], math.floor( Steps.mine[dateStr].steps or "0" ) )
+end
+function Steps.Post( param )
+	local chatChannel, toWhom
+	if( param ) then
+		if( param == "say" ) then
+			chatChannel = "SAY"
+		elseif( param == "yell") then
+			chatChannel = "YELL"
+		elseif( param == "guild" and IsInGuild() ) then
+			chatChannel = "GUILD"
+		elseif( param == "party" and IsInGroup( LE_PARTY_CATEGORY_HOME ) ) then
+			chatChannel = "PARTY"
+		elseif( param == "instance" and IsInGroup( LE_PARTY_CATEGORY_INSTANCE ) ) then
+			chatChannel = "INSTANCE_CHAT"
+		elseif( param == "instance" and IsInGroup( LE_PARTY_CATEGORY_HOME ) ) then
+			chatChannel = "PARTY"
+		elseif( param == 'raid' and IsInRaid() ) then
+			chatChannel = "RAID"
+		elseif( param ~= "" ) then
+			chatChannel = "WHISPER"
+			toWhom = param
+		end
 
--- 		if( chatChannel ) then
--- 			SendChatMessage( Steps.GetPostString(), chatChannel, nil, toWhom )  -- toWhom will be nil for most
--- 			Steps.SendMessages()
--- 		end
--- 	end
--- end
--- function Steps.UpdateBars()
--- 	if Steps_options.show then
--- 		Steps_Frame:SetAlpha(1)
--- 	else
--- 		Steps_StepBar_1:Hide()
--- 		Steps_StepBar_2:Hide()
--- 		Steps_Frame:SetAlpha(0)
--- 	end
--- end
+		if( chatChannel ) then
+			SendChatMessage( Steps.GetPostString(), chatChannel, nil, toWhom )  -- toWhom will be nil for most
+			Steps.SendMessages()
+		end
+	end
+end
+function Steps.UpdateBars()
+	if Steps_options.show then
+		Steps_Frame:SetAlpha(1)
+	else
+		Steps_StepBar_1:Hide()
+		Steps_StepBar_2:Hide()
+		Steps_Frame:SetAlpha(0)
+	end
+end
 
--- Steps.commandList = {
--- 	[Steps.L["help"]] = {
--- 		["func"] = Steps.PrintHelp,
--- 		["help"] = {"",Steps.L["Print this help."]}
--- 	},
--- 	[Steps.L["show"]] = {
--- 		["func"] = function() Steps_options.show = not Steps_options.show; Steps.UpdateBars(); end,
--- 		["help"] = {"", Steps.L["Toggle display."]}
--- 	},
--- 	[Steps.L["lock"]] = {
--- 		["func"] = function() Steps_options.unlocked = not Steps_options.unlocked
--- 						Steps.Print( Steps_options.unlocked and Steps.L["UI unlocked"] or Steps.L["UI locked"] )
--- 					end,
--- 		["help"] = {"", Steps.L["Toggle display lock."]}
--- 	},
--- 	[Steps.L["reset"]] = {
--- 		["func"] = Steps.UIReset,
--- 		["help"] = {"", Steps.L["Reset the position of the UI"]}
--- 	},
--- 	[Steps.L["chat"]] = {
--- 		["func"] = function() Steps_options.enableChat = not Steps_options.enableChat;
--- 						if Steps_options.enableChat then
--- 							if not Steps.OriginalSendChatMessage then
--- 								Steps.InitChat()
--- 							end
--- 							Steps.Print(Steps.L["{steps} now enabled."])
--- 						else
--- 							Steps.Print(Steps.L["Please /reload to disable chat integration."])
--- 						end
--- 					end,
--- 		["help"] = {"", Steps.L["Toggle chat {steps} integration."]}
--- 	},
--- 	[Steps.L["say"]] = {
--- 		["func"] = function() Steps.Post("say") end,
--- 		["help"] = { "| guild | party | instance | raid | whisper <playerName>", "Post steps report to channel or player."}
--- 	},
--- 	[Steps.L["yell"]] = {
--- 		["func"] = function() Steps.Post("yell") end,
--- 	},
--- 	[Steps.L["guild"]] = {
--- 		["func"] = function() Steps.Post("guild") end,
--- 	},
--- 	[Steps.L["party"]] = {
--- 		["func"] = function() Steps.Post("party") end,
--- 	},
--- 	[Steps.L["instance"]] = {
--- 		["func"] = function() Steps.Post("instance") end,
--- 	},
--- 	[Steps.L["raid"]] = {
--- 		["func"] = function() Steps.Post("raid") end,
--- 	},
--- 	[Steps.L["whisper"]] = {
--- 		["func"] = function(target) Steps.Post(target) end,
--- 	},
--- 	["debug"] = {
--- 		["func"] = function() Steps.debug = not Steps.debug end
--- 	},
--- 	-- [Steps.L["display"]] = {
--- 	-- 	["func"] = Steps.ChangeDisplay,
--- 	-- 	["help"] = {"",Steps.L["Cycle through display options."]}
--- 	-- },
--- }
+Steps.commandList = {
+	[Steps.L["help"]] = {
+		["func"] = Steps.PrintHelp,
+		["help"] = {"",Steps.L["Print this help."]}
+	},
+	[Steps.L["show"]] = {
+		["func"] = function() Steps_options.show = not Steps_options.show; Steps.UpdateBars(); end,
+		["help"] = {"", Steps.L["Toggle display."]}
+	},
+	[Steps.L["lock"]] = {
+		["func"] = function() Steps_options.unlocked = not Steps_options.unlocked
+						Steps.Print( Steps_options.unlocked and Steps.L["UI unlocked"] or Steps.L["UI locked"] )
+					end,
+		["help"] = {"", Steps.L["Toggle display lock."]}
+	},
+	[Steps.L["reset"]] = {
+		["func"] = Steps.UIReset,
+		["help"] = {"", Steps.L["Reset the position of the UI"]}
+	},
+	[Steps.L["chat"]] = {
+		["func"] = function() Steps_options.enableChat = not Steps_options.enableChat;
+						if Steps_options.enableChat then
+							if not Steps.OriginalSendChatMessage then
+								Steps.InitChat()
+							end
+							Steps.Print(Steps.L["{steps} now enabled."])
+						else
+							Steps.Print(Steps.L["Please /reload to disable chat integration."])
+						end
+					end,
+		["help"] = {"", Steps.L["Toggle chat {steps} integration."]}
+	},
+	[Steps.L["say"]] = {
+		["func"] = function() Steps.Post("say") end,
+		["help"] = { "| guild | party | instance | raid | whisper <playerName>", "Post steps report to channel or player."}
+	},
+	[Steps.L["yell"]] = {
+		["func"] = function() Steps.Post("yell") end,
+	},
+	[Steps.L["guild"]] = {
+		["func"] = function() Steps.Post("guild") end,
+	},
+	[Steps.L["party"]] = {
+		["func"] = function() Steps.Post("party") end,
+	},
+	[Steps.L["instance"]] = {
+		["func"] = function() Steps.Post("instance") end,
+	},
+	[Steps.L["raid"]] = {
+		["func"] = function() Steps.Post("raid") end,
+	},
+	[Steps.L["whisper"]] = {
+		["func"] = function(target) Steps.Post(target) end,
+	},
+	["debug"] = {
+		["func"] = function() Steps.debug = not Steps.debug end
+	},
+	-- [Steps.L["display"]] = {
+	-- 	["func"] = Steps.ChangeDisplay,
+	-- 	["help"] = {"",Steps.L["Cycle through display options."]}
+	-- },
+}
 
 
 -- --[[

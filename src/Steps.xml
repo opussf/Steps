@@ -63,9 +63,9 @@ xsi:schemaLocation="http://www.blizzard.com/wow/ui/
 			</StatusBar>
 		</Frames>
 		<Scripts>
-			<!-- <OnLoad>Steps.OnLoad()</OnLoad> -->
-			<!-- <OnUpdate>Steps.OnUpdate()</OnUpdate> -->
-			<!-- <OnEvent>Steps[event]( ... )</OnEvent> -->
+			<OnLoad>Steps.OnLoad()</OnLoad>
+			<OnUpdate>Steps.OnUpdate()</OnUpdate>
+			<OnEvent>Steps[event]( ... )</OnEvent>
 			<!-- <OnMouseDown>Steps.OnDragStart()</OnMouseDown> -->
 			<!-- <OnMouseUp>Steps.OnDragStop()</OnMouseUp> -->
 		</Scripts>

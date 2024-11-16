@@ -55,7 +55,7 @@ function Steps.VARIABLES_LOADED()
 	Steps.mine[date("%Y%m%d")] = Steps.mine[date("%Y%m%d")] or { ["steps"] = 0 }
 	Steps.min, Steps.ave, Steps.max = Steps.CalcMinAveMax()
 	Steps.totalC = math.floor( Steps.mine.steps / 100 )
-	-- Steps.Prune()
+	Steps.Prune()
 	if Steps_options.show then
 		Steps_Frame:SetAlpha(1)
 	else
@@ -279,7 +279,7 @@ function Steps.OnUpdate()
 	end
 	Steps.lastUpdate = nowTS
 	if math.floor( Steps.mine.steps / 100 ) > Steps.totalC then
-		Steps.LOADING_SCREEN_DISABLED()
+		-- Steps.LOADING_SCREEN_DISABLED()
 	end
 end
 function Steps.CalcMinAveMax()
@@ -301,37 +301,37 @@ function Steps.CalcMinAveMax()
 		   (ave and math.floor(ave) or 0),
 		   (max and math.floor(max) or 0)
 end
--- -- Support
--- function Steps.Prune()
--- 	local pruneTS = time() - ( Steps.pruneDays * 86400 )
--- 	for r, _ in pairs( Steps_data ) do
--- 		local ncount = 0
--- 		for n, _ in pairs( Steps_data[r] ) do
--- 			local kcount = 0
--- 			for k, _ in pairs( Steps_data[r][n] ) do
--- 				if string.len(k) == 8 then
--- 					local y = strsub( k, 1, 4 )
--- 					local m = strsub( k, 5, 6 )
--- 					local d = strsub( k, 7, 8 )
--- 					local kts = time{ year=y, month=m, day=d }
--- 					if kts < pruneTS then
--- 						Steps_data[r][n][k] = nil
--- 					else
--- 						kcount = kcount + 1
--- 					end
--- 				end
--- 			end
--- 			if kcount == 0 then
--- 				Steps_data[r][n] = nil
--- 			else
--- 				ncount = ncount + 1
--- 			end
--- 		end
--- 		if ncount == 0 then
--- 			Steps_data[r] = nil
--- 		end
--- 	end
--- end
+-- Support
+function Steps.Prune()
+	local pruneTS = time() - ( Steps.pruneDays * 86400 )
+	for r, _ in pairs( Steps_data ) do
+		local ncount = 0
+		for n, _ in pairs( Steps_data[r] ) do
+			local kcount = 0
+			for k, _ in pairs( Steps_data[r][n] ) do
+				if string.len(k) == 8 then
+					local y = strsub( k, 1, 4 )
+					local m = strsub( k, 5, 6 )
+					local d = strsub( k, 7, 8 )
+					local kts = time{ year=y, month=m, day=d }
+					if kts < pruneTS then
+						Steps_data[r][n][k] = nil
+					else
+						kcount = kcount + 1
+					end
+				end
+			end
+			if kcount == 0 then
+				Steps_data[r][n] = nil
+			else
+				ncount = ncount + 1
+			end
+		end
+		if ncount == 0 then
+			Steps_data[r] = nil
+		end
+	end
+end
 -- function Steps.Print( msg, showName)
 -- 	-- print to the chat frame
 -- 	-- set showName to false to suppress the addon name printing

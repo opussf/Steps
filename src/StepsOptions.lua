@@ -1,7 +1,7 @@
 -- StepsOptions @VERSION@
 function Steps.OptionsPanel_OnLoad( panel )
 	panel.name = "Steps"
-	StepsOptionsFrame_Title:SetText(Steps_MSG_ADDONNAME.." v"..Steps_MSG_VERSION)
+	StepsOptionsFrame_Title:SetText(STEPS_MSG_ADDONNAME.." v"..STEPS_MSG_VERSION)
 
 	-- These NEED to be set
 	panel.OnDefault = function() end

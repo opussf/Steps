@@ -16,3 +16,5 @@ localization_es.lua
 localization_pt.lua
 Steps.lua
 Steps.xml
+StepsOptions.lua
+StepsOptions.xml

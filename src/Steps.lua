@@ -416,6 +416,7 @@ function Steps.DeNormalizeRealm( realm )
 	return string.sub( realmOut, 2, -1 )
 end
 function Steps.GetTodayTotal( name, realm )
+	local today = 0
 	if name and Steps_data[realm] and Steps_data[realm][name] then
 		for dayBack = -1,1 do
 			local dateStr = date("%Y%m%d", time() + (dayBack*86400))
@@ -436,14 +437,14 @@ function Steps.TooltipSetUnit( arg1, arg2 )
 			realm = GetRealmName()
 		end
 	end
-	today, total = Steps.GetTodayTotal( name, realm )
+	local today, total = Steps.GetTodayTotal( name, realm )
 	if today then
 		GameTooltip:AddLine( "Steps today: "..today.." total: "..total )
 	end
 end
 -- DropDownMenu
 function Steps.ModifyMenu( owner, rootDescription, contextData )
-	today, total = Steps.GetTodayTotal( contextData.name, (contextData.server and Steps.DeNormalizeRealm( contextData.server ) or GetRealmName()) )
+	local today, total = Steps.GetTodayTotal( contextData.name, (contextData.server and Steps.DeNormalizeRealm( contextData.server ) or GetRealmName()) )
 	if today then
 		rootDescription:CreateDivider()
 		rootDescription:CreateTitle("Steps today: "..today.." total: "..total)

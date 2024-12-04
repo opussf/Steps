@@ -43,7 +43,7 @@ function Steps.ADDON_LOADED()
 	Steps.name = UnitName("player")
 	Steps.realm = GetRealmName()
 	Steps.msgRealm = string.gsub( Steps.realm, " ", "" )
-	-- TooltipDataProcessor.AddTooltipPostCall( Enum.TooltipDataType.Unit, Steps.TooltipSetUnit )
+	TooltipDataProcessor.AddTooltipPostCall( Enum.TooltipDataType.Unit, Steps.TooltipSetUnit )
 end
 function Steps.VARIABLES_LOADED()
 	-- Unregister the event for this method.
@@ -438,22 +438,24 @@ function Steps.TooltipSetUnit( arg1, arg2 )
 		end
 	end
 	local today, total = Steps.GetTodayTotal( name, realm )
+	if Steps.debug then print( name, realm, today, total ) end
 	if today then
 		GameTooltip:AddLine( "Steps today: "..today.." total: "..total )
 	end
 end
 -- DropDownMenu
 function Steps.ModifyMenu( owner, rootDescription, contextData )
+	if Steps.debug then print( owner, rootDescription, contextData ) end
 	local today, total = Steps.GetTodayTotal( contextData.name, (contextData.server and Steps.DeNormalizeRealm( contextData.server ) or GetRealmName()) )
 	if today then
 		rootDescription:CreateDivider()
 		rootDescription:CreateTitle("Steps today: "..today.." total: "..total)
 	end
 end
--- Menu.ModifyMenu("MENU_UNIT_SELF", Steps.ModifyMenu)
--- Menu.ModifyMenu("MENU_UNIT_COMMUNITIES_GUILD_MEMBER", Steps.ModifyMenu)
--- Menu.ModifyMenu("MENU_UNIT_PARTY", Steps.ModifyMenu)
--- Menu.ModifyMenu("MENU_UNIT_RAID", Steps.ModifyMenu)
+Menu.ModifyMenu("MENU_UNIT_SELF", Steps.ModifyMenu)
+Menu.ModifyMenu("MENU_UNIT_COMMUNITIES_GUILD_MEMBER", Steps.ModifyMenu)
+Menu.ModifyMenu("MENU_UNIT_PARTY", Steps.ModifyMenu)
+Menu.ModifyMenu("MENU_UNIT_RAID", Steps.ModifyMenu)
 -- Post
 function Steps.GetPostString()
 	local dateStr = date("%Y%m%d")

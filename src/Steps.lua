@@ -459,34 +459,34 @@ end
 -- 	local dateStr = date("%Y%m%d")
 -- 	return string.format("%s: %i", Steps.L["My steps today"], math.floor( Steps.mine[dateStr].steps or "0" ) )
 -- end
--- function Steps.Post( param )
--- 	local chatChannel, toWhom
--- 	if( param ) then
--- 		if( param == "say" ) then
--- 			chatChannel = "SAY"
--- 		elseif( param == "yell") then
--- 			chatChannel = "YELL"
--- 		elseif( param == "guild" and IsInGuild() ) then
--- 			chatChannel = "GUILD"
--- 		elseif( param == "party" and IsInGroup( LE_PARTY_CATEGORY_HOME ) ) then
--- 			chatChannel = "PARTY"
--- 		elseif( param == "instance" and IsInGroup( LE_PARTY_CATEGORY_INSTANCE ) ) then
--- 			chatChannel = "INSTANCE_CHAT"
--- 		elseif( param == "instance" and IsInGroup( LE_PARTY_CATEGORY_HOME ) ) then
--- 			chatChannel = "PARTY"
--- 		elseif( param == 'raid' and IsInRaid() ) then
--- 			chatChannel = "RAID"
--- 		elseif( param ~= "" ) then
--- 			chatChannel = "WHISPER"
--- 			toWhom = param
--- 		end
+function Steps.Post( param )
+	local chatChannel, toWhom
+	if( param ) then
+		if( param == "say" ) then
+			chatChannel = "SAY"
+		elseif( param == "yell") then
+			chatChannel = "YELL"
+		elseif( param == "guild" and IsInGuild() ) then
+			chatChannel = "GUILD"
+		elseif( param == "party" and IsInGroup( LE_PARTY_CATEGORY_HOME ) ) then
+			chatChannel = "PARTY"
+		elseif( param == "instance" and IsInGroup( LE_PARTY_CATEGORY_INSTANCE ) ) then
+			chatChannel = "INSTANCE_CHAT"
+		elseif( param == "instance" and IsInGroup( LE_PARTY_CATEGORY_HOME ) ) then
+			chatChannel = "PARTY"
+		elseif( param == 'raid' and IsInRaid() ) then
+			chatChannel = "RAID"
+		elseif( param ~= "" ) then
+			chatChannel = "WHISPER"
+			toWhom = param
+		end
 
--- 		if( chatChannel ) then
--- 			SendChatMessage( Steps.GetPostString(), chatChannel, nil, toWhom )  -- toWhom will be nil for most
--- 			Steps.SendMessages()
--- 		end
--- 	end
--- end
+		if( chatChannel ) then
+			SendChatMessage( Steps.GetPostString(), chatChannel, nil, toWhom )  -- toWhom will be nil for most
+			Steps.SendMessages()
+		end
+	end
+end
 -- function Steps.UpdateBars()
 -- 	if Steps_options.show then
 -- 		Steps_Frame:SetAlpha(1)
@@ -498,10 +498,10 @@ end
 -- end
 
 Steps.commandList = {
--- 	[Steps.L["help"]] = {
--- 		["func"] = Steps.PrintHelp,
--- 		["help"] = {"",Steps.L["Print this help."]}
--- 	},
+	[Steps.L["help"]] = {
+		["func"] = Steps.PrintHelp,
+		["help"] = {"",Steps.L["Print this help."]}
+	},
 -- 	[Steps.L["show"]] = {
 -- 		["func"] = function() Steps_options.show = not Steps_options.show; Steps.UpdateBars(); end,
 -- 		["help"] = {"", Steps.L["Toggle display."]}
@@ -529,10 +529,10 @@ Steps.commandList = {
 -- 					end,
 -- 		["help"] = {"", Steps.L["Toggle chat {steps} integration."]}
 -- 	},
--- 	[Steps.L["say"]] = {
--- 		["func"] = function() Steps.Post("say") end,
--- 		["help"] = { "| guild | party | instance | raid | whisper <playerName>", "Post steps report to channel or player."}
--- 	},
+	[Steps.L["say"]] = {
+		["func"] = function() Steps.Post("say") end,
+		["help"] = { "| guild | party | instance | raid | whisper <playerName>", "Post steps report to channel or player."}
+	},
 -- 	[Steps.L["yell"]] = {
 -- 		["func"] = function() Steps.Post("yell") end,
 -- 	},

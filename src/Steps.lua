@@ -120,16 +120,16 @@ function Steps.toBytes(num)
 	end
 	return t, strOut
 end
--- function Steps.fromBytes( bytes )
--- 	local num = 0
+function Steps.fromBytes( bytes )
+	local num = 0
 
--- 	for i = 1,#bytes do
--- 		local b = string.byte( bytes, i )
--- 		num = bit.lshift(num, 7) + bit.band( b, 0x7f )
--- 	end
+	for i = 1,#bytes do
+		local b = string.byte( bytes, i )
+		num = bit.lshift(num, 7) + bit.band( b, 0x7f )
+	end
 
--- 	return num
--- end
+	return num
+end
 function Steps.BuildAddonMessage2()
 	local prefixLen = string.len( Steps.commPrefix ) + 1
 	local msgStr = string.format("%s|%s|%s|%s",
@@ -385,22 +385,22 @@ function Steps.PrintHelp()
 		end
 	end
 end
--- -- function Steps.ChangeDisplay()
--- -- end
--- -- UI
--- function Steps.OnDragStart()
--- 	if Steps_options.unlocked then
--- 		Steps_Frame:StartMoving()
--- 	end
+-- function Steps.ChangeDisplay()
 -- end
--- function Steps.OnDragStop()
--- 	Steps_Frame:StopMovingOrSizing()
--- end
--- function Steps.UIReset()
--- 	Steps_Frame:SetSize( 200, 12 )
--- 	Steps_Frame:ClearAllPoints()
--- 	Steps_Frame:SetPoint("BOTTOMLEFT", "$parent", "BOTTOMLEFT")
--- end
+-- UI
+function Steps.OnDragStart()
+	if Steps_options.unlocked then
+		Steps_Frame:StartMoving()
+	end
+end
+function Steps.OnDragStop()
+	Steps_Frame:StopMovingOrSizing()
+end
+function Steps.UIReset()
+	Steps_Frame:SetSize( 200, 12 )
+	Steps_Frame:ClearAllPoints()
+	Steps_Frame:SetPoint("BOTTOMLEFT", "$parent", "BOTTOMLEFT")
+end
 -- function Steps.DeNormalizeRealm( realm )
 -- 	local realmOut = ""
 -- 	for s in string.gmatch( realm, "(.)" ) do
@@ -415,33 +415,33 @@ end
 -- 	end
 -- 	return string.sub( realmOut, 2, -1 )
 -- end
--- function Steps.GetTodayTotal( name, realm )
--- 	local today = 0
--- 	if name and Steps_data[realm] and Steps_data[realm][name] then
--- 		for dayBack = -1,1 do
--- 			local dateStr = date("%Y%m%d", time() + (dayBack*86400))
--- 			if Steps_data[realm][name][dateStr] then
--- 				today = Steps_data[realm][name][dateStr].steps
--- 			end
--- 		end
--- 		return math.floor( today or 0 ), math.floor( Steps_data[realm][name].steps or 0 )
--- 	end
--- end
--- -- Tooltip
--- function Steps.TooltipSetUnit( arg1, arg2 )
--- 	local name = GameTooltip:GetUnit()
--- 	local realm = ""
--- 	if UnitName( "mouseover" ) == name then
--- 		_, realm = UnitName( "mouseover" )
--- 		if not realm then
--- 			realm = GetRealmName()
--- 		end
--- 	end
--- 	local today, total = Steps.GetTodayTotal( name, realm )
--- 	if today then
--- 		GameTooltip:AddLine( "Steps today: "..today.." total: "..total )
--- 	end
--- end
+function Steps.GetTodayTotal( name, realm )
+	local today = 0
+	if name and Steps_data[realm] and Steps_data[realm][name] then
+		for dayBack = -1,1 do
+			local dateStr = date("%Y%m%d", time() + (dayBack*86400))
+			if Steps_data[realm][name][dateStr] then
+				today = Steps_data[realm][name][dateStr].steps
+			end
+		end
+		return math.floor( today or 0 ), math.floor( Steps_data[realm][name].steps or 0 )
+	end
+end
+-- Tooltip
+function Steps.TooltipSetUnit( arg1, arg2 )
+	local name = GameTooltip:GetUnit()
+	local realm = ""
+	if UnitName( "mouseover" ) == name then
+		_, realm = UnitName( "mouseover" )
+		if not realm then
+			realm = GetRealmName()
+		end
+	end
+	local today, total = Steps.GetTodayTotal( name, realm )
+	if today then
+		GameTooltip:AddLine( "Steps today: "..today.." total: "..total )
+	end
+end
 -- -- DropDownMenu
 -- function Steps.ModifyMenu( owner, rootDescription, contextData )
 -- 	local today, total = Steps.GetTodayTotal( contextData.name, (contextData.server and Steps.DeNormalizeRealm( contextData.server ) or GetRealmName()) )
@@ -461,7 +461,6 @@ function Steps.GetPostString()
 end
 function Steps.Post( param )
 	local chatChannel, toWhom
-	print( "Fuck, is this broken: \""..param.."\"" )
 	if( param ) then
 		if( param == "say" ) then
 			chatChannel = "SAY"

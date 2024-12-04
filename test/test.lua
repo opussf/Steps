@@ -23,119 +23,119 @@ dateStr = date("%Y%m%d")
 Steps.commPrefix = "Steps"
 Steps_options.show = true
 
--- function test.before()
--- 	Steps.OnLoad()
--- 	Steps.ADDON_LOADED()
--- 	Steps.VARIABLES_LOADED()
--- 	Steps.LOADING_SCREEN_DISABLED()
--- end
--- function test.after()
--- 	Steps_log = {}
--- 	Steps_data = {}
--- 	myParty = { ["group"] = nil, ["raid"] = nil, ["roster"] = {} }
--- end
--- function test.test_playerStartsMoving()
--- 	unitSpeeds.player = 7 -- 100% speed
--- 	Steps.isMoving = nil
--- 	Steps.OnUpdate()
--- 	assertTrue( Steps.isMoving )
--- 	assertEquals( 7, Steps.lastSpeed )
--- end
--- function test.test_playerMovingSameSpeed()
--- 	unitSpeeds.player = 7
--- 	Steps.isMoving = true
--- 	Steps.OnUpdate()
--- 	assertTrue( Steps.isMoving )
--- 	assertEquals( 7, Steps.lastSpeed )
--- end
--- function test.test_playerChangesSpeed()
--- 	unitSpeeds.player = 14
--- 	Steps.isMoving = true
--- 	Steps.lastSpeed = 7
--- 	Steps.OnUpdate()
--- 	assertTrue( Steps.isMoving )
--- 	assertEquals( 14, Steps.lastSpeed )
--- end
--- function test.test_playerStops()
--- 	unitSpeeds.player = 0
--- 	Steps.isMoving = true
--- 	Steps.lastSpeed = 7
--- 	Steps.OnUpdate()
--- 	assertFalse( Steps.isMoving )
--- 	assertEquals( 0, Steps.lastSpeed )
--- end
--- function test.test_speed7()
--- 	unitSpeeds.player = 7
--- 	Steps.isMoving = true
--- 	Steps.lastSpeed = 7
--- 	Steps.lastUpdate = time() - 1
--- 	Steps.OnUpdate()
--- 	assertEquals( 2, Steps_data["Test Realm"]["testPlayer"][dateStr].steps )
--- end
--- function test.test_speed12_5()
--- 	unitSpeeds.player = 12.5
--- 	Steps.isMoving = true
--- 	Steps.lastSpeed = 12.5
--- 	Steps.lastUpdate = time() - 1
--- 	Steps.OnUpdate()
--- 	assertEquals( 357, math.floor( Steps_data["Test Realm"]["testPlayer"][dateStr].steps * 100) )
--- end
--- function test.test_speed14()
--- 	unitSpeeds.player = 14
--- 	Steps.isMoving = true
--- 	Steps.lastSpeed = 14
--- 	Steps.lastUpdate = time() - 1
--- 	Steps.OnUpdate()
--- 	assertEquals( 4, Steps_data["Test Realm"]["testPlayer"][dateStr].steps )
--- end
--- function test.test_replace_single()
--- 	unitSpeeds.player = 7
--- 	Steps.isMoving = true
--- 	Steps.lastSpeed = 7
--- 	Steps.lastUpdate = time() - 1
--- 	Steps.OnUpdate()
--- 	assertEquals( "My steps today: 2", Steps.ReplaceMessage( "{step}" ) )
--- end
--- function test.test_replace_plural()
--- 	unitSpeeds.player = 7
--- 	Steps.isMoving = true
--- 	Steps.lastSpeed = 7
--- 	Steps.lastUpdate = time() - 1
--- 	Steps.OnUpdate()
--- 	assertEquals( "My steps today: 2", Steps.ReplaceMessage( "{steps}" ) )
--- end
--- function test.test_command()
--- 	Steps.Command()
--- end
--- function test.test_commandHelp()
--- 	Steps.Command( "help" )
--- end
--- function test.test_UI_Text()
--- 	unitSpeeds.player = 7
--- 	Steps.isMoving = true
--- 	Steps.lastSpeed = 7
--- 	Steps.lastUpdate = time() - 1
--- 	Steps.OnUpdate()
--- 	assertEquals( 'Steps: 2 (0:2)', Steps_StepBarText:GetText() )
--- end
--- function test.test_prune_removeDays()
--- 	-- just remove old data
--- 	oldDateStr = date( "%Y%m%d", time() - (92*86400) )
--- 	Steps_data["Test Realm"]["testPlayer"][oldDateStr] = {["steps"] = 500}
--- 	Steps_data["Test Realm"]["testPlayer"][date("%Y%m%d")] = {["steps"] = 100}
--- 	Steps_data["Test Realm"]["testPlayer"].steps = 600
--- 	Steps.Prune()
--- 	assertIsNil( Steps_data["Test Realm"]["testPlayer"][oldDateStr] )
--- 	assertEquals( 100, Steps_data["Test Realm"]["testPlayer"][date("%Y%m%d")].steps )
--- end
--- function test.test_prune_removePlayer()
--- 	oldDateStr = date( "%Y%m%d", time() - (95*86400) )
--- 	Steps_data["Test Realm"]["otherPlayer"] = {[oldDateStr] = {["steps"] = 500}, ["steps"] = 500}
--- 	Steps_data["Test Realm"]["otherPlayer"].steps = 500
--- 	Steps_data["Test Realm"]["testPlayer"] = {[date("%Y%m%d")] = {["steps"] = 100}, ["steps"] = 100}
--- 	Steps.Prune()
--- 	assertIsNil( Steps_data["Test Realm"]["otherPlayer"] )
--- end
+function test.before()
+	Steps.OnLoad()
+	Steps.ADDON_LOADED()
+	Steps.VARIABLES_LOADED()
+	Steps.LOADING_SCREEN_DISABLED()
+end
+function test.after()
+	Steps_log = {}
+	Steps_data = {}
+	myParty = { ["group"] = nil, ["raid"] = nil, ["roster"] = {} }
+end
+function test.test_playerStartsMoving()
+	unitSpeeds.player = 7 -- 100% speed
+	Steps.isMoving = nil
+	Steps.OnUpdate()
+	assertTrue( Steps.isMoving )
+	assertEquals( 7, Steps.lastSpeed )
+end
+function test.test_playerMovingSameSpeed()
+	unitSpeeds.player = 7
+	Steps.isMoving = true
+	Steps.OnUpdate()
+	assertTrue( Steps.isMoving )
+	assertEquals( 7, Steps.lastSpeed )
+end
+function test.test_playerChangesSpeed()
+	unitSpeeds.player = 14
+	Steps.isMoving = true
+	Steps.lastSpeed = 7
+	Steps.OnUpdate()
+	assertTrue( Steps.isMoving )
+	assertEquals( 14, Steps.lastSpeed )
+end
+function test.test_playerStops()
+	unitSpeeds.player = 0
+	Steps.isMoving = true
+	Steps.lastSpeed = 7
+	Steps.OnUpdate()
+	assertFalse( Steps.isMoving )
+	assertEquals( 0, Steps.lastSpeed )
+end
+function test.test_speed7()
+	unitSpeeds.player = 7
+	Steps.isMoving = true
+	Steps.lastSpeed = 7
+	Steps.lastUpdate = time() - 1
+	Steps.OnUpdate()
+	assertEquals( 2, Steps_data["Test Realm"]["testPlayer"][dateStr].steps )
+end
+function test.test_speed12_5()
+	unitSpeeds.player = 12.5
+	Steps.isMoving = true
+	Steps.lastSpeed = 12.5
+	Steps.lastUpdate = time() - 1
+	Steps.OnUpdate()
+	assertEquals( 357, math.floor( Steps_data["Test Realm"]["testPlayer"][dateStr].steps * 100) )
+end
+function test.test_speed14()
+	unitSpeeds.player = 14
+	Steps.isMoving = true
+	Steps.lastSpeed = 14
+	Steps.lastUpdate = time() - 1
+	Steps.OnUpdate()
+	assertEquals( 4, Steps_data["Test Realm"]["testPlayer"][dateStr].steps )
+end
+function test.test_replace_single()
+	unitSpeeds.player = 7
+	Steps.isMoving = true
+	Steps.lastSpeed = 7
+	Steps.lastUpdate = time() - 1
+	Steps.OnUpdate()
+	assertEquals( "My steps today: 2", Steps.ReplaceMessage( "{step}" ) )
+end
+function test.test_replace_plural()
+	unitSpeeds.player = 7
+	Steps.isMoving = true
+	Steps.lastSpeed = 7
+	Steps.lastUpdate = time() - 1
+	Steps.OnUpdate()
+	assertEquals( "My steps today: 2", Steps.ReplaceMessage( "{steps}" ) )
+end
+function test.test_command()
+	Steps.Command()
+end
+function test.test_commandHelp()
+	Steps.Command( "help" )
+end
+function test.test_UI_Text()
+	unitSpeeds.player = 7
+	Steps.isMoving = true
+	Steps.lastSpeed = 7
+	Steps.lastUpdate = time() - 1
+	Steps.OnUpdate()
+	assertEquals( 'Steps: 2 (0:2)', Steps_StepBarText:GetText() )
+end
+function test.test_prune_removeDays()
+	-- just remove old data
+	oldDateStr = date( "%Y%m%d", time() - (92*86400) )
+	Steps_data["Test Realm"]["testPlayer"][oldDateStr] = {["steps"] = 500}
+	Steps_data["Test Realm"]["testPlayer"][date("%Y%m%d")] = {["steps"] = 100}
+	Steps_data["Test Realm"]["testPlayer"].steps = 600
+	Steps.Prune()
+	assertIsNil( Steps_data["Test Realm"]["testPlayer"][oldDateStr] )
+	assertEquals( 100, Steps_data["Test Realm"]["testPlayer"][date("%Y%m%d")].steps )
+end
+function test.test_prune_removePlayer()
+	oldDateStr = date( "%Y%m%d", time() - (95*86400) )
+	Steps_data["Test Realm"]["otherPlayer"] = {[oldDateStr] = {["steps"] = 500}, ["steps"] = 500}
+	Steps_data["Test Realm"]["otherPlayer"].steps = 500
+	Steps_data["Test Realm"]["testPlayer"] = {[date("%Y%m%d")] = {["steps"] = 100}, ["steps"] = 100}
+	Steps.Prune()
+	assertIsNil( Steps_data["Test Realm"]["otherPlayer"] )
+end
 -- function test.test_prune_removeRealm()
 -- 	Steps_data["otherRealm"] = {}
 -- 	Steps.Prune()

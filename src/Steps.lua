@@ -61,9 +61,9 @@ function Steps.VARIABLES_LOADED()
 	else
 		Steps_Frame:SetAlpha(0)
 	end
--- 	if Steps_options.enableChat then
--- 		Steps.InitChat()
--- 	end
+	if Steps_options.enableChat then
+		Steps.InitChat()
+	end
 end
 function Steps.SendMessages()
 	if not C_ChatInfo.IsAddonMessagePrefixRegistered(Steps.commPrefix) then
@@ -93,7 +93,7 @@ function Steps.INSTANCE_GROUP_SIZE_CHANGED()
 end
 function Steps.CHAT_MSG_ADDON(...)
 	self, prefix, message, distType, sender = ...
-	Steps.Print( "p:"..prefix.." m:"..message.." d:"..distType.." s:"..sender )
+	if Steps.debug then print( "msg< p:"..prefix.." m:"..message.." d:"..distType.." s:"..sender ) end
 	if prefix == Steps.commPrefix and sender ~= Steps.name.."-"..Steps.msgRealm then
 		if string.find(message, "v:") then
 			Steps.DecodeMessage( message )
@@ -401,20 +401,20 @@ function Steps.UIReset()
 	Steps_Frame:ClearAllPoints()
 	Steps_Frame:SetPoint("BOTTOMLEFT", "$parent", "BOTTOMLEFT")
 end
--- function Steps.DeNormalizeRealm( realm )
--- 	local realmOut = ""
--- 	for s in string.gmatch( realm, "(.)" ) do
--- 		if string.find( s, "[A-Z]" ) then
--- 			s = " "..s
--- 		end
--- 		realmOut = realmOut..s
--- 	end
--- 	b = string.find( realmOut, "of " )
--- 	if b then
--- 		realmOut = string.sub( realmOut, 1, b-1 ).." "..string.sub( realmOut, b, -1 )
--- 	end
--- 	return string.sub( realmOut, 2, -1 )
--- end
+function Steps.DeNormalizeRealm( realm )
+	local realmOut = ""
+	for s in string.gmatch( realm, "(.)" ) do
+		if string.find( s, "[A-Z]" ) then
+			s = " "..s
+		end
+		realmOut = realmOut..s
+	end
+	b = string.find( realmOut, "of " )
+	if b then
+		realmOut = string.sub( realmOut, 1, b-1 ).." "..string.sub( realmOut, b, -1 )
+	end
+	return string.sub( realmOut, 2, -1 )
+end
 function Steps.GetTodayTotal( name, realm )
 	local today = 0
 	if name and Steps_data[realm] and Steps_data[realm][name] then
@@ -442,19 +442,19 @@ function Steps.TooltipSetUnit( arg1, arg2 )
 		GameTooltip:AddLine( "Steps today: "..today.." total: "..total )
 	end
 end
--- -- DropDownMenu
--- function Steps.ModifyMenu( owner, rootDescription, contextData )
--- 	local today, total = Steps.GetTodayTotal( contextData.name, (contextData.server and Steps.DeNormalizeRealm( contextData.server ) or GetRealmName()) )
--- 	if today then
--- 		rootDescription:CreateDivider()
--- 		rootDescription:CreateTitle("Steps today: "..today.." total: "..total)
--- 	end
--- end
+-- DropDownMenu
+function Steps.ModifyMenu( owner, rootDescription, contextData )
+	local today, total = Steps.GetTodayTotal( contextData.name, (contextData.server and Steps.DeNormalizeRealm( contextData.server ) or GetRealmName()) )
+	if today then
+		rootDescription:CreateDivider()
+		rootDescription:CreateTitle("Steps today: "..today.." total: "..total)
+	end
+end
 -- Menu.ModifyMenu("MENU_UNIT_SELF", Steps.ModifyMenu)
 -- Menu.ModifyMenu("MENU_UNIT_COMMUNITIES_GUILD_MEMBER", Steps.ModifyMenu)
 -- Menu.ModifyMenu("MENU_UNIT_PARTY", Steps.ModifyMenu)
 -- Menu.ModifyMenu("MENU_UNIT_RAID", Steps.ModifyMenu)
--- -- Post
+-- Post
 function Steps.GetPostString()
 	local dateStr = date("%Y%m%d")
 	return string.format("%s: %i", Steps.L["My steps today"], math.floor( Steps.mine[dateStr].steps or "0" ) )
@@ -552,7 +552,7 @@ Steps.commandList = {
 		["func"] = function(target) Steps.Post(target) end,
 	},
 	["debug"] = {
-		["func"] = function() Steps.debug = not Steps.debug end
+		["func"] = function() Steps.debug = not Steps.debug; Steps.Print( "Debug is "..(Steps.debug and "On" or "Off") ) end
 	},
 -- 	-- [Steps.L["display"]] = {
 -- 	-- 	["func"] = Steps.ChangeDisplay,

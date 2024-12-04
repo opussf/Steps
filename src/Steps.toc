@@ -17,5 +17,5 @@ localization_pt.lua
 Steps.lua
 Steps.xml
 StepsChat.lua
-#StepsOptions.lua
-#StepsOptions.xml
+StepsOptions.lua
+StepsOptions.xml

@@ -1,5 +1,5 @@
--- -- StepsOptions @VERSION@
--- function Steps.OptionsPanel_OnLoad( panel )
+-- StepsOptions @VERSION@
+function Steps.OptionsPanel_OnLoad( panel )
 -- 	panel.name = "Steps"
 -- 	StepsOptionsFrame_Title:SetText(STEPS_MSG_ADDONNAME.." v"..STEPS_MSG_VERSION)
 
@@ -12,7 +12,7 @@
 -- 	local category, layout = Settings.RegisterCanvasLayoutCategory( panel, panel.name )
 -- 	panel.category = category
 -- 	Settings.RegisterAddOnCategory(category)
--- end
+end
 -- function Steps.OptionsPanel_OKAY()
 -- 	-- Data was recorded, clear the temp
 -- 	Steps.oldValues = nil
@@ -33,11 +33,10 @@
 -- 		Steps.oldValues={[option] = Steps_options[option]}
 -- 	end
 -- end
--- function Steps.OptionsPanel_CheckButton_OnLoad( self, option, text )
--- 	--FB.Print("CheckButton_OnLoad( "..option..", "..text.." ) -> "..(FB_options[option] and "checked" or "nil"));
--- 	getglobal(self:GetName().."Text"):SetText(text)
--- 	self:SetChecked(Steps_options[option])
--- end
+function Steps.OptionsPanel_CheckButton_OnLoad( self, option, text )
+	getglobal(self:GetName().."Text"):SetText(text)
+	self:SetChecked(Steps_options[option])
+end
 -- -- OnClick for checkbuttons
 -- function Steps.OptionsPanel_CheckButton_OnClick( self, option )
 -- 	Steps.OptionPanel_KeepOriginalValue( option )

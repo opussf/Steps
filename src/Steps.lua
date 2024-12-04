@@ -556,8 +556,8 @@ Steps.commandList = {
 	["debug"] = {
 		["func"] = function() Steps.debug = not Steps.debug; Steps.Print( "Debug is "..(Steps.debug and "On" or "Off") ) end
 	},
--- 	-- [Steps.L["display"]] = {
--- 	-- 	["func"] = Steps.ChangeDisplay,
--- 	-- 	["help"] = {"",Steps.L["Cycle through display options."]}
--- 	-- },
+	-- [Steps.L["display"]] = {
+	-- 	["func"] = Steps.ChangeDisplay,
+	-- 	["help"] = {"",Steps.L["Cycle through display options."]}
+	-- },
 }

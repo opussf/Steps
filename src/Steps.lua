@@ -93,7 +93,7 @@ function Steps.INSTANCE_GROUP_SIZE_CHANGED()
 end
 function Steps.CHAT_MSG_ADDON(...)
 	self, prefix, message, distType, sender = ...
-	-- Steps.Print( "p:"..prefix.." m:"..message.." d:"..distType.." s:"..sender )
+	if Steps.debug then print( "msg< p:"..prefix.." m:"..message.." d:"..distType.." s:"..sender ) end
 	if prefix == Steps.commPrefix and sender ~= Steps.name.."-"..Steps.msgRealm then
 		if string.find(message, "v:") then
 			Steps.DecodeMessage( message )
@@ -438,12 +438,14 @@ function Steps.TooltipSetUnit( arg1, arg2 )
 		end
 	end
 	local today, total = Steps.GetTodayTotal( name, realm )
+	if Steps.debug then print( name, realm, today, total ) end
 	if today then
 		GameTooltip:AddLine( "Steps today: "..today.." total: "..total )
 	end
 end
 -- DropDownMenu
 function Steps.ModifyMenu( owner, rootDescription, contextData )
+	if Steps.debug then print( owner, rootDescription, contextData ) end
 	local today, total = Steps.GetTodayTotal( contextData.name, (contextData.server and Steps.DeNormalizeRealm( contextData.server ) or GetRealmName()) )
 	if today then
 		rootDescription:CreateDivider()
@@ -552,7 +554,7 @@ Steps.commandList = {
 		["func"] = function(target) Steps.Post(target) end,
 	},
 	["debug"] = {
-		["func"] = function() Steps.debug = not Steps.debug end
+		["func"] = function() Steps.debug = not Steps.debug; Steps.Print( "Debug is "..(Steps.debug and "On" or "Off") ) end
 	},
 	-- [Steps.L["display"]] = {
 	-- 	["func"] = Steps.ChangeDisplay,

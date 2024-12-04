@@ -34,7 +34,6 @@ function Steps.OptionPanel_KeepOriginalValue( option )
 	end
 end
 function Steps.OptionsPanel_CheckButton_OnLoad( self, option, text )
-	--FB.Print("CheckButton_OnLoad( "..option..", "..text.." ) -> "..(FB_options[option] and "checked" or "nil"));
 	getglobal(self:GetName().."Text"):SetText(text)
 	self:SetChecked(Steps_options[option])
 end

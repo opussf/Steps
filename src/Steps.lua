@@ -295,7 +295,7 @@ function Steps.CalcMinAveMax()
 	local dateStr = date("%Y%m%d")
 	for date, struct in pairs( Steps.mine ) do
 		if string.len(date) == 8 and date ~= dateStr and struct.steps > 0 then
-			dSteps = struct.steps
+			local dSteps = struct.steps
 			min = min and math.min(min, dSteps) or dSteps
 			max = max and math.max(max, dSteps) or dSteps
 			count = count + 1

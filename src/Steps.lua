@@ -92,7 +92,7 @@ function Steps.INSTANCE_GROUP_SIZE_CHANGED()
 	Steps.SendMessages()
 end
 function Steps.CHAT_MSG_ADDON(...)
-	self, prefix, message, distType, sender = ...
+	local _, prefix, message, distType, sender = ...
 	if Steps.debug then print( "msg< p:"..prefix.." m:"..message.." d:"..distType.." s:"..sender ) end
 	if prefix == Steps.commPrefix and sender ~= Steps.name.."-"..Steps.msgRealm then
 		if string.find(message, "v:") then
@@ -106,6 +106,7 @@ function Steps.toBytes(num)
 	-- print( "toBytes( "..num.." )" )
 	-- returns a table and string of bytes.  MSB first
 	local t = {} -- will contain the bits
+	local strOut
 	if num == 0 then
 		t[1] = 128
 		strOut = string.char(128)

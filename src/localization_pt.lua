@@ -6,6 +6,6 @@ if GetLocale() == "ptBR" then
     L.L["My steps today"] = "Meus passos hoje"
     L.L["Print this help."] = "Imprimir esta ajuda."
     L.L["help"] = "ajuda"
-    L.L["Send steps to any chat"] = "envie passos para qualquer chat"
+    L.L["Send steps to any chat"] = "Envie passos para qualquer chat"
     L.L["A new version of Steps is available."] = "Uma nova versão do Steps está disponível."
 end

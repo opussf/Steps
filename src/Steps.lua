@@ -554,6 +554,9 @@ Steps.commandList = {
 	[Steps.L["whisper"]] = {
 		["func"] = function(target) Steps.Post(target) end,
 	},
+	[Steps.L["trend"]] = {
+		["func"] = function() Steps.ShowTrend() end,
+	},
 	["debug"] = {
 		["func"] = function() Steps.debug = not Steps.debug; Steps.Print( "Debug is "..(Steps.debug and "On" or "Off") ) end
 	},

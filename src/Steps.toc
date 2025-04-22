@@ -19,3 +19,5 @@ Steps.xml
 StepsChat.lua
 StepsOptions.lua
 StepsOptions.xml
+StepsUI.lua
+StepsUI.xml

@@ -8,8 +8,6 @@ xsi:schemaLocation="http://www.blizzard.com/wow/ui/
 		<Size x="20" y="200" />
 		<BarTexture file="Interface\TARGETINGFRAME\UI-StatusBar" />
 		<BarColor r="1.0" g="0.23" b="0.19" />
-
-		FF3B30
 	</StatusBar>
 
 	<Frame name="StepsUI_Frame" frameStrata="BACKGROUND" toplevel="false" enableMouse="false" movable="true" parent="UIParent">

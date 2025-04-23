@@ -396,6 +396,9 @@ function Steps.OnDragStart()
 end
 function Steps.OnDragStop()
 	Steps_Frame:StopMovingOrSizing()
+	if not Steps_options.unlocked then
+		Steps.ShowTrend()
+	end
 end
 function Steps.UIReset()
 	Steps_Frame:SetSize( 200, 12 )

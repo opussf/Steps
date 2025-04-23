@@ -11,10 +11,10 @@ function Steps.ShowTrend()
 	end
 	StepsUI_Frame:Show()
 
-	Steps.ShowDays()
+	Steps.ShowWeek()
 end
-function Steps.ShowDays()
-	if Steps.AssureBars( 7 ) < 7 then
+function Steps.ShowWeek()
+	if Steps.AssureBars( 7, 30 ) < 7 then
 		StepsUI_Frame:Hide()
 		return
 	end
@@ -59,25 +59,43 @@ function Steps.ShowDays()
 		Steps.HistBars[7-dayBack]:SetValue( math.floor( barData[dayStr][2] ) )
 	end
 end
-function Steps.AssureBars( barsNeeded )
+function Steps.Show2Week()
+	if Steps.AssureBars( 14, 15 ) < 7 then
+		StepsUI_Frame:Hide()
+		return
+	end
+	local dayList = {}
+	for dayBack = 1, 14, 2 do
+		table.insert( dayList, date( "%a", time() + (dayBack*86400) ) )
+	end
+	if Steps.AssureXAxis( 7, dayList ) < 7 then
+		StepsUI_Frame:Hide()
+		return
+	end
+
+end
+function Steps.AssureBars( barsNeeded, width )
+	width = width or 30
 	local count = #Steps.MineBars
 	if( not InCombatLockdown() and barsNeeded > count  ) then
 		Steps.Print( "I need "..barsNeeded.."/"..count.." bars." )
 		for i = count+1, barsNeeded do
 			Steps.Print( "Creating bar# "..i )
-			local newBar = CreateFrame( "StatusBar", "Steps_MineBar"..i, StepsUI_Frame, "Steps_TrendBarTemplate" )  --template can be last parameter
+			local newBar = CreateFrame( "StatusBar", "Steps_MineBar"..i, StepsUI_BarFrame, "Steps_TrendBarTemplate" )  --template can be last parameter
 			newBar:SetFrameStrata( "MEDIUM" )
 			newBar:SetStatusBarColor( unpack( Steps.stepsColor ) )  -- Should be the gold color
+			newBar:SetWidth( width )
 			if( i == 1 ) then
-				newBar:SetPoint( "TOPLEFT", "StepsUI_Frame", "TOPLEFT" )
+				newBar:SetPoint( "TOPLEFT", "StepsUI_BarFrame", "TOPLEFT" )
 			else
 				newBar:SetPoint( "TOPLEFT", Steps.MineBars[i-1], "TOPRIGHT" )
 			end
 			Steps.MineBars[i] = newBar
-			newBar = CreateFrame( "StatusBar", "Steps_HistBar"..i, StepsUI_Frame, "Steps_TrendBarTemplate" )
+			newBar = CreateFrame( "StatusBar", "Steps_HistBar"..i, StepsUI_BarFrame, "Steps_TrendBarTemplate" )
 			newBar:SetFrameStrata( "LOW" )
+			newBar:SetWidth( width )
 			if( i == 1 ) then
-				newBar:SetPoint( "TOPLEFT", "StepsUI_Frame", "TOPLEFT" )
+				newBar:SetPoint( "TOPLEFT", "StepsUI_BarFrame", "TOPLEFT" )
 			else
 				newBar:SetPoint( "TOPLEFT", Steps.HistBars[i-1], "TOPRIGHT" )
 			end

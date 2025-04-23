@@ -2,6 +2,7 @@ STEPS_SLUG, Steps = ...
 
 Steps.MineBars = {}
 Steps.HistBars = {}
+Steps.XAxis = {}
 
 function Steps.ShowTrend()
 	if StepsUI_Frame:IsVisible() then
@@ -10,7 +11,14 @@ function Steps.ShowTrend()
 	end
 	StepsUI_Frame:Show()
 
+	Steps.ShowDays()
+end
+function Steps.ShowDays()
 	if Steps.AssureBars( 7 ) < 7 then
+		StepsUI_Frame:Hide()
+		return
+	end
+	if Steps.AssureXAxis( 7 ) < 7 then
 		StepsUI_Frame:Hide()
 		return
 	end
@@ -47,7 +55,6 @@ function Steps.ShowTrend()
 		Steps.HistBars[7-dayBack]:SetValue( math.floor( barData[dayStr][2] ) )
 	end
 end
-
 function Steps.AssureBars( barsNeeded )
 	local count = #Steps.MineBars
 	if( not InCombatLockdown() and barsNeeded > count  ) then
@@ -55,7 +62,8 @@ function Steps.AssureBars( barsNeeded )
 		for i = count+1, barsNeeded do
 			Steps.Print( "Creating bar# "..i )
 			local newBar = CreateFrame( "StatusBar", "Steps_MineBar"..i, StepsUI_Frame, "Steps_TrendBarTemplate" )  --template can be last parameter
-			newBar:SetFrameStrata( "LOW" )
+			newBar:SetFrameStrata( "MEDIUM" )
+			newBar:SetStatusBarColor( unpack( Steps.stepsColor ) )  -- Should be the gold color
 			if( i == 1 ) then
 				newBar:SetPoint( "TOPLEFT", "StepsUI_Frame", "TOPLEFT" )
 			else
@@ -69,8 +77,35 @@ function Steps.AssureBars( barsNeeded )
 			else
 				newBar:SetPoint( "TOPLEFT", Steps.HistBars[i-1], "TOPRIGHT" )
 			end
-			Stes.HistBars[i] = newBar
+			Steps.HistBars[i] = newBar
 		end
 	end
+	for i = 1, barsNeeded do
+		Steps.MineBars[i]:Show()
+		Steps.HistBars[i]:Show()
+	end
+	for i = barsNeeded+1, count do
+		Steps.MineBars[i]:Hide()
+		Steps.HistBars[i]:Hide()
+	end
 	return max( count, barsNeeded )
+end
+function Steps.AssureXAxis( needed )
+	local count = #Steps.XAxis
+	if( not InCombatLockdown() and needed > count ) then
+		Steps.Print( "I need "..needed.."/"..count.." XAxis." )
+		for i = count+1, needed do
+			Steps.Print( "Creating XAxis# "..i )
+			local newButton = CreateFrame( "Button", "Steps_XAxis"..i, StepsUI_Frame, "Steps_XAxisButtonTemplate" )
+			newButton:SetSize( 30, 20 )
+			if( i == 1 ) then
+				newButton:SetPoint( "BOTTOMLEFT", "StepsUI_Frame", "BOTTOMLEFT" )
+			else
+				newButton:SetPoint( "BOTTOMLEFT", Steps.XAxis[i-1], "BOTTOMRIGHT" )
+			end
+			newButton:SetText("Sun")
+			Steps.XAxis[i] = newButton
+		end
+	end
+	return max( count, needed )
 end

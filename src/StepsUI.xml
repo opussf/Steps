@@ -5,14 +5,36 @@ xsi:schemaLocation="http://www.blizzard.com/wow/ui/
 ..\..\FrameXML\UI.xsd">
 
 	<StatusBar name="Steps_TrendBarTemplate" orientation="VERTICAL" virtual="true">
-		<Size x="20" y="200" />
+		<Size x="30" y="200" />
 		<BarTexture file="Interface\TARGETINGFRAME\UI-StatusBar" />
 		<BarColor r="1.0" g="0.23" b="0.19" />
 	</StatusBar>
 
+	<Button name="Steps_XAxisButtonTemplate" inherits="UIPanelButtonTemplate" frameStrata="MEDIUM" virtual="true">
+		<Layers>
+			<Layer level="BACKGROUND">
+				<Texture name="$parentBG" setAllPoints="true">
+					<Color r="0.08" g="0.2" b="0.4" a="1"/>
+				</Texture>
+			</Layer>
+		</Layers>
+		<Scripts>
+			<OnLoad>self:Disable()
+				local t = self:GetNormalTexture()
+				if t then t:Hide() end
+				t = self:GetHighlightTexture()
+				if t then t:Hide() end
+				t = self:GetPushedTexture()
+				if t then t:Hide() end
+				t = self:GetDisabledTexture()
+				if t then t:Hide() end
+			</OnLoad>
+		</Scripts>
+	</Button>
+
 	<Frame name="StepsUI_Frame" frameStrata="BACKGROUND" toplevel="false" enableMouse="false" movable="true" parent="UIParent">
 		<Size>
-			<AbsDimension x="140" y="200"/>
+			<AbsDimension x="210" y="300"/>
 		</Size>
 		<Anchors>
 			<Anchor point="CENTER"/>

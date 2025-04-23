@@ -18,7 +18,11 @@ function Steps.ShowDays()
 		StepsUI_Frame:Hide()
 		return
 	end
-	if Steps.AssureXAxis( 7 ) < 7 then
+	local dayList = {}
+	for dayBack = 1, 7 do
+		table.insert( dayList, date( "%a", time() + (dayBack*86400) ) )
+	end
+	if Steps.AssureXAxis( 7, dayList ) < 7 then
 		StepsUI_Frame:Hide()
 		return
 	end
@@ -90,10 +94,11 @@ function Steps.AssureBars( barsNeeded )
 	end
 	return max( count, barsNeeded )
 end
-function Steps.AssureXAxis( needed )
+function Steps.AssureXAxis( needed, labels )
 	local count = #Steps.XAxis
 	if( not InCombatLockdown() and needed > count ) then
 		Steps.Print( "I need "..needed.."/"..count.." XAxis." )
+		local dayIndex = 1
 		for i = count+1, needed do
 			Steps.Print( "Creating XAxis# "..i )
 			local newButton = CreateFrame( "Button", "Steps_XAxis"..i, StepsUI_Frame, "Steps_XAxisButtonTemplate" )
@@ -103,7 +108,8 @@ function Steps.AssureXAxis( needed )
 			else
 				newButton:SetPoint( "BOTTOMLEFT", Steps.XAxis[i-1], "BOTTOMRIGHT" )
 			end
-			newButton:SetText("Sun")
+			newButton:SetText( labels[dayIndex] )
+			dayIndex = dayIndex + 1
 			Steps.XAxis[i] = newButton
 		end
 	end

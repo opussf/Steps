@@ -109,10 +109,10 @@ function Steps.ShowMonth()
 		return
 	end
 	local barData = {}  -- [1] = {mine,all}
-	local dayList = {}  -- [1] = {"Apr 20"}
+	local dayList = {}  -- [1] = {"mar ##","Apr 20"}
 	local barMax = 0
 	local i = 1
-	for dayBack = 0, 28 do
+	for dayBack = 0, 34 do
 		local dayStr = date( "%Y%m%d", time() - (dayBack*86400) )
 		local dow = tonumber( date( "%w", time() - (dayBack*86400) ) )
 		barData[i] = barData[i] or {0,0}
@@ -130,22 +130,26 @@ function Steps.ShowMonth()
 			barMax = max( barMax, barData[i][1] )
 		end
 		if dow == 0 then
-			table.insert( dayList, date( "%d %b", time() - (dayBack*86400) ) )
+			table.insert( dayList, 1, date( "%d %b", time() - (dayBack*86400) ) )
 			i = i + 1
 		end
 	end
+	Steps.Print( "#barData: "..#barData.."  #dayList: "..#dayList )
+	while #barData > 4 do table.remove(barData ) end
+	while #dayList > 4 do table.remove(dayList, 1) end
+
 	for i = 1, 4 do
-		print( dayList[i].." = {"..barData[i][1]..", "..barData[i][2].." }" )
+		print( dayList[5-i].." = {"..barData[i][1]..", "..barData[i][2].." }" )
 	end
 	if Steps.AssureXAxis( 4, 52, dayList ) < 4 then
 		StepsUI_Frame:Hide()
 		return
 	end
 	for i = 1, 4 do
-		Steps.MineBars[i]:SetMinMaxValues( 0, barMax )
-		Steps.MineBars[i]:SetValue( math.floor( barData[i][1] ) )
-		Steps.HistBars[i]:SetMinMaxValues( 0, barMax )
-		Steps.HistBars[i]:SetValue( math.floor( barData[i][2] ) )
+		Steps.MineBars[5-i]:SetMinMaxValues( 0, barMax )
+		Steps.MineBars[5-i]:SetValue( math.floor( barData[i][1] ) )
+		Steps.HistBars[5-i]:SetMinMaxValues( 0, barMax )
+		Steps.HistBars[5-i]:SetValue( math.floor( barData[i][2] ) )
 	end
 end
 function Steps.Show2Month()
@@ -157,9 +161,10 @@ function Steps.Show2Month()
 	local dayList = {}  -- [1] = {"Apr 20"}
 	local barMax = 0
 	local i = 1
-	for dayBack = 0, 56 do
+	for dayBack = 0, 59 do
 		local dayStr = date( "%Y%m%d", time() - (dayBack*86400) )
 		local dow = tonumber( date( "%w", time() - (dayBack*86400) ) )
+		Steps.Print( i..":"..dayStr..":"..dow )
 		barData[i] = barData[i] or {0,0}
 
 		for r,ra in pairs( Steps_data ) do
@@ -174,15 +179,20 @@ function Steps.Show2Month()
 			barData[i][1] = barData[i][1] + math.floor( Steps.mine[dayStr].steps )
 			barMax = max( barMax, barData[i][1] )
 		end
-		if dow == 0 then
-			table.insert( dayList, date( "%d %b", time() - (dayBack*86400) ) )
+		if dow == 0 then -- 0 = Sun
+			if i%2 == 0 then
+				table.insert( dayList, 1, string.sub( date( "%d%b", time() - (dayBack*86400) ), 1, 3 ) )
+			end
 			i = i + 1
 		end
 	end
+	Steps.Print( "#barData: "..#barData.."  #dayList: "..#dayList )
+	while #barData > 8 do table.remove(barData ) end
+	while #dayList > 8 do table.remove(dayList, 1) end
 	for i = 1, 8 do
-		print( dayList[i].." = {"..barData[i][1]..", "..barData[i][2].." }" )
+		print( i.." = {"..barData[i][1]..", "..barData[i][2].." }" )
 	end
-	if Steps.AssureXAxis( 8, 26, dayList ) < 4 then
+	if Steps.AssureXAxis( 4, 52.5, dayList ) < 4 then
 		StepsUI_Frame:Hide()
 		return
 	end
@@ -194,9 +204,54 @@ function Steps.Show2Month()
 	end
 end
 function Steps.Show3Month()
-	if Steps.AssureBars( 12, 13 ) < 4 then
+	if Steps.AssureBars( 12, 17.5 ) < 4 then
 		StepsUI_Frame:Hide()
 		return
+	end
+	local barData = {}  -- [1] = {mine,all}
+	local dayList = {}  -- [1] = {"Apr 20"}
+	local barMax = 0
+	local i = 1
+	for dayBack = 0, 91 do
+		local dayStr = date( "%Y%m%d", time() - (dayBack*86400) )
+		local dow = tonumber( date( "%w", time() - (dayBack*86400) ) )
+		Steps.Print( i..":"..dayStr..":"..dow )
+		barData[i] = barData[i] or {0,0}
+
+		for r,ra in pairs( Steps_data ) do
+			for n,na in pairs( ra ) do
+				if na[dayStr] then
+					barData[i][2] = barData[i][2] + na[dayStr].steps
+					barMax = max( barMax, barData[i][2] )
+				end
+			end
+		end
+		if Steps.mine[dayStr] then
+			barData[i][1] = barData[i][1] + math.floor( Steps.mine[dayStr].steps )
+			barMax = max( barMax, barData[i][1] )
+		end
+		if dow == 0 then -- 0 = Sun
+			if i%3 == 0 then
+				table.insert( dayList, 1, string.sub( date( "%d%b", time() - (dayBack*86400) ), 1, 3 ) )
+			end
+			i = i + 1
+		end
+	end
+	Steps.Print( "#barData: "..#barData.."  #dayList: "..#dayList )
+	while #barData > 12 do table.remove(barData ) end
+	while #dayList > 12 do table.remove(dayList, 1) end
+	for i = 1, 12 do
+		print( i.." = {"..barData[i][1]..", "..barData[i][2].." }" )
+	end
+	if Steps.AssureXAxis( 4, 52.5, dayList ) < 4 then
+		StepsUI_Frame:Hide()
+		return
+	end
+	for i = 1, 12 do
+		Steps.MineBars[13-i]:SetMinMaxValues( 0, barMax )
+		Steps.MineBars[13-i]:SetValue( math.floor( barData[i][1] ) )
+		Steps.HistBars[13-i]:SetMinMaxValues( 0, barMax )
+		Steps.HistBars[13-i]:SetValue( math.floor( barData[i][2] ) )
 	end
 end
 function Steps.AssureBars( barsNeeded, width )

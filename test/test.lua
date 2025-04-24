@@ -402,6 +402,14 @@ function test.makeUITestData( size )
 		Steps_data["Test Realm"]["testPlayer"][dayStr]={ steps = 50 * dayBack }
 	end
 end
+function test.getStartOfWeek()
+	for i = 0, 7 do
+		local ts = time() - (i*86400)
+		if date( "%w", ts ) == "0" then -- sunday
+			return ts, i
+		end
+	end
+end
 function test.test_trendUI_showWeek_onlyToday_XAxisLabel()
 	test.makeUITestData( 0 )
 	Steps.ShowWeek()
@@ -415,13 +423,89 @@ function test.test_trendUI_showWeek_onlyToday_Steps()
 end
 function test.test_trendUI_showWeek_3days_Steps()
 	test.makeUITestData( 3 )
-	-- test.dump( Steps_data )
-	-- test.dump( Steps.mine )
 	Steps.ShowWeek()
 	assertEquals( 100, Steps.MineBars[5]:GetValue() )
 	assertEquals( 100, Steps.HistBars[5]:GetValue() )
-	-- print( Steps.MineBars[4]:GetValue() )
-	-- print( Steps.HistBars[4]:GetValue() )
+end
+function test.test_trendUI_show2Week_onlyToday_XAxisLabel()
+	test.makeUITestData( 0 )
+	Steps.Show2Week()
+	assertEquals( date("%a", time()-(86400) ), Steps.XAxis[7]:GetText() )
+end
+function test.test_trendUI_show2Week_15days()
+	test.makeUITestData( 15 )
+	Steps.Show2Week()
+	assertEquals( 150, Steps.MineBars[11]:GetValue() )
+	assertEquals( 150, Steps.HistBars[11]:GetValue() )
+end
+function test.test_trendUI_showMonth_onlyToday_XAxisLabel()
+	test.makeUITestData( 0 )
+	local sow, dayBack = test.getStartOfWeek()
+	Steps.ShowMonth()
+	assertEquals( date("%d %b", sow ), Steps.XAxis[4]:GetText() )
+end
+function test.test_trendUI_showMonth_15days()
+	test.makeUITestData( 15 )
+	local sow, dayBack = test.getStartOfWeek()
+	local ev = ((dayBack+1)*dayBack*50)/2
+	Steps.ShowMonth()
+	assertEquals( ev, Steps.MineBars[4]:GetValue() )
+	assertEquals( ev, Steps.HistBars[4]:GetValue() )
+end
+function test.test_trendUI_show2Month_onlyToday_XAxisLabel()
+	test.makeUITestData( 0 )
+	local sow, dayBack = test.getStartOfWeek()
+	sow = sow - 86400*7   -- 2 month groups 2 weeks together
+	Steps.Show2Month()
+	assertEquals( string.sub( date("%d%b", sow ), 1, 3 ),
+			Steps.XAxis[4]:GetText() )
+end
+function test.test_trendUI_show2Month_15days()
+	test.makeUITestData( 15 )
+	local sow, dayBack = test.getStartOfWeek()
+	local ev = ((dayBack+1)*dayBack*50)/2
+	-- test.dump( Steps_data )
+	Steps.Show2Month()
+	assertEquals( ev, Steps.MineBars[8]:GetValue() )
+	assertEquals( ev, Steps.HistBars[8]:GetValue() )
+end
+function test.test_trendUI_show3Month_onlyToday_XAxisLabel()
+	test.makeUITestData( 0 )
+	local sow, dayBack = test.getStartOfWeek()
+	sow = sow - 86400*14   -- 3 month groups 3 weeks together
+	Steps.Show3Month()
+	assertEquals( string.sub( date("%d%b", sow ), 1, 3 ),
+			Steps.XAxis[4]:GetText() )
+end
+function test.test_trendUI_show3Month_15days()
+	test.makeUITestData( 15 )
+	local sow, dayBack = test.getStartOfWeek()
+	local ev = ((dayBack+1)*dayBack*50)/2
+	print( sow..","..dayBack..","..ev )
+	-- test.dump( Steps_data )
+	Steps.Show3Month()
+	assertEquals( ev, Steps.MineBars[12]:GetValue() )
+	assertEquals( ev, Steps.HistBars[12]:GetValue() )
+end
+function test.notest_trendUI_show3Month_100days()
+	test.makeUITestData( 91 )
+	local sow, dayBack = test.getStartOfWeek()
+	local e = 84 + dayBack  -- 84 = 7 * 12
+	local s = e-7 -- 1 week
+	local ev = ((e-s)*(s+e-1)*50)/2
+	print( e-s+1 )
+	-- dayback = 4
+	-- s = 84 + 4
+	-- e = e-7
+
+	print( sow..","..dayBack..","..ev )
+	-- test.dump( Steps_data )
+	Steps.Show3Month()
+	print( Steps.XAxis[4]:GetText() )
+	assertEquals( ev, Steps.MineBars[1]:GetValue() )
+	assertEquals( ev, Steps.HistBars[1]:GetValue() )
+	print( Steps.MineBars[4]:GetValue() )
+	print( Steps.HistBars[4]:GetValue() )
 end
 
 test.run()

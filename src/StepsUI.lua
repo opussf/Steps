@@ -135,7 +135,7 @@ function Steps.ShowMonth()
 		end
 	end
 	-- Steps.Print( "#barData: "..#barData.."  #dayList: "..#dayList )
-	while #barData > 4 do table.remove(barData ) end
+	while #barData > 4 do table.remove(barData) end
 	while #dayList > 4 do table.remove(dayList, 1) end
 
 	-- for i = 1, 4 do

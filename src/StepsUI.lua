@@ -134,13 +134,13 @@ function Steps.ShowMonth()
 			i = i + 1
 		end
 	end
-	Steps.Print( "#barData: "..#barData.."  #dayList: "..#dayList )
+	-- Steps.Print( "#barData: "..#barData.."  #dayList: "..#dayList )
 	while #barData > 4 do table.remove(barData ) end
 	while #dayList > 4 do table.remove(dayList, 1) end
 
-	for i = 1, 4 do
-		print( dayList[5-i].." = {"..barData[i][1]..", "..barData[i][2].." }" )
-	end
+	-- for i = 1, 4 do
+	-- 	print( dayList[5-i].." = {"..barData[i][1]..", "..barData[i][2].." }" )
+	-- end
 	if Steps.AssureXAxis( 4, 52, dayList ) < 4 then
 		StepsUI_Frame:Hide()
 		return
@@ -164,7 +164,7 @@ function Steps.Show2Month()
 	for dayBack = 0, 59 do
 		local dayStr = date( "%Y%m%d", time() - (dayBack*86400) )
 		local dow = tonumber( date( "%w", time() - (dayBack*86400) ) )
-		Steps.Print( i..":"..dayStr..":"..dow )
+		-- Steps.Print( i..":"..dayStr..":"..dow )
 		barData[i] = barData[i] or {0,0}
 
 		for r,ra in pairs( Steps_data ) do
@@ -186,12 +186,12 @@ function Steps.Show2Month()
 			i = i + 1
 		end
 	end
-	Steps.Print( "#barData: "..#barData.."  #dayList: "..#dayList )
+	-- Steps.Print( "#barData: "..#barData.."  #dayList: "..#dayList )
 	while #barData > 8 do table.remove(barData ) end
 	while #dayList > 8 do table.remove(dayList, 1) end
-	for i = 1, 8 do
-		print( i.." = {"..barData[i][1]..", "..barData[i][2].." }" )
-	end
+	-- for i = 1, 8 do
+	-- 	print( i.." = {"..barData[i][1]..", "..barData[i][2].." }" )
+	-- end
 	if Steps.AssureXAxis( 4, 52.5, dayList ) < 4 then
 		StepsUI_Frame:Hide()
 		return
@@ -215,7 +215,7 @@ function Steps.Show3Month()
 	for dayBack = 0, 91 do
 		local dayStr = date( "%Y%m%d", time() - (dayBack*86400) )
 		local dow = tonumber( date( "%w", time() - (dayBack*86400) ) )
-		Steps.Print( i..":"..dayStr..":"..dow )
+		-- Steps.Print( i..":"..dayStr..":"..dow )
 		barData[i] = barData[i] or {0,0}
 
 		for r,ra in pairs( Steps_data ) do
@@ -237,12 +237,12 @@ function Steps.Show3Month()
 			i = i + 1
 		end
 	end
-	Steps.Print( "#barData: "..#barData.."  #dayList: "..#dayList )
+	-- Steps.Print( "#barData: "..#barData.."  #dayList: "..#dayList )
 	while #barData > 12 do table.remove(barData ) end
 	while #dayList > 12 do table.remove(dayList, 1) end
-	for i = 1, 12 do
-		print( i.." = {"..barData[i][1]..", "..barData[i][2].." }" )
-	end
+	-- for i = 1, 12 do
+	-- 	print( i.." = {"..barData[i][1]..", "..barData[i][2].." }" )
+	-- end
 	if Steps.AssureXAxis( 4, 52.5, dayList ) < 4 then
 		StepsUI_Frame:Hide()
 		return

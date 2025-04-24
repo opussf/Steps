@@ -481,8 +481,6 @@ function test.test_trendUI_show3Month_15days()
 	test.makeUITestData( 15 )
 	local sow, dayBack = test.getStartOfWeek()
 	local ev = ((dayBack+1)*dayBack*50)/2
-	print( sow..","..dayBack..","..ev )
-	-- test.dump( Steps_data )
 	Steps.Show3Month()
 	assertEquals( ev, Steps.MineBars[12]:GetValue() )
 	assertEquals( ev, Steps.HistBars[12]:GetValue() )

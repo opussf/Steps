@@ -4,15 +4,12 @@ require "wowTest"
 --myLocale = "esMX"
 
 test.outFileName = "testOut.xml"
+-- test.coberturaFileName = "../coverage.xml"
 
 -- require the file to test
 ParseTOC( "../src/Steps.toc" )
 
 -- Figure out how to parse the XML here, until then....
-Steps_Frame = CreateFrame()
-Steps_StepBar_1 = CreateStatusBar()
-Steps_StepBar_2 = CreateStatusBar()
-Steps_StepBarText = CreateFrame()
 GameTooltip = FrameGameTooltip
 
 -- addon setup
@@ -160,31 +157,31 @@ function test.prep_minavemax_data()
 end
 function test.test_minavemax_min()
 	test.prep_minavemax_data()
-	min, ave, max = Steps.CalcMinAveMax()
+	local min, ave, max = Steps.CalcMinAveMax()
 	assertEquals( 2000, min )
 end
 function test.test_minavemax_ave()
 	test.prep_minavemax_data()
-	min, ave, max = Steps.CalcMinAveMax()
+	local min, ave, max = Steps.CalcMinAveMax()
 	assertEquals( 81000, ave )
 end
 function test.test_minavemax_max()
 	test.prep_minavemax_data()
-	min, ave, max = Steps.CalcMinAveMax()
+	local min, ave, max = Steps.CalcMinAveMax()
 	assertEquals( 160000, max )
 end
 function test.test_minavemax_min_withZeros()
 	test.prep_minavemax_data()
 	dataDay = date( "%Y%m%d", time() - (1 * 86400) )
 	Steps_data["Test Realm"]["testPlayer"][dataDay] = {["steps"] = 0}
-	min, ave, max = Steps.CalcMinAveMax()
+	local min, ave, max = Steps.CalcMinAveMax()
 	assertEquals( 4000, min )
 end
 function test.test_minavemax_ave_withZeros()
 	test.prep_minavemax_data()
 	dataDay = date( "%Y%m%d", time() - (1 * 86400) )
 	Steps_data["Test Realm"]["testPlayer"][dataDay] = {["steps"] = 0}
-	min, ave, max = Steps.CalcMinAveMax()
+	local min, ave, max = Steps.CalcMinAveMax()
 	assertEquals( 82000, ave )
 end
 
@@ -327,4 +324,104 @@ function test.test_denormalize_01()
 	assertEquals( "Sisters of Elune", Steps.DeNormalizeRealm( "SistersofElune") )
 	assertEquals( "The Forgotten Coast", Steps.DeNormalizeRealm( "TheForgottenCoast" ) )
 end
+-------------------
+-- Trend Graphs
+-------------------
+function test.test_trendUI_trendCommand()
+	StepsUI_Frame:Hide()
+	Steps.Command( "trend" )
+	assertTrue( StepsUI_Frame:IsVisible() )
+end
+function test.test_trendUI_showWeek_mineBars_has7()
+	Steps.MineBars = {}
+	StepsUI_Frame:Show()
+	Steps.ShowWeek()
+	assertEquals( 7, #Steps.MineBars )
+end
+function test.test_trendUI_showWeek_mineBars_firstIsVisible()
+	Steps.MineBars = {}
+	StepsUI_Frame:Show()
+	Steps.ShowWeek()
+	assertTrue( Steps.MineBars[1]:IsVisible() )
+end
+function test.test_trendUI_showWeek_mineBars_firstIs30Wide()
+	Steps.MineBars = {}
+	StepsUI_Frame:Show()
+	Steps.ShowWeek()
+	assertEquals( 30, Steps.MineBars[1]:GetWidth() )
+end
+function test.test_trendUI_assureBars_hidesExtras()
+	Steps.MineBars = {}
+	Steps.AssureBars( 2, 30 )
+	assertTrue( Steps.MineBars[2]:IsVisible() )
+	Steps.AssureBars( 1, 30 )
+	assertFalse( Steps.MineBars[2]:IsVisible() )
+end
+function test.test_trendUI_showWeek_XAxis_has7()
+	Steps.XAxis = {}
+	StepsUI_Frame:Show()
+	Steps.ShowWeek()
+	assertEquals( 7, #Steps.XAxis )
+end
+function test.test_trendUI_showWeek_XAxis_firstIsVisible()
+	Steps.XAxis = {}
+	StepsUI_Frame:Show()
+	Steps.ShowWeek()
+	assertTrue( Steps.XAxis[1]:IsVisible() )
+end
+function test.test_trendUI_showWeek_XAxis_firstIs30Wide()
+	Steps.XAxis = {}
+	StepsUI_Frame:Show()
+	Steps.ShowWeek()
+	assertEquals( 30, Steps.XAxis[1]:GetWidth() )
+end
+function test.test_trendUI_assureXAxis_hidesExtras()
+	Steps.XAxis = {}
+	Steps.AssureXAxis( 2, 30, {"A","B"} )
+	assertTrue( Steps.XAxis[2]:IsVisible() )
+	Steps.AssureXAxis( 1, 30, {"A"} )
+	assertFalse( Steps.XAxis[2]:IsVisible() )
+end
+function test.test_trendUI_assureXAxis_hasExpectedLabel()
+	Steps.XAxis = {}
+	Steps.AssureXAxis( 2, 30, {"A","B"} )
+	assertEquals( "A", Steps.XAxis[1]:GetText() )
+end
+function test.test_trendUI_assureXAxis_changesWidth()
+	Steps.XAxis = {}
+	Steps.AssureXAxis( 2, 30, {"A","B"} )
+	assertEquals( 30, Steps.XAxis[1]:GetWidth() )
+	Steps.AssureXAxis( 1, 60, {"A"} )
+	assertEquals( 60, Steps.XAxis[1]:GetWidth() )
+end
+function test.makeUITestData( size )
+	Steps.MineBars = {}
+	Steps.HistBars = {}
+	for dayBack = 0, size do
+		local dayStr = date( "%Y%m%d", time() - (dayBack*86400) )
+		Steps_data["Test Realm"]["testPlayer"][dayStr]={ steps = 50 * dayBack }
+	end
+end
+function test.test_trendUI_showWeek_onlyToday_XAxisLabel()
+	test.makeUITestData( 0 )
+	Steps.ShowWeek()
+	assertEquals( date("%a", time() ), Steps.XAxis[7]:GetText() )
+end
+function test.test_trendUI_showWeek_onlyToday_Steps()
+	test.makeUITestData( 0 )
+	Steps.ShowWeek()
+	assertEquals( 0, Steps.MineBars[7]:GetValue() )
+	assertEquals( 0, Steps.HistBars[7]:GetValue() )
+end
+function test.test_trendUI_showWeek_3days_Steps()
+	test.makeUITestData( 3 )
+	-- test.dump( Steps_data )
+	-- test.dump( Steps.mine )
+	Steps.ShowWeek()
+	assertEquals( 100, Steps.MineBars[5]:GetValue() )
+	assertEquals( 100, Steps.HistBars[5]:GetValue() )
+	-- print( Steps.MineBars[4]:GetValue() )
+	-- print( Steps.HistBars[4]:GetValue() )
+end
+
 test.run()

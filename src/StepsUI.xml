@@ -24,7 +24,6 @@ xsi:schemaLocation="http://www.blizzard.com/wow/ui/
 			<OnLeave>GameTooltip:Hide()</OnLeave>
 		</Scripts>
 	</StatusBar>
-
 	<Button name="Steps_XAxisButtonTemplate" inherits="UIPanelButtonTemplate" frameStrata="MEDIUM" virtual="true">
 		<Layers>
 			<Layer level="BACKGROUND">
@@ -59,7 +58,6 @@ xsi:schemaLocation="http://www.blizzard.com/wow/ui/
 			</OnLoad>
 		</Scripts>
 	</Button>
-
 	<Frame name="StepsUI_Frame" frameStrata="BACKGROUND" toplevel="false" enableMouse="false" movable="true" parent="UIParent">
 		<Size>
 			<AbsDimension x="210" y="240"/>
@@ -149,7 +147,6 @@ xsi:schemaLocation="http://www.blizzard.com/wow/ui/
 					</Anchor>
 				</Anchors>
 			</Frame>
-
 		</Frames>
 		<Scripts>
 			<OnLoad>self:Hide()</OnLoad>

@@ -395,8 +395,9 @@ function Steps.OnDragStart()
 	end
 end
 function Steps.OnDragStop()
-	Steps_Frame:StopMovingOrSizing()
-	if not Steps_options.unlocked then
+	if Steps_options.unlocked then
+		Steps_Frame:StopMovingOrSizing()
+	else
 		Steps.ShowTrend()
 	end
 end

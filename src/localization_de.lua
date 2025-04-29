@@ -16,7 +16,6 @@ if GetLocale() == "deDE" then
 	L.L["raid"] = "Schlachtzug"
 	L.L["Reset the position of the UI"] = "Position des UI zurücksetzen"
 	L.L["reset"] = "Zurücksetzen"
-	L.L["say"] = "Sagen"
 	L.L["Send steps to any chat"] = "Schritte an einen beliebigen Chat senden"
 	L.L["show"] = "Anzeigen"
 	L.L["Steps"] = "Schritte"
@@ -32,4 +31,6 @@ if GetLocale() == "deDE" then
 	L.L["{steps}"] = "{schritte}"
 	L.L["options"] = "Optionen"
 	L.L["Open the options panel"] = "Optionsmenü öffnen"
+	L.L["dow"] = { [0]="So", "Mo", "Di", "Mi", "Do", "Fr", "Sa" }
+	L.L["mon"] = { "Jan", "Feb", "Mär", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dez" }
 end

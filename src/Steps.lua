@@ -25,6 +25,13 @@ Steps.ave = 0
 Steps.max = 0
 Steps.commPrefix = "STEPS"
 Steps.stepsColor = { 0.73, 0.52, 0.18, 1 }
+Steps.say = string.lower(_G["SAY"])
+Steps.guild = string.lower(_G["GUILD"])
+Steps.instance = string.lower(_G["INSTANCE"])
+Steps.party = string.lower(_G["PARTY"])
+Steps.raid = string.lower(_G["RAID"])
+Steps.whisper = string.lower(_G["WHISPER"])
+Steps.yell = string.lower(_G["YELL"])
 
 -- Setup
 function Steps.OnLoad()
@@ -536,28 +543,35 @@ Steps.commandList = {
 					end,
 		["help"] = {"", Steps.L["Toggle chat {steps} integration."]}
 	},
-	[Steps.L["say"]] = {
+	["say"] = {
 		["func"] = function() Steps.Post("say") end,
 		["help"] = { "| guild | party | instance | raid | whisper <playerName>", "Post steps report to channel or player."}
 	},
-	[Steps.L["yell"]] = {
+	[Steps.say] = { ["alias"] = "say" },
+	["yell"] = {
 		["func"] = function() Steps.Post("yell") end,
 	},
-	[Steps.L["guild"]] = {
+	[Steps.yell] = { ["alias"] = "yell" },
+	["guild"] = {
 		["func"] = function() Steps.Post("guild") end,
 	},
-	[Steps.L["party"]] = {
+	[Steps.guild] = { ["alias"] = "guild" },
+	["party"] = {
 		["func"] = function() Steps.Post("party") end,
 	},
-	[Steps.L["instance"]] = {
+	[Steps.party] = { ["alias"] = "party" },
+	["instance"] = {
 		["func"] = function() Steps.Post("instance") end,
 	},
-	[Steps.L["raid"]] = {
+	[Steps.instance] = { ["alias"] = "instance" },
+	["raid"] = {
 		["func"] = function() Steps.Post("raid") end,
 	},
-	[Steps.L["whisper"]] = {
+	[Steps.raid] = { ["alias"] = "raid" },
+	["whisper"] = {
 		["func"] = function(target) Steps.Post(target) end,
 	},
+	[Steps.whisper] = { ["alias"] = "whisper" },
 	[Steps.L["trend"]] = {
 		["func"] = function() Steps.ShowTrend() end,
 	},

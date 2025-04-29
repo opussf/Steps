@@ -16,7 +16,6 @@ if GetLocale() == "ruRU" then
 	L.L["raid"] = "рейд"
 	L.L["Reset the position of the UI"] = "Сбросить положение интерфейса"
 	L.L["reset"] = "сброс"
-	L.L["say"] = "сказать"
 	L.L["Send steps to any chat"] = "Отправить шаги в любой чат"
 	L.L["show"] = "показать"
 	L.L["Steps"] = "Шаги"
@@ -32,4 +31,6 @@ if GetLocale() == "ruRU" then
 	L.L["{steps}"] = "{шаги}"
 	L.L["options"] = "настройки"
 	L.L["Open the options panel"] = "Открыть панель настроек"
+	L.L["dow"] = { [0]="Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб" }
+	L.L["mon"] = { "янв", "фев", "мар", "апр", "май", "июн", "июл", "авг", "сен", "окт", "ноя", "дек" }
 end

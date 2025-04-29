@@ -16,7 +16,6 @@ if GetLocale() == "frFR" then
 	L.L["raid"] = "raid"
 	L.L["Reset the position of the UI"] = "Réinitialiser la position de l'interface"
 	L.L["reset"] = "réinitialiser"
-	L.L["say"] = "dire"
 	L.L["Send steps to any chat"] = "Envoyer les pas à n'importe quel chat"
 	L.L["show"] = "afficher"
 	L.L["Steps"] = "Pas"
@@ -32,4 +31,6 @@ if GetLocale() == "frFR" then
 	L.L["{steps}"] = "{pas}"
 	L.L["options"] = "options"
 	L.L["Open the options panel"] = "Ouvrir le panneau des options"
+	L.L["dow"] = { [0]="Dim", "Lun", "Mar", "Mer", "Jeu", "Ven", "Sam" }
+	L.L["mon"] = { "jan", "fév", "mar", "avr", "mai", "jun", "jui", "aoû", "sep", "oct", "nov", "déc" }
 end

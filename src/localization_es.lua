@@ -7,7 +7,7 @@ if GetLocale() == "esES" or GetLocale() == "esMX" then
 	L.L["display"] = "pantalla"
 	L.L["guild"] = "gremio"
 	L.L["help"] = "ayuda"
-	L.L["instance"] = "instancia"
+	L.L["instance"] = "banda"
 	L.L["lock"] = "bloquear"
 	L.L["My steps today"] = "Mis pasos de hoy"
 	L.L["party"] = "grupo"
@@ -16,7 +16,6 @@ if GetLocale() == "esES" or GetLocale() == "esMX" then
 	L.L["raid"] = "raidear"
 	L.L["Reset the position of the UI"] = "Restablecer la posición de la interfaz"
 	L.L["reset"] = "restablecer"
-	L.L["say"] = "decir"
 	L.L["Send steps to any chat"] = "Enviar pasos a cualquier chat"
 	L.L["show"] = "mostrar"
 	L.L["Steps"] = "Pasos"
@@ -32,4 +31,6 @@ if GetLocale() == "esES" or GetLocale() == "esMX" then
 	L.L["{steps}"] = "{pasos}"
 	L.L["options"] = "opciones"
 	L.L["Open the options panel"] = "Abrir el panel de opciones"
+	L.L["dow"] = { [0]="Dom", "Lun", "Mar", "Mié", "Jue", "Vie", "Sáb" }
+	L.L["mon"] = { "ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic" }
 end

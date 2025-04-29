@@ -543,35 +543,35 @@ Steps.commandList = {
 					end,
 		["help"] = {"", Steps.L["Toggle chat {steps} integration."]}
 	},
+	[Steps.say] = { ["alias"] = "say" },
 	["say"] = {
 		["func"] = function() Steps.Post("say") end,
 		["help"] = { "| guild | party | instance | raid | whisper <playerName>", "Post steps report to channel or player."}
 	},
-	[Steps.say] = { ["alias"] = "say" },
+	[Steps.yell] = { ["alias"] = "yell" },
 	["yell"] = {
 		["func"] = function() Steps.Post("yell") end,
 	},
-	[Steps.yell] = { ["alias"] = "yell" },
+	[Steps.guild] = { ["alias"] = "guild" },
 	["guild"] = {
 		["func"] = function() Steps.Post("guild") end,
 	},
-	[Steps.guild] = { ["alias"] = "guild" },
+	[Steps.party] = { ["alias"] = "party" },
 	["party"] = {
 		["func"] = function() Steps.Post("party") end,
 	},
-	[Steps.party] = { ["alias"] = "party" },
+	[Steps.instance] = { ["alias"] = "instance" },
 	["instance"] = {
 		["func"] = function() Steps.Post("instance") end,
 	},
-	[Steps.instance] = { ["alias"] = "instance" },
+	[Steps.raid] = { ["alias"] = "raid" },
 	["raid"] = {
 		["func"] = function() Steps.Post("raid") end,
 	},
-	[Steps.raid] = { ["alias"] = "raid" },
+	[Steps.whisper] = { ["alias"] = "whisper" },
 	["whisper"] = {
 		["func"] = function(target) Steps.Post(target) end,
 	},
-	[Steps.whisper] = { ["alias"] = "whisper" },
 	[Steps.L["trend"]] = {
 		["func"] = function() Steps.ShowTrend() end,
 	},

@@ -35,7 +35,7 @@ Steps.yell = string.lower(_G["YELL"])
 
 -- Setup
 function Steps.OnLoad()
-	SLASH_STEPS1 = "/Steps"
+	SLASH_STEPS1 = "/"..Steps.L["Steps"]
 	SlashCmdList["STEPS"] = function(msg) Steps.Command(msg) end
 	Steps.lastSpeed = 0
 	Steps_Frame:RegisterEvent( "ADDON_LOADED" )

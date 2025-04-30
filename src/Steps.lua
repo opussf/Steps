@@ -452,7 +452,7 @@ function Steps.TooltipSetUnit( arg1, arg2 )
 	local today, total = Steps.GetTodayTotal( name, realm )
 	if Steps.debug then print( name, realm, today, total ) end
 	if today then
-		GameTooltip:AddLine( "Steps today: "..today.." total: "..total )
+		GameTooltip:AddLine( Steps.L["Steps today"]..": "..today.." "..Steps.L["total"]..": "..total )
 	end
 end
 -- DropDownMenu
@@ -461,7 +461,7 @@ function Steps.ModifyMenu( owner, rootDescription, contextData )
 	local today, total = Steps.GetTodayTotal( contextData.name, (contextData.server and Steps.DeNormalizeRealm( contextData.server ) or GetRealmName()) )
 	if today then
 		rootDescription:CreateDivider()
-		rootDescription:CreateTitle(Steps.L["Steps today"]..": "..today.." "..Steps.L["total"]..": "..total)
+		rootDescription:CreateTitle( Steps.L["Steps today"]..": "..today.." "..Steps.L["total"]..": "..total )
 	end
 end
 Menu.ModifyMenu("MENU_UNIT_SELF", Steps.ModifyMenu)

@@ -24,7 +24,7 @@ if GetLocale() == "deDE" then
 	L.L["Show progress bars."] = "Fortschrittsbalken anzeigen."
 	L.L["show"] = "Anzeigen"
 	L.L["Show"] = "Anzeigen"
-	L.L["steps today"] = "Schritte heute"
+	L.L["Steps today"] = "Schritte heute"
 	L.L["Steps"] = "Schritte"
 	L.L["Toggle chat {steps} integration."] = "Chat-{schritte}-Integration umschalten."
 	L.L["Toggle display lock."] = "Anzeige-Sperre umschalten."

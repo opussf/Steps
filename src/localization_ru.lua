@@ -24,7 +24,7 @@ if GetLocale() == "ruRU" then
 	L.L["Show progress bars."] = "Показать индикаторы прогресса."
 	L.L["show"] = "показать"
 	L.L["Show"] = "Показать"
-	L.L["steps today"] = "шаги сегодня"
+	L.L["Steps today"] = "Шаги сегодня"
 	L.L["Steps"] = "Шаги"
 	L.L["Toggle chat {steps} integration."] = "Включить/выключить интеграцию чата с {шаги}."
 	L.L["Toggle display lock."] = "Заблокировать/разблокировать отображение."

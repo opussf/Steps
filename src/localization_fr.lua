@@ -24,7 +24,7 @@ if GetLocale() == "frFR" then
 	L.L["Show progress bars."] = "Afficher les barres de progression."
 	L.L["show"] = "afficher"
 	L.L["Show"] = "Afficher"
-	L.L["steps today"] = "pas aujourd'hui"
+	L.L["Steps today"] = "Pas aujourd'hui"
 	L.L["Steps"] = "Pas"
 	L.L["Toggle chat {steps} integration."] = "Activer/Désactiver l'intégration du chat {pas}."
 	L.L["Toggle display lock."] = "Verrouiller/Déverrouiller l'affichage."

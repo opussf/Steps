@@ -22,6 +22,7 @@ localization_de.lua
 localization_fr.lua
 localization_es.lua
 localization_pt.lua
+localization_ko.lua
 localization_ru.lua
 Steps.lua
 Steps.xml

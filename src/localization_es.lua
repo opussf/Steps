@@ -24,6 +24,7 @@ if GetLocale() == "esES" or GetLocale() == "esMX" then
 	L.L["Show progress bars."] = "Mostrar barras de progreso."
 	L.L["show"] = "mostrar"
 	L.L["Show"] = "Mostrar"
+	L.L["steps today"] = "pasos hoy"
 	L.L["Steps"] = "Pasos"
 	L.L["Toggle chat {steps} integration."] = "Activar o desactivar la integración de {pasos} en el chat."
 	L.L["Toggle display lock."] = "Bloquear o desbloquear la pantalla."

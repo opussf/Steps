@@ -461,7 +461,7 @@ function Steps.ModifyMenu( owner, rootDescription, contextData )
 	local today, total = Steps.GetTodayTotal( contextData.name, (contextData.server and Steps.DeNormalizeRealm( contextData.server ) or GetRealmName()) )
 	if today then
 		rootDescription:CreateDivider()
-		rootDescription:CreateTitle("Steps today: "..today.." total: "..total)
+		rootDescription:CreateTitle(Steps.L["Steps today"]..": "..today.." "..Steps.L["total"]..": "..total)
 	end
 end
 Menu.ModifyMenu("MENU_UNIT_SELF", Steps.ModifyMenu)

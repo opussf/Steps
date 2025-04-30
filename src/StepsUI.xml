@@ -16,7 +16,7 @@ xsi:schemaLocation="http://www.blizzard.com/wow/ui/
 					local histBar = _G["Steps_HistBar"..index]
 					if histBar then
 						GameTooltip:SetOwner(self, "ANCHOR_RIGHT" )
-						GameTooltip:SetText(Steps.L["Steps"]..": \n"..Steps.L["Mine"]..": "..self:GetValue().."\n"..Steps.L["Total"]..: "..histBar:GetValue() )
+						GameTooltip:SetText(Steps.L["Steps"]..": \n"..Steps.L["Mine"]..": "..self:GetValue().."\n"..Steps.L["Total"]..": "..histBar:GetValue() )
 						GameTooltip:Show()
 					end
 				end

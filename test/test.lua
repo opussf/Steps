@@ -198,7 +198,7 @@ function test.notest_send()
 end
 function test.notest_decode_steps_single()
 	Steps.versionAlerted = nil
-	Steps.CHAT_MSG_ADDON( {}, "Steps", "0.0|wonkRealm|wonkPlayer|"..string.char(0x87)..string.char(0xe1), "GUILD", "joeBob" )
+	Steps.CHAT_MSG_ADDON( "Steps", "0.0|wonkRealm|wonkPlayer|"..string.char(0x87)..string.char(0xe1), "GUILD", "joeBob" )
 	assertTrue( Steps_data["wonkRealm"]["wonkPlayer"] )
 	assertEquals( 993, Steps_data["wonkRealm"]["wonkPlayer"].steps )
 	assertEquals( "0.0", Steps_data["wonkRealm"]["wonkPlayer"].version )
@@ -208,7 +208,7 @@ function test.notest_decode_steps_single()
 end
 function test.notest_decode_steps_sets_versionAlerted()
 	Steps.versionAlerted = nil
-	Steps.CHAT_MSG_ADDON( {}, "Steps", "0.1|wonkRealm|wonkPlayer|"..string.char(0x87)..string.char(0xe1), "GUILD", "joeBob" )
+	Steps.CHAT_MSG_ADDON( "Steps", "0.1|wonkRealm|wonkPlayer|"..string.char(0x87)..string.char(0xe1), "GUILD", "joeBob" )
 	assertEquals( 993, Steps_data["wonkRealm"]["wonkPlayer"].steps )
 	assertEquals( "0.1", Steps_data["wonkRealm"]["wonkPlayer"].version )
 	assertIsNil( Steps.importRealm )
@@ -219,7 +219,7 @@ function test.test_decode_steps_with_history()
 	Steps.versionAlerted = nil
 	stepstoday = string.format("%s%s", select(2, Steps.toBytes(tonumber(date("%Y%m%d")))), select(2, Steps.toBytes(512)) )
 
-	Steps.CHAT_MSG_ADDON( {}, "Steps", "0.1|wonkRealm|wonkPlayer|"..string.char(0x87)..string.char(0xe1).."|"..stepstoday, "GUILD", "joeBob" )
+	Steps.CHAT_MSG_ADDON( "Steps", "0.1|wonkRealm|wonkPlayer|"..string.char(0x87)..string.char(0xe1).."|"..stepstoday, "GUILD", "joeBob" )
 	assertEquals( 993, Steps_data["wonkRealm"]["wonkPlayer"].steps )
 	assertEquals( "0.1", Steps_data["wonkRealm"]["wonkPlayer"].version )
 	assertEquals( 512, Steps_data["wonkRealm"]["wonkPlayer"][date("%Y%m%d")].steps )
@@ -232,13 +232,13 @@ function test.test_send_info_again()
 	steps = select(2, Steps.toBytes(42))
 	stepstoday = string.format("%s%s", select(2, Steps.toBytes(tonumber(date("%Y%m%d")))), steps )
 
-	Steps.CHAT_MSG_ADDON( {}, "Steps", "0.1|wonkRealm|wonkPlayer|"..steps.."|"..stepstoday, "GUILD", "wonkPlayer-wonkRealm")
+	Steps.CHAT_MSG_ADDON( "Steps", "0.1|wonkRealm|wonkPlayer|"..steps.."|"..stepstoday, "GUILD", "wonkPlayer-wonkRealm")
 	assertEquals( 42, Steps_data["wonkRealm"]["wonkPlayer"].steps )
 	assertEquals( 42, Steps_data["wonkRealm"]["wonkPlayer"][date("%Y%m%d")].steps )
 end
 function test.test_decode_steps_older_version()
 	Steps.versionAlerted = nil
-	Steps.CHAT_MSG_ADDON( {}, "Steps", "v:0.1,r:wonkRealm,n:wonkPlayer,s:42,t:"..date("%Y%m%d").."<42", "GUILD", "wonkPlayer-wonkRealm")
+	Steps.CHAT_MSG_ADDON( "Steps", "v:0.1,r:wonkRealm,n:wonkPlayer,s:42,t:"..date("%Y%m%d").."<42", "GUILD", "wonkPlayer-wonkRealm")
 	assertEquals( 42, Steps_data["wonkRealm"]["wonkPlayer"].steps )
 	assertEquals( 42, Steps_data["wonkRealm"]["wonkPlayer"][date("%Y%m%d")].steps )
 end

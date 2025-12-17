@@ -1,7 +1,7 @@
 -----------------------------------------
 -- Author  :  Opussf
--- Date    :  September 22 2025
--- Revision:  9.5.1-17-g28f1478
+-- Date    :  December 01 2025
+-- Revision:  9.7.1-2-g52b7d63
 -----------------------------------------
 -- These are functions from wow that have been needed by addons so far
 -- Not a complete list of the functions.
@@ -21,10 +21,10 @@ settings = {
 actionLog = {
 }
 buildInfo = {
-	"1.1.1",       --version
-	"3255",        --build
-	"Sep 12 2025", --date
-	20400          --TOC Version
+	"11.2.5",       -- version
+	"3255",         -- build
+	"Sep 12 2025",  -- date
+	110205          -- TOC Version
 }
 -- append actions to the log to track actions that may not have an other sideeffects.
 -- record the function calls
@@ -81,6 +81,7 @@ myStatistics = {
 }
 myLocale = "enUS"
 myZone = {["Zone"] = "Thing", ["Sub"] = "Sub"}
+isInCombat = false
 
 registeredPrefixes = {}
 
@@ -493,6 +494,15 @@ Frame = {
 		["GetText"] = function(self) return( self.textValue ); end,
 		["SetFrameLevel"] = function(self) end,
 		["SetAlpha"] = function(self, value) end,
+		["GetNumLines"] = function(self)
+				if self.textValue == "" then return 0 end
+				local _, count = self.textValue:gsub("\n", "")
+				if self.textValue:sub(-1) == "\n" then
+					return count
+				else
+					return count + 1
+				end
+			end,
 }
 FrameGameTooltip = {
 		["HookScript"] = function( self, callback ) end,
@@ -534,6 +544,7 @@ Units = {
 		["sex"] = 3,
 		["currentHealth"] = 100000,
 		["maxHealth"] = 123456,
+		["creatureTypeID"] = 7,
 	},
 	["sameRealmUnit"] = {
 		["class"] = "Warrior",
@@ -545,6 +556,7 @@ Units = {
 		["realm"] = "testPlayer",
 		["realmRelationship"] = 1,
 		["sex"] = 2,
+		["creatureTypeID"] = 7,
 	},
 	["coalescedRealmUnit"] = {
 		["class"] = "Monk",
@@ -555,6 +567,7 @@ Units = {
 		["race"] = "Pandarian",
 		["realm"] = "coalescedRealm",
 		["realmRelationship"] = 2,
+		["creatureTypeID"] = 7,
 	},
 	["connectedRealmUnit"] = {
 		["class"] = "Mage",
@@ -564,6 +577,7 @@ Units = {
 		["name"] = "connectedUnit",
 		["realm"] = "connectedRealm",
 		["realmRelationship"] = 3,
+		["creatureTypeID"] = 7,
 	},
 	["mouseover"] = {
 		["class"] = "Priest",
@@ -574,8 +588,12 @@ Units = {
 		["race"] = "Dwarf",
 		["realm"] = "mouserealm",
 		["sex"] = 1,
+		["creatureTypeID"] = 7,
 	},
-
+}
+UnitCreatureTypes = { "Beast", "Dragonkin", "Demon", "Elemental", "Giant",
+		"Undead", "Humanoid", "Critter", "Mechanical", "Not specified",
+		"Totem", "Non-combat Pet", "Gas Cloud", "Wild Pet", "Aberration"
 }
 function CreateFrame( frameType, frameName, parentFrame, inheritFrame )
 --	print("CreateFrame: needing a new frame of type: "..(frameType or "nil"))
@@ -604,8 +622,8 @@ function CreateFontString( name, ... )
 		FontString[k] = v
 	end
 	FontString.text = ""
-	FontString["SetText"] = function(self,text) self.text=text; end
-	FontString["GetText"] = function(self) return(self.text); end
+	FontString["SetText"] = function(self,text) self.textValue=text; end
+	FontString["GetText"] = function(self) return(self.textValue); end
 	FontString.name=name
 	--print("FontString made?")
 	return FontString
@@ -640,15 +658,15 @@ function CreateCheckButton( name, ... )
 	me[name.."Text"] = CreateFontString(name.."Text")
 	return me
 end
-EditBox = {
-		["SetText"] = function(self,text) self.text=text; end,
+FrameEditBox = {
+		["SetText"] = function(self,text) self.textValue=text; end,
 		["SetCursorPosition"] = function(self,pos) self.cursorPosition=pos; end,
 		["HighlightText"] = function(self,start,last) end,
 		["IsNumeric"] = function() end,
 }
 function CreateEditBox( name, ... )
 	me = {}
-	for k,v in pairs(EditBox) do
+	for k,v in pairs(FrameEditBox) do
 		me[k] = v
 	end
 	me.name = name
@@ -964,6 +982,10 @@ end
 function C_AddOns.LoadAddOn( addonName )
 end
 function C_AddOns.DisableAddOn( addonName, playerName )
+end
+function C_AddOns.IsAddOnLoaded( addonName )
+	-- assue it is, modify later
+	return true
 end
 
 C_Container = {}
@@ -1638,7 +1660,7 @@ function UnitOnTaxi()
 	return settings.unitOnTaxi or false
 end
 function UnitAffectingCombat( unit )
-	return false
+	return isInCombat
 end
 C_UnitAuras = {}
 function C_UnitAuras.GetAuraDataByIndex( unit, index )
@@ -1650,6 +1672,11 @@ function C_UnitAuras.GetAuraDataByIndex( unit, index )
 end
 function UnitClass( who )
 	return Units[who].class, Units[who].classCAPS, Units[who].classIndex
+end
+function UnitCreatureType( who )
+	if Units[who] then
+		return UnitCreatureTypes[Units[who].creatureTypeID], Units[who].creatureTypeID
+	end
 end
 function UnitExists( who )
 	return Units[who] and true or nil
@@ -1664,6 +1691,9 @@ end
 function UnitHealthMax( who )
 	-- http://wowwiki.wikia.com/wiki/API_UnitHealth
 	return Units[who].maxHealth
+end
+function UnitIsPlayer( who )
+	return Units[who] and Units[who].isPlayer or nil
 end
 function UnitFactionGroup( who )
 	-- http://www.wowwiki.com/API_UnitFactionGroup
@@ -1683,7 +1713,9 @@ function UnitLevel( who )
 	return unitLevels[who]
 end
 function UnitName( who )
-	return Units[who].name, Units[who].realm
+	if Units[who] then
+		return Units[who].name, Units[who].realm
+	end
 end
 function UnitPowerMax( who, powerType )
 	-- http://wowwiki.wikia.com/wiki/API_UnitPowerMax
@@ -2260,6 +2292,85 @@ function C_PlayerInfo.GetPlayerMythicPlusRatingSummary( unitStr )
 	return {["runs"] = {}, ["currentSeasonScore"] = 0 }
 end
 
+----------
+-- C_TooltipInfo
+----------
+C_TooltipInfo = {}
+C_TooltipInfo.data = {
+	["target"] = {
+		["lines"] = {
+			{ ["leftText"] = "LeftText" },
+		}
+	}
+}
+function C_TooltipInfo.GetUnit( target )
+	return C_TooltipInfo.data[target]
+end
+
+----------
+-- C_PetJournal
+----------
+C_PetJournal = {}
+C_PetJournal.data = {
+	["summoned"] = {
+		GUID = 12534
+	},
+}
+function C_PetJournal.GetSummonedPetGUID()
+	return C_PetJournal.data.summoned.GUID
+end
+function C_PetJournal.GetPetInfoByPetID( petID )
+	-- speciesID, customName, level, xp, maxXp, displayID, isFavorite, name, icon, petType, creatureID, sourceText, description, isWild, canBattle, tradable, unique, obtainable = C_PetJournal.GetPetInfoByPetID(petID)
+	-- @TODO: Look this up
+	return 0,"CustomPetName",0,0,0,0,0,"PetName"
+end
+
+----------
+-- C_Calendar
+----------
+C_Calendar = {}
+C_Calendar.monthDays = {31,28,31,30,31,30,31,31,30,31,30,31}  -- no.  this is NOT perfect.... This is for testing only
+function C_Calendar.GetMonthInfo(monthOffset)
+	-- returns info about the current month.
+	-- { firstWeekday, numDays, year, month }
+	local isPos = (monthOffset > 0)
+	local out = {}
+	local today = os.date("*t",os.time())  -- this is date's struct
+	today.month = today.month + monthOffset
+
+	while ( today.month < 1 or today.month > 12 ) do
+		today.month = (isPos and today.month-12 or today.month+12)
+		today.year = (isPos and today.year+1 or today.year-1)
+	end
+
+	-- print(monthOffset)
+	-- test.dump(today)
+	-- print("----")
+
+	out = {firstWeekday=1, numDays=C_Calendar.monthDays[today.month], year=today.year, month=today.month}
+	-- test.dump(out)
+	-- print("=====")
+	return out
+end
+function C_Calendar.GetNumDayEvents(monthOffset, day)
+	return 0
+end
+function C_Calendar.OpenCalendar()
+	--
+end
+
+----------
+-- C_Map
+----------
+C_Map = {}
+function C_Map.GetBestMapForUnit( unitStr )
+	return 5
+end
+function C_Map.GetMapInfo( mapID )
+	return { mapID=5, name="map name", parentMapID=0, mapType=1, flags=2 }
+end
+
+-----------------------------------------
 -- A SAX parser takes a content handler, which provides these methods:
 --     startDocument()                 -- called at the start of the Document
 --     endDocument()                   -- called at the end of the Document
@@ -2448,12 +2559,18 @@ function ParseTOC( tocFile, useRequire )
 		local tocContents = f:read( "*all" )
 		for line in tocContents:gmatch("([^\n]*)\n?") do
 			if line ~= "" then
-				local luaFile = line:match("([_%a][_%w]*)%.lua")
-				local xmlFile = line:match("([_%a][_%w]*)%.xml")
+				local luaFile = line:match("([%w%._%-\\/]+)%.lua")
+				if luaFile then
+					luaFile = luaFile:gsub("\\", "/") -- normalize to forward slashes
+				end
+				local xmlFile = line:match("([%w%._%-\\/]+)%.xml")
+				if xmlFile then
+					xmlFile = xmlFile:gsub("\\", "/") -- normalize to forward slashes
+				end
 				local hashKey, hashValue = line:match("## ([_%a]*): (.*)")
 
 				if hashKey then
-					addonData[hashKey] = hashValue
+					addonData[hashKey] = string.gsub( hashValue, "[\n\r]", "")
 				elseif luaFile then
 					table.insert(tocFileTable, { "lua", luaFile })
 				elseif xmlFile then

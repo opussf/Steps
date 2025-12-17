@@ -4,7 +4,8 @@ require "wowTest"
 --myLocale = "esMX"
 
 test.outFileName = "testOut.xml"
--- test.coberturaFileName = "../coverage.xml"
+test.coberturaFileName = "../coverage.xml"
+test.coverageReportPercent = true
 
 -- require the file to test
 ParseTOC( "../src/Steps.toc" )

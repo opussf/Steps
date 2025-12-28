@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="Steps.css" type="text/css"/>
 <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css" type="text/css"/>
 <title ng-bind="limitSize + 'Steps'">Steps</title>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script src="/js/bootstrap.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <script src="/js/angular.min.js"></script>
@@ -16,7 +17,12 @@
 </head>
 <body>
 <div class="container-fluid">
-<div class="main" ng-app="myApp" ng-controller="StepsDisplay">
+<div class="main" id="stepsApp" ng-app="myApp" ng-controller="StepsDisplay">
+<div class="row">
+<div class="col-12">
+<div id="chart_div" style="height: 175px"></div>
+</div>
+</div>
 <div class="row">
 <div class="col col-xs-2 col-md-2">
 <ul>
@@ -27,33 +33,33 @@
 
 <div class="row">
 <div class="col col-xs-2 col-md-2 StepsHeader">
-	<a href ng-click="sortReverse = sortType=='name' ? !sortReverse : true; sortType='name'">Name
+	<a href ng-click="sortReverse = sortType=='name' ? !sortReverse : false; sortType='name'">Name
 	<span ng-show="sortType=='name' && !sortReverse" class="fa fa-caret-up"></span>
 	<span ng-show="sortType=='name' && sortReverse" class="fa fa-caret-down"></span>
 	</a>
 </div>
 <div class="col col-xs-1 col-md-1 StepsHeader">
-	<a href ng-click="sortReverse = sortType='steps' ? !sortReverse : true; sortType='steps'">Steps
+	<a href ng-click="sortReverse = sortType=='steps' ? !sortReverse : true; sortType='steps'">Steps
 	<span ng-show="sortType=='steps' && !sortReverse" class="fa fa-caret-up"></span>
 	<span ng-show="sortType=='steps' && sortReverse" class="fa fa-caret-down"></span>
 	</a>
 </div>
 <div class="col col-xs-1 col-md-1 StepsHeader">
-	<a href ng-click="sortReverse = sortType='today' ? !sortReverse : true; sortType='today'">
+	<a href ng-click="sortReverse = sortType=='today' ? !sortReverse : true; sortType='today'">
 	{{currentDate | date:'yyyy-MM-dd'}}
 	<span ng-show="sortType=='today' && !sortReverse" class="fa fa-caret-up"></span>
 	<span ng-show="sortType=='today' && sortReverse" class="fa fa-caret-down"></span>
 	</a>
 </div>
 <div class="col col-xs-1 col-md-1 StepsHeader">
-	<a href ng-click="sortReverse = sortType='yesterday' ? !sortReverse : true; sortType='yesterday'">
+	<a href ng-click="sortReverse = sortType=='yesterday' ? !sortReverse : true; sortType='yesterday'">
 	{{yesterday | date:'yyyy-MM-dd'}}
 	<span ng-show="sortType=='yesterday' && !sortReverse" class="fa fa-caret-up"></span>
 	<span ng-show="sortType=='yesterday' && sortReverse" class="fa fa-caret-down"></span>
 	</a>
 </div>
 <div class="col col-xs-1 col-md-1 StepsHeader">
-	<a href ng-click="sortReverse = sortType='daybefore' ? !sortReverse : true; sortType='daybefore'">
+	<a href ng-click="sortReverse = sortType=='daybefore' ? !sortReverse : true; sortType='daybefore'">
 	{{daybefore | date:'yyyy-MM-dd'}}
 	<span ng-show="sortType=='daybefore' && !sortReverse" class="fa fa-caret-up"></span>
 	<span ng-show="sortType=='daybefore' && sortReverse" class="fa fa-caret-down"></span>
@@ -72,8 +78,9 @@
 	{{b2Month | date:'yyyy-MM'}} (days)
 </div>
 </div> <!-- row -->
-<div class="row RandomFortuneWrapper" ng-repeat="char in steps | orderBy:sortType:sortReverse | filter:stepsFilter track by $index" ng-value="{{$index}}">
-<div class="col col-xs-2 col-md-2 StepsName"><span>{{$index+1}} - {{char.name}}-{{char.realm}}</span></div>
+<div class="row StepsWrapper" ng-repeat="char in steps | orderBy:sortType:sortReverse | filter:stepsFilter track by $index" ng-value="{{$index}}">
+<div class="col col-xs-2 col-md-2 StepsName"><span>{{$index+1}} - 
+	<a href ng-click="nameOnClick( char.name, char.realm )">{{char.name}}-{{char.realm}}</a></span></div>
 <div class="col col-xs-1 col-md-1 StepsSteps"><span>{{ char.steps }}</span></div>
 <div class="col col-xs-1 col-md-1 StepsStepsDays"><span>{{ stepsInDay(currentDate, char.days) }}</span></div>
 <div class="col col-xs-1 col-md-1 StepsStepsDays"><span>{{ stepsInDay(yesterday, char.days) }}</span></div>

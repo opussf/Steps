@@ -2407,6 +2407,12 @@ function ItemLocation.IsValid( self )
 	return true
 end
 
+--------
+-- 12.0.0 stubs
+function issecretvalue( value )
+	return false  -- default to false for now.
+end
+
 -----------------------------------------
 -- A SAX parser takes a content handler, which provides these methods:
 --     startDocument()                 -- called at the start of the Document

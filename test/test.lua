@@ -190,11 +190,8 @@ end
 function test.notest_send()
 	test.prep_minavemax_data()
 	Steps.LOADING_SCREEN_DISABLED()
-	-- for i = 1,string.len(Steps.addonMsg) do
-	-- 	print( string.format( "%s = 0x%x", string.sub( Steps.addonMsg, i, i ), string.byte( Steps.addonMsg, i ) ) )
-	-- end
 	assertTrue( string.len( Steps.addonMsg ) < 255, "Steps.addonMsg length ("..string.len( Steps.addonMsg )..") is 255 or more characters." )
-	-- assertEquals( "@VERSION@|Test Realm|testPlayer|"..string.char(0x99)..string.char(0xa8), Steps.addonMsg )
+	assertEquals( "@VERSION@|Test Realm|testPlayer|"..string.char(0x99)..string.char(0xa8), Steps.addonMsg )
 	assertEquals( "@VERSION@|Test Realm|testPlayer|"..string.char(0x99)..string.char(0xa8).."|", string.sub( Steps.addonMsg, 1, 34 ) )
 end
 function test.notest_decode_steps_single()
@@ -465,7 +462,6 @@ function test.test_trendUI_show2Month_15days()
 	test.makeUITestData( 15 )
 	local sow, dayBack = test.getStartOfWeek()
 	local ev = ((dayBack+1)*dayBack*50)/2
-	-- test.dump( Steps_data )
 	Steps.Show2Month()
 	assertEquals( ev, Steps.MineBars[8]:GetValue() )
 	assertEquals( ev, Steps.HistBars[8]:GetValue() )

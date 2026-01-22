@@ -24,7 +24,7 @@
 
 	<xsl:template match="char">
 		<item>
-		<title><xsl:value-of select="position()"/>. <xsl:value-of select="@name"/>-<xsl:value-of select="@realm"/> has <xsl:value-of select="@steps"/> steps.</title>
+		<title><xsl:value-of select="position()"/>. <xsl:value-of select="@name"/> of <xsl:value-of select="@realm"/> has <xsl:value-of select="@steps"/> steps..</title>
 		<link>http://www.zz9-za.com/~opus/steps</link>
 		<guid isPermaLink='false'><xsl:value-of select='@name'/>-<xsl:value-of select="@realm"/>-<xsl:value-of select='@steps'/></guid>
 		<description><xsl:value-of select="@name"/>-<xsl:value-of select="@realm"/> has <xsl:value-of select="@steps"/> steps.</description>

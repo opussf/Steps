@@ -440,19 +440,21 @@ function Steps.GetTodayTotal( name, realm )
 	end
 end
 -- Tooltip
-function Steps.TooltipSetUnit( arg1, arg2 )
+function Steps.TooltipSetUnit( arg1, arg2 ) -- tooltip, tooltipdata
 	local name = GameTooltip:GetUnit()
-	local realm = ""
-	if UnitName( "mouseover" ) == name then
-		_, realm = UnitName( "mouseover" )
-		if not realm then
-			realm = GetRealmName()
+	if not issecretvalue( name ) then
+		local realm = ""
+		if UnitName( "mouseover" ) == name then
+			_, realm = UnitName( "mouseover" )
+			if not realm then
+				realm = GetRealmName()
+			end
 		end
-	end
-	local today, total = Steps.GetTodayTotal( name, realm )
-	if Steps.debug then print( name, realm, today, total ) end
-	if today then
-		GameTooltip:AddLine( Steps.L["Steps today"]..": "..today.." "..Steps.L["total"]..": "..total )
+		local today, total = Steps.GetTodayTotal( name, realm )
+		if Steps.debug then print( name, realm, today, total ) end
+		if today then
+			GameTooltip:AddLine( Steps.L["Steps today"]..": "..today.." "..Steps.L["total"]..": "..total )
+		end
 	end
 end
 -- DropDownMenu
@@ -494,7 +496,6 @@ function Steps.Post( param )
 			chatChannel = "WHISPER"
 			toWhom = param
 		end
-
 		if( chatChannel ) then
 			SendChatMessage( Steps.GetPostString(), chatChannel, nil, toWhom )  -- toWhom will be nil for most
 			Steps.SendMessages()

@@ -497,7 +497,7 @@ function Steps.Post( param )
 			toWhom = param
 		end
 		if( chatChannel ) then
-			SendChatMessage( Steps.GetPostString(), chatChannel, nil, toWhom )  -- toWhom will be nil for most
+			C_ChatInfo.SendChatMessage( Steps.GetPostString(), chatChannel, nil, toWhom )  -- toWhom will be nil for most
 			Steps.SendMessages()
 		end
 	end

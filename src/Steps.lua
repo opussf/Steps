@@ -410,6 +410,7 @@ function Steps.UIReset()
 	Steps_Frame:SetPoint("BOTTOMLEFT", "$parent", "BOTTOMLEFT")
 	Steps_options.show = true
 	Steps.UpdateBars()
+	Steps.Print(Steps.L["Display Reset. Set to visible, and in the BOTTOMLEFT."])
 end
 function Steps.DeNormalizeRealm( realm )
 	local realmOut = ""

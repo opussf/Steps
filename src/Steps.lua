@@ -412,6 +412,8 @@ function Steps.UIReset()
 	Steps_Frame:SetSize( 200, 12 )
 	Steps_Frame:ClearAllPoints()
 	Steps_Frame:SetPoint("BOTTOMLEFT", "$parent", "BOTTOMLEFT")
+	Steps_options.show = true
+	Steps.UpdateBars()
 end
 function Steps.DeNormalizeRealm( realm )
 	local realmOut = ""

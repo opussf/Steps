@@ -22,6 +22,7 @@ Steps.commPrefix = "Steps"
 Steps_options.show = true
 
 function test.before()
+	chatLog = {}
 	Steps.OnLoad()
 	Steps.ADDON_LOADED()
 	Steps.VARIABLES_LOADED()
@@ -270,52 +271,65 @@ end
 function test.test_get_postString()
 	assertEquals( "My steps today: 0", Steps.GetPostString() )
 end
+function test.find_chatlog_to_chattype(chattype)
+	for i, cl in ipairs(chatLog) do
+		if cl.chatType == chattype then
+			return i
+		end
+	end
+end
 function test.test_post_say()
-	chatLog = {}
 	Steps.Command( "say" )
-	assertEquals( "SAY", chatLog[#chatLog].chatType )
-	assertEquals( "My steps today: 0", chatLog[#chatLog].msg )
+	local chatLogIndex = test.find_chatlog_to_chattype("SAY")
+	assertTrue(chatLogIndex, "This should have posted, check the chatType.")
+	assertEquals( "My steps today: 0", chatLog[chatLogIndex].msg )
 end
 function test.test_post_yell()
-	chatLog = {}
 	Steps.Command( "yell" )
-	assertEquals( "YELL", chatLog[#chatLog].chatType )
-	assertEquals( "My steps today: 0", chatLog[#chatLog].msg )
+	local chatLogIndex = test.find_chatlog_to_chattype("YELL")
+	assertTrue(chatLogIndex, "This should have posted, check the chatType.")
+	assertEquals( "My steps today: 0", chatLog[chatLogIndex].msg )
 end
 function test.test_post_guild()
-	chatLog = {}
 	Steps.Command( "guild" )
-	assertEquals( "GUILD", chatLog[#chatLog].chatType )
-	assertEquals( "My steps today: 0", chatLog[#chatLog].msg )
+	local chatLogIndex = test.find_chatlog_to_chattype("GUILD")
+	assertTrue(chatLogIndex, "This should have posted, check the chatType.")
+	assertEquals( "My steps today: 0", chatLog[chatLogIndex].msg )
 end
 function test.test_post_party()
 	myParty.party = true
 	Steps.Command( "party" )
-	assertEquals( "PARTY", chatLog[#chatLog].chatType )
-	assertEquals( "My steps today: 0", chatLog[#chatLog].msg )
+	local chatLogIndex = test.find_chatlog_to_chattype("PARTY")
+	assertTrue(chatLogIndex, "This should have posted, check the chatType.")
+	assertEquals( "My steps today: 0", chatLog[chatLogIndex].msg )
 end
 function test.test_post_party2()
 	myParty.party = true
 	Steps.Command( "instance" )
-	assertEquals( "PARTY", chatLog[#chatLog].chatType )
-	assertEquals( "My steps today: 0", chatLog[#chatLog].msg )
+	local chatLogIndex = test.find_chatlog_to_chattype("PARTY")
+	assertTrue(chatLogIndex, "This should have posted, check the chatType.")
+	assertEquals( "My steps today: 0", chatLog[chatLogIndex].msg )
 end
 function test.test_post_instance()
 	myParty.instance = true
 	Steps.Command( "instance" )
-	assertEquals( "INSTANCE_CHAT", chatLog[#chatLog].chatType )
-	assertEquals( "My steps today: 0", chatLog[#chatLog].msg )
+	local chatLogIndex = test.find_chatlog_to_chattype("INSTANCE_CHAT")
+	assertTrue(chatLogIndex, "This should have posted, check the chatType.")
+	assertEquals( "My steps today: 0", chatLog[chatLogIndex].msg )
 end
 function test.test_post_raid()
+	chatLog = {}
 	myParty.raid = true
 	Steps.Command( "raid" )
-	assertEquals( "RAID", chatLog[#chatLog].chatType )
-	assertEquals( "My steps today: 0", chatLog[#chatLog].msg )
+	local chatLogIndex = test.find_chatlog_to_chattype("RAID")
+	assertTrue(chatLogIndex, "This should have posted, check the chatType.")
+	assertEquals( "My steps today: 0", chatLog[chatLogIndex].msg )
 end
 function test.test_post_whisper()
 	Steps.Command( "whisper otherPlayer" )
-	assertEquals( "WHISPER", chatLog[#chatLog].chatType )
-	assertEquals( "My steps today: 0", chatLog[#chatLog].msg )
+	local chatLogIndex = test.find_chatlog_to_chattype("WHISPER")
+	assertTrue(chatLogIndex, "This should have posted, check the chatType.")
+	assertEquals( "My steps today: 0", chatLog[chatLogIndex].msg )
 end
 function test.test_denormalize_01()
 	assertEquals( "Aerie Peak", Steps.DeNormalizeRealm( "AeriePeak") )

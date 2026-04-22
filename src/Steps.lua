@@ -44,10 +44,6 @@ function Steps.OnLoad()
 	Steps_EventFrame:RegisterEvent( "CHAT_MSG_ADDON" )
 	Steps_EventFrame:RegisterEvent( "GROUP_ROSTER_UPDATE" )
 	Steps_EventFrame:RegisterEvent( "INSTANCE_GROUP_SIZE_CHANGED" )
-	Steps_EventFrame:RegisterEvent( "ADDON_RESTRICTION_STATE_CHANGED" )
-end
-function Steps.ADDON_RESTRICTION_STATE_CHANGED(p1,p2,p3)
-	print("ADDON_RESTRICTION_STATE_CHANGED: ", p1, p2, p3)
 end
 function Steps.ADDON_LOADED()
 	Steps_EventFrame:UnregisterEvent( "ADDON_LOADED" )
